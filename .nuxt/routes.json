@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Chart",
+    "path": "/Chart",
+    "component": "D:\\\\ast-last\\\\pages\\\\Chart.vue",
+    "chunkName": "pages/Chart",
+    "_name": "_f830b382"
+  },
+  {
+    "name": "Charts",
+    "path": "/Charts",
+    "component": "D:\\\\ast-last\\\\pages\\\\Charts.vue",
+    "chunkName": "pages/Charts",
+    "_name": "_068e7a78"
+  },
+  {
+    "name": "Login",
+    "path": "/Login",
+    "component": "D:\\\\ast-last\\\\pages\\\\Login.vue",
+    "chunkName": "pages/Login",
+    "_name": "_81a5ff6c"
+  },
+  {
+    "name": "profiler",
+    "path": "/profiler",
+    "component": "D:\\\\ast-last\\\\pages\\\\profiler.vue",
+    "chunkName": "pages/profiler",
+    "_name": "_8bd65b10"
+  },
+  {
+    "name": "Projects",
+    "path": "/Projects",
+    "component": "D:\\\\ast-last\\\\pages\\\\Projects.vue",
+    "chunkName": "pages/Projects",
+    "_name": "_9a083aae"
+  },
+  {
+    "name": "recorder",
+    "path": "/recorder",
+    "component": "D:\\\\ast-last\\\\pages\\\\recorder.vue",
+    "chunkName": "pages/recorder",
+    "_name": "_06eb4666"
+  },
+  {
+    "name": "repairs",
+    "path": "/repairs",
+    "component": "D:\\\\ast-last\\\\pages\\\\repairs.vue",
+    "chunkName": "pages/repairs",
+    "_name": "_ccbe5272"
+  },
+  {
+    "name": "settingspage",
+    "path": "/settingspage",
+    "component": "D:\\\\ast-last\\\\pages\\\\settingspage.vue",
+    "chunkName": "pages/settingspage",
+    "_name": "_a1f4c87e"
+  },
+  {
+    "name": "vibro",
+    "path": "/vibro",
+    "component": "D:\\\\ast-last\\\\pages\\\\vibro.vue",
+    "chunkName": "pages/vibro",
+    "_name": "_abea93e6"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "D:\\\\ast-last\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "_name": "_7e133d53"
+  }
+]
