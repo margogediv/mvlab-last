@@ -22,7 +22,6 @@ export default {
     VSidebar,
     Vfooter,
     VmsgBox
-
   }
 };
 </script>

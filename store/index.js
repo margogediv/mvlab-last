@@ -8,7 +8,6 @@ import Messages from './Messages';
 import users from './users';
 import oeecharts from './oeecharts';
 
-
 export const store = () => new Vuex.Store({
 	modules: {
 		Clients,

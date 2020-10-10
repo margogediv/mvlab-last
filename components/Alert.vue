@@ -1,6 +1,6 @@
 <template>
   <transition name="fade">
-    <div v-show="showAlert" class="boxAlert" v-bind:class="alertMsg.status">
+    <div v-show="showAlert" v-if="this.currentAlert" class="boxAlert" v-bind:class="alertMsg.status">
       <div class="alertMsg">{{ alertMsg.msg }}</div>
       <button v-on:click="changeShow">
         <!-- <button v-on:click="$emit('changeShow')"> -->
@@ -19,17 +19,13 @@ export default {
       showAlert: true
     };
   },
-  mounted() {
-    this.$store.dispatch('Messages/getCurrentAlert');
-  },
 
   computed: {
     ...mapGetters("Messages", {
       currentAlert: "currentAlert"
     }),
     alertMsg: function() {
-      let indx = randomInteger(0, 2);
-      return this.currentAlert[indx];
+      return this.currentAlert;
     }
   },
   methods: {

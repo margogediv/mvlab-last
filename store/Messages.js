@@ -4,20 +4,7 @@ export default {
   state: () => ({
     currentDevMessages: [],
     currentMessages: [],
-    currentAlert: [
-      {
-        msg: "DANGER!!!",
-        status: "dng"
-      },
-      {
-        msg: "ALL ok",
-        status: "ok"
-      },
-      {
-        msg: "ALERT!!!",
-        status: "alert"
-      }
-    ]
+    currentAlert: null,
 
   }),
   getters: {
@@ -39,9 +26,6 @@ export default {
     updateCurrentMessages(state, payload) {
       state.currentMessages = payload;
     },
-    updateCurrentAlert(state, payload) {
-      state.currentAlert = payload;
-    },
   },
   actions: {
     async getCurrentDevMessages(store, payload) {
@@ -50,13 +34,8 @@ export default {
       store.commit('updateCurrentDevMessages', data.currentDevMessages);
     },
     async getCurrentMessages(store, payload) {
-      let data = await this.$axios.$get('http://ast.devzsg.net/api/messages/get-current-messages/');
+      let data = await this.$axios.$get('http://185.6.25.155/api/current_messages/');
       store.commit('updateCurrentMessages', data.currentMessages);
-    },
-    async getCurrentAlert(store, payload) {
-
-      let data = await this.$axios.$get('http://ast.devzsg.net/api/messages/get-current-alert/');
-      store.commit('updateCurrentAlert', data.currentAlert);
     },
   },
 

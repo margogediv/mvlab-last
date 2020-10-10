@@ -6,33 +6,33 @@
 
       <div class="select-period">
         <button
-          v-on:click="setRange({period:1, id: 0})"
-          class="btn-period"
-          :class="{ active: periodActive[0] }"
+            v-on:click="setRange({period:1, id: 0})"
+            class="btn-period"
+            :class="{ active: periodActive[0] }"
         >час
         </button>
         <button
-          v-on:click="setRange({period:8, id: 1})"
-          class="btn-period"
-          :class="{ active: periodActive[1] }"
+            v-on:click="setRange({period:8, id: 1})"
+            class="btn-period"
+            :class="{ active: periodActive[1] }"
         >смена
         </button>
         <button
-          v-on:click="setRange({period:24, id: 2})"
-          class="btn-period"
-          :class="{ active: periodActive[2] }"
+            v-on:click="setRange({period:24, id: 2})"
+            class="btn-period"
+            :class="{ active: periodActive[2] }"
         >день
         </button>
         <button
-          v-on:click="setRange({period:168, id: 3})"
-          class="btn-period"
-          :class="{ active: periodActive[3] }"
+            v-on:click="setRange({period:168, id: 3})"
+            class="btn-period"
+            :class="{ active: periodActive[3] }"
         >неделя
         </button>
         <button
-          v-on:click="setRange({period:5040, id: 4})"
-          class="btn-period"
-          :class="{ active: periodActive[4] }"
+            v-on:click="setRange({period:5040, id: 4})"
+            class="btn-period"
+            :class="{ active: periodActive[4] }"
         >месяц
         </button>
       </div>
@@ -109,22 +109,21 @@
       </div>
       <div class="top5">
         <highcharts
-          class="highchartBar"
-          :constructor-type="'chart'"
-          :options="chartOptionsTop5.option"
-          :lang="basicOptions.lang"
+            class="highchartBar"
+            :constructor-type="'chart'"
+            :options="chartOptionsTop5.option"
+            :lang="basicOptions.lang"
         ></highcharts>
       </div>
     </div>
     <!-- Данные OEE -->
-
     <!-- График -->
     <div class="charts-items">
       <highcharts
-        class="highchart"
-        :options="chartOptions.option"
-        :constructor-type="'stockChart'"
-        :lang="basicOptions.lang"
+          class="highchart"
+          :options="chartOptions.option"
+          :constructor-type="'stockChart'"
+          :lang="basicOptions.lang"
       ></highcharts>
 
       <!-- Таблица -->
@@ -133,6 +132,9 @@
     </div>
     <!-- График -->
     <VchartBox v-show="isVchartBoxVisible" @changeShow="closeVchartBoxVisible" :content="content"></VchartBox>
+
+<!--    Loader-->
+    <Loader v-if="loader"/>
   </div>
 </template>
 
@@ -142,8 +144,9 @@ import {mapActions} from "vuex";
 
 import Table from "@/components/Table";
 import VchartBox from "@/components/VchartBox";
+import Loader from "@/components/Loader";
 
-var nowDate = new Date();
+// var nowDate = new Date();
 let legendVisible = {
   A: false,
   P: false,
@@ -155,38 +158,39 @@ export default {
   layout: "header_footer",
 
   created() {
-    this.loadData(this.opt);
     this.loadBasicOptions();
 
     this.setActiveTabHeader("OEE");
     this.setActiveTabSidebar("Online");
+
+    let opt = {
+      id: this.idx,
+      start: this.getChartTime.start,
+      end: this.getChartTime.end,
+    }
+    this.$store.dispatch('oeecharts/getTimeStatus', opt);
+    this.$store.dispatch('oeecharts/getReason', opt);
+    this.$store.dispatch('oeecharts/loadData', opt);
+    localStorage.setItem('idx', this.idx);
   },
 
   components: {
     pointTable: Table,
     VchartBox: VchartBox,
+    Loader: Loader,
   },
 
   data() {
     return {
       isVchartBoxVisible: false,
 
-      range: 28800000,
+      range: (5040 * 3600),
 
-      periodActive: [false, true, false, false, false],
-
-      // fistDate: new Date().toISOString().substr(0, 10),
-      // lastDate: new Date().toISOString().substr(0, 10),
-      fistDate: new Date().toISOString(),
-      lastDate: new Date().toISOString(),
+      periodActive: [false, false, false, false, true],
       cntPoint: 5,
       selected: "spline",
       typeChart: [{value: "area"}, {value: "column"}, {value: "line"}],
     };
-  },
-  mounted() {
-    this.$store.dispatch('oeecharts/getTimeStatus');
-    this.$store.dispatch('oeecharts/getReason');
   },
 
   computed: {
@@ -199,7 +203,8 @@ export default {
       activeshop: "activeshop",
       reason: "reason",
       timeStatus: "timeStatus",
-
+      loader: "loader",
+      getChartTime: "getChartTime",
     }),
 
     dataHead() {
@@ -242,18 +247,10 @@ export default {
       };
     },
 
-    opt: function () {
-      return {
-        fist: this.fistDate,
-        last: this.lastDate,
-        numPoint: this.cntPoint,
-      };
-    },
-
     content: function () {
       return {
-        fist: this.fistDate,
-        last: this.lastDate,
+        fist: this.getChartTime.start,
+        last: this.getChartTime.end,
         title: "Настройка отображения графиков",
         btnLeft: "Экспорт",
         btnRight: "Обновить",
@@ -264,7 +261,6 @@ export default {
 
     chartOptions() {
       let arrOptions = {};
-      let arrayShow = [];
       let chartOption;
 
       chartOption = {
@@ -276,7 +272,7 @@ export default {
           //   {data: this.basicData[this.idx][0]},
           //   {data: this.basicData[this.idx][1]},
           //   {data: this.basicData[this.idx][2]},
-          //   {data: this.basicData[this.idx][4]},
+          //   {data: this.basicData[this.idx][3]},
           //   ],
         },
 
@@ -347,7 +343,7 @@ export default {
             type: this.selected,
             yAxis: 0,
             keys: ["x", "y", "id"],
-            data: this.basicData.length ? this.basicData[this.idx][0] : [],
+            data: this.basicData.length ? this.basicData[0] : [],
             visible: legendVisible.A,
             showInNavigator: true || legendVisible.A,
           },
@@ -356,7 +352,7 @@ export default {
             type: this.selected,
             yAxis: 1,
             keys: ["x", "y", "id"],
-            data: this.basicData.length ? this.basicData[this.idx][1] : [],
+            data: this.basicData.length ? this.basicData[1] : [],
             visible: legendVisible.P,
             showInNavigator: true || legendVisible.P,
           },
@@ -365,7 +361,7 @@ export default {
             type: this.selected,
             yAxis: 2,
             keys: ["x", "y", "id"],
-            data: this.basicData.length ? this.basicData[this.idx][2] : [],
+            data: this.basicData.length ? this.basicData[2] : [],
             visible: legendVisible.Q,
             showInNavigator: true || legendVisible.Q,
           },
@@ -374,7 +370,7 @@ export default {
             type: this.selected,
             yAxis: 3,
             keys: ["x", "y", "id"],
-            data: this.basicData.length ? this.basicData[this.idx][4] : [],
+            data: this.basicData.length ? this.basicData[3] : [],
             visible: legendVisible.OEE,
             showInNavigator: true || legendVisible.OEE,
           },
@@ -383,28 +379,29 @@ export default {
             type: "xrange",
             yAxis: 4,
             keys: ["x", "x2", "y", "id", "color"],
-            data: this.basicData.length ? this.basicData[this.idx][5] : [],
+            data: this.basicData.length ? this.basicData[5] : [],
           },
           {
             name: "простой",
             type: "xrange",
             yAxis: 5,
             keys: ["x", "x2", "y", "id", "color"],
-            data: this.basicData.length ? this.basicData[this.idx][6] : [],
+            data: this.basicData.length ? this.basicData[6] : [],
           },
           {
             name: "выключен",
             type: "xrange",
             yAxis: 6,
             keys: ["x", "x2", "y", "id", "color"],
-            data: this.basicData.length ? this.basicData[this.idx][7] : [],
+            data: this.basicData.length ? this.basicData[7] : [],
           },
+
           {
             name: "авария",
             type: "xrange",
             yAxis: 7,
             keys: ["x", "x2", "y", "id", "color"],
-            data: this.basicData.length ? this.basicData[this.idx][8] : [],
+            data: this.basicData.length ? this.basicData[8] : [],
           },
         ],
       };
@@ -414,27 +411,40 @@ export default {
         name: this.idx + 1,
         option: chartOption,
         A: this.basicData.length ? Number(
-          this.basicData[this.idx][0][
-          this.basicData[this.idx][0].length - 1
-            ][1] * 100
+            this.basicData[0][
+            this.basicData[0].length - 1
+                ][1] * 100
         ).toFixed() : 0,
         P: this.basicData.length ? Number(
-          this.basicData[this.idx][1][
-          this.basicData[this.idx][1].length - 1
-            ][1] * 100
+            this.basicData[1][
+            this.basicData[1].length - 1
+                ][1] * 100
         ).toFixed() : 0,
         Q: this.basicData.length ? Number(
-          this.basicData[this.idx][2][
-          this.basicData[this.idx][2].length - 1
-            ][1] * 100
+            this.basicData[2][
+            this.basicData[2].length - 1
+                ][1] * 100
         ).toFixed() : 0,
         OEE: this.basicData.length ? Number(
-          this.basicData[this.idx][4][
-          this.basicData[this.idx][4].length - 1
-            ][1] * 100
+            this.basicData[3][
+            this.basicData[3].length - 1
+                ][1] * 100
         ).toFixed() : 0,
       };
 
+      let opt = {
+        id: this.idx,
+        fist: this.getChartTime.start,
+        last: this.getChartTime.end,
+      }
+
+      let idx = parseInt(localStorage.getItem('idx'));
+      if (idx !== this.idx){
+        localStorage.setItem('idx', this.idx);
+        this.$store.dispatch('oeecharts/getTimeStatus', opt);
+        this.$store.dispatch('oeecharts/getReason', opt);
+        this.$store.dispatch('oeecharts/loadData', opt);
+      }
       return arrOptions;
     },
 
@@ -544,10 +554,10 @@ export default {
       let xPoint = {
         machineid: idxPoint,
         X: formatDate(dateX),
-        A: this.basicData[this.idx][0][e.point.index][1],
-        P: this.basicData[this.idx][1][e.point.index][1],
-        Q: this.basicData[this.idx][2][e.point.index][1],
-        OEE: this.basicData[this.idx][4][e.point.index][1],
+        A: this.basicData[0][e.point.index][1],
+        P: this.basicData[1][e.point.index][1],
+        Q: this.basicData[2][e.point.index][1],
+        OEE: this.basicData[3][e.point.index][1],
         color: "#FF0000",
         width: 1,
         id: e.point.index,

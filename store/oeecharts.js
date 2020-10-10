@@ -1,3 +1,5 @@
+const date = new Date();
+
 export default {
     namespaced: true,
 
@@ -44,9 +46,22 @@ export default {
             working: 0,
         },
 
+        loader: false,
+        chartTime: {
+            start: ((date.getTime() - (3600 * 24 * 30 * 1000)) / 1000).toFixed(),
+            end: (date.getTime() / 1000).toFixed(),
+        }
+
     }),
 
     getters: {
+        getChartTime(state) {
+            return state.chartTime;
+        },
+
+        loader(state) {
+            return state.loader;
+        },
         factories(state) {
             return state.factories;
         },
@@ -79,16 +94,37 @@ export default {
         },
 
         currentArrPoint(state) {
-            let arr = state.arrPoint.filter(item => item.machineid == state.selectChart);
+            let arr = state.arrPoint.filter(item => item.machineid === state.selectChart);
             return arr;
         },
         lengthArrPoint(state, idx) {
-            let arr = state.arrPoint.filter(item => item.machineid == state.selectChart);
+            let arr = state.arrPoint.filter(item => item.machineid === state.selectChart);
             return arr.length;
         },
 
         basicData(state) {
-            return state.basicData;
+            let arrayData = [];
+
+            if (!state.basicData.length)
+                return arrayData;
+
+            arrayData = state.basicData.map((x) => x);
+            arrayData.push(state.basicData[4].filter((item) => item[1] === "работает").map(function (item){
+                return [item[0][0], item[0][1], 1, item[1], item[2]];
+            }));
+            arrayData.push(state.basicData[4].filter((item) => item[1] === "простой").map(function (item){
+                return [item[0][0], item[0][1], 1, item[1], item[2]];
+            }));
+
+            arrayData.push(state.basicData[4].filter((item) => item[1] === "выключен").map(function (item){
+                return [item[0][0], item[0][1], 1, item[1], item[2]];
+            }));
+
+            arrayData.push(state.basicData[4].filter((item) => item[1] === "авария").map(function (item){
+                return [item[0][0], item[0][1], 1, item[1], item[2]];
+            }));
+
+            return arrayData;
         },
 
         basicOptions(state) {
@@ -105,8 +141,29 @@ export default {
     },
     mutations: {
 
+        setLoader(state, loader) {
+            state.loader = loader;
+        },
+
         setChart(state, idx) {
             state.selectChart = idx;
+        },
+
+        nextChart(state) {
+
+            if (state.selectChart < state.basicData.length - 1) {
+                state.selectChart++
+            } else {
+                state.selectChart = 0
+            }
+        },
+        prevChart(state) {
+
+            if (state.selectChart > 0) {
+                state.selectChart--
+            } else {
+                state.selectChart = state.basicData.length - 1
+            }
         },
 
         setshowCharts(state, arr) {
@@ -128,23 +185,6 @@ export default {
             });
             state.selectedshops = filterShops;
             state.activeshop = filterShops[0];
-        },
-
-        nextChart(state) {
-
-            if (state.selectChart < state.basicData.length - 1) {
-                state.selectChart++
-            } else {
-                state.selectChart = 0
-            }
-        },
-        prevChart(state) {
-
-            if (state.selectChart > 0) {
-                state.selectChart--
-            } else {
-                state.selectChart = state.basicData.length - 1
-            }
         },
         removePoint(state, point) {
             let indexPoint = state.arrPoint.findIndex(state => state.id == point.id);
@@ -179,6 +219,10 @@ export default {
 
     },
     actions: {
+
+        setLoader(store, loader) {
+            store.commit('setLoader', loader);
+        },
 
         setChart(store, idx) {
             store.commit('setChart', idx);
@@ -216,117 +260,23 @@ export default {
             let data = getBasicOptions();
             store.commit('loadBasicOptions', data);
         },
-        async getTimeStatus(store, payload) {
-
-            let data = await this.$axios.$get('http://ast.devzsg.net/api/oeecharts/get-time-status/');
+        async getTimeStatus(store, opt) {
+            let data = await this.$axios.$get(`http://185.6.25.155/api/time_status/${opt.id}/${opt.start}/${opt.end}`);
             store.commit('updateTimeStatus', data.timeStatus);
         },
-        async getReason(store, payload) {
-
-            let data = await this.$axios.$get('http://ast.devzsg.net/api/oeecharts/get-reason/');
+        async getReason(store, opt) {
+            let data = await this.$axios.$get(`http://185.6.25.155/api/top_stop_line/${opt.id}/${opt.start}/${opt.end}`);
             store.commit('updateReason', data.reason);
         },
         async loadData(store, opt) {
-            let data = await this.$axios.$get('http://ast.devzsg.net/api/oeecharts/get-basic-data/');
+            store.commit('setLoader', true);
+            let data = await this.$axios.$get(`http://185.6.25.155/api/basic_data/${opt.id}/${opt.start}/${opt.end}`);
             store.commit('loadData', data.basicData);
+            store.commit('setLoader', false);
         },
     },
     strict: process.env.NODE_ENV !== 'production'
 };
-
-// function getBasicData(opt = {
-//   fist: new Date(),
-//   last: new Date(),
-//   numPoint: 5
-// }) {
-//
-//   let arrAllData = [];
-//
-//   for (let idx = 0; idx < 3; idx++) {
-//
-//     let date = (new Date(opt.fist));
-//     let datefirst = date.setMinutes(date.getMinutes());
-//     let datelast = (new Date(opt.last));
-//     datelast = datelast.setMinutes(datelast.getMinutes() + 60 * 24 - 1);
-//     let diff = datelast - datefirst;
-//
-//     let iter = opt.numPoint;
-//     let array = new Array;
-//
-//     for (let i = datefirst; i < datelast; i += iter * 60000) {
-//       array.push(new Date(i));
-//     }
-//
-//
-//     let arrayData = [];
-//
-//     let arrayA = array.map((elem, index) => elem = [elem.getTime(), Number(Math.random().toFixed(2)), "A" + index]);
-//
-//     let arrayP = array.map((elem, index) => elem = [elem.getTime(), Number(Math.random().toFixed(2)), "P" + index]);
-//
-//     let arrayQ = array.map((elem, index) => elem = [elem.getTime(), Number(Math.random().toFixed(2)), "Q" + index]);
-//
-//     let arrayOEE = array.map((elem, index) => elem = [elem.getTime(), Number(Math.random().toFixed(2)), "OEE" + index]);
-//
-//     let arrayTempON = array.map((elem, index) => elem = [elem.getTime(), Number(Math.random().toFixed(2)), "ON" + index]);
-//
-//     let arrayON = [];
-//
-//
-//     let result = arrayTempON.map(function (item) {
-//
-//       if (item[1] <= 0.11) {
-//
-//         return [item[0], 1, "простой", '#ffdb66'];
-//       } else if (item[1] <= 0.94) {
-//
-//         return [item[0], 1, "работает", '#8ccf9c'];
-//       } else if (item[1] <= 0.98) {
-//
-//         return [item[0], 1, "выключен", '#66b0ff'];
-//       } else if (item[1] <= 1) {
-//
-//         return [item[0], 1, "авария", '#e9818a'];
-//       }
-//
-//     });
-//
-//     let tempON = result[0];
-//     let lastON = result[result.length - 1];
-//
-//
-//     result.forEach(function (item, i, arr) {
-//
-//       if (tempON[2] !== item[2]) {
-//         arrayON.push([tempON[0], item[0], tempON[1], tempON[2], tempON[3]]);
-//         tempON = item;
-//       }
-//
-//     });
-//
-//     if (tempON !== lastON) {
-//       arrayON.push([tempON[0], lastON[0], tempON[1], tempON[2], tempON[3]]);
-//     }
-//
-//     arrayData.push(arrayA);
-//     arrayData.push(arrayP);
-//     arrayData.push(arrayQ);
-//
-//     arrayData.push(arrayON);
-//     arrayData.push(arrayOEE);
-//
-//
-//     arrayData.push(arrayON.filter((item) => item[3] == "работает"));
-//     arrayData.push(arrayON.filter((item) => item[3] == "простой"));
-//     arrayData.push(arrayON.filter((item) => item[3] == "выключен"));
-//     arrayData.push(arrayON.filter((item) => item[3] == "авария"));
-//
-//     arrAllData.push(arrayData);
-//
-//   }
-//   return arrAllData;
-//
-// }
 
 function getBasicOptions() {
     let basicOptions = {
@@ -665,29 +615,4 @@ function getBasicOptions() {
     };
     return basicOptions;
 
-};
-
-function formatDate(x = nowDate) {
-    let date = new Date(x);
-    let dayOfMonth = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let hour = date.getHours();
-    let minutes = date.getMinutes();
-    let diffMs = new Date() - date;
-    let diffSec = Math.round(diffMs / 1000);
-    let diffMin = diffSec / 60;
-    let diffHour = diffMin / 60;
-
-    // форматирование
-    //year = year.toString().slice(-2);
-    month = month < 10 ? '0' + month : month;
-    dayOfMonth = dayOfMonth < 10 ? '0' + dayOfMonth : dayOfMonth;
-    hour = hour < 10 ? '0' + hour : hour;
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-
-
-    return `${dayOfMonth}.${month}.${year} ${hour}:${minutes}`
-
 }
-
