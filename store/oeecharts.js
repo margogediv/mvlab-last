@@ -47,16 +47,17 @@ export default {
         },
 
         loader: false,
-        chartTime: {
+        chartTimeOpt: {
+            idx: 0,
             start: parseInt((date.getTime() - (3600 * 8 * 1000))/1000),
             end: parseInt(date.getTime()/1000),
-        }
+        },
 
     }),
 
     getters: {
-        getChartTime(state) {
-            return state.chartTime;
+        chartTimeOpt(state) {
+            return state.chartTimeOpt;
         },
 
         loader(state) {
@@ -140,6 +141,10 @@ export default {
         },
     },
     mutations: {
+
+        setChartTimeOpt(state) {
+            return state.chartTimeOpt;
+        },
 
         setLoader(state, loader) {
             state.loader = loader;
@@ -235,6 +240,10 @@ export default {
     },
     actions: {
 
+        setChartTimeOpt(store, opt) {
+            store.commit('setChartTimeOpt', opt);
+        },
+
         setLoader(store, loader) {
             store.commit('setLoader', loader);
         },
@@ -276,16 +285,16 @@ export default {
             store.commit('loadBasicOptions', data);
         },
         async getTimeStatus(store, opt) {
-            let data = await this.$axios.$get(`/api/time_status/${opt.id}/${opt.start}/${opt.end}`);
+            let data = await this.$axios.$get(`/api/time_status/${opt.idx}/${opt.start}/${opt.end}`);
             store.commit('updateTimeStatus', data.timeStatus);
         },
         async getReason(store, opt) {
-            let data = await this.$axios.$get(`/api/top_stop_line/${opt.id}/${opt.start}/${opt.end}`);
+            let data = await this.$axios.$get(`/api/top_stop_line/${opt.idx}/${opt.start}/${opt.end}`);
             store.commit('updateReason', data.reason);
         },
         async loadData(store, opt) {
             store.commit('setLoader', true);
-            let data = await this.$axios.$get(`/api/basic_data/${opt.id}/${opt.start}/${opt.end}`);
+            let data = await this.$axios.$get(`/api/basic_data/${opt.idx}/${opt.start}/${opt.end}`);
             store.commit('loadData', data.basicData);
             store.commit('setLoader', false);
         },

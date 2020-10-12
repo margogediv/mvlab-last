@@ -131,9 +131,10 @@
       <!-- Таблица -->
     </div>
     <!-- График -->
-    <VchartBox v-show="isVchartBoxVisible" @changeShow="closeVchartBoxVisible" :content="content"></VchartBox>
+    <VchartBox v-show="isVchartBoxVisible" @changeShow="closeVchartBoxVisible" :content="content"
+               :key="idx"></VchartBox>
 
-<!--    Loader-->
+    <!--    Loader-->
     <Loader v-if="loader"/>
   </div>
 </template>
@@ -163,14 +164,9 @@ export default {
     this.setActiveTabHeader("OEE");
     this.setActiveTabSidebar("Online");
 
-    let opt = {
-      id: this.idx,
-      start: this.getChartTime.start,
-      end: this.getChartTime.end,
-    }
-    this.$store.dispatch('oeecharts/getTimeStatus', opt);
-    this.$store.dispatch('oeecharts/getReason', opt);
-    this.$store.dispatch('oeecharts/loadData', opt);
+    this.$store.dispatch('oeecharts/getTimeStatus', this.chartTimeOpt);
+    this.$store.dispatch('oeecharts/getReason', this.chartTimeOpt);
+    this.$store.dispatch('oeecharts/loadData', this.chartTimeOpt);
     localStorage.setItem('idx', this.idx);
   },
 
@@ -204,7 +200,7 @@ export default {
       reason: "reason",
       timeStatus: "timeStatus",
       loader: "loader",
-      getChartTime: "getChartTime",
+      chartTimeOpt: "chartTimeOpt",
     }),
 
     dataHead() {
@@ -249,8 +245,9 @@ export default {
 
     content: function () {
       return {
-        fist: this.getChartTime.start,
-        last: this.getChartTime.end,
+        id: this.chartTimeOpt.idx,
+        fist: this.chartTimeOpt.start,
+        last: this.chartTimeOpt.end,
         title: "Настройка отображения графиков",
         btnLeft: "Экспорт",
         btnRight: "Обновить",
@@ -432,18 +429,13 @@ export default {
         ).toFixed() : 0,
       };
 
-      let opt = {
-        id: this.idx,
-        start: this.getChartTime.start,
-        end: this.getChartTime.end,
-      }
 
       let idx = parseInt(localStorage.getItem('idx'));
-      if (idx !== this.idx){
+      if (idx !== this.idx) {
         localStorage.setItem('idx', this.idx);
-        this.$store.dispatch('oeecharts/getTimeStatus', opt);
-        this.$store.dispatch('oeecharts/getReason', opt);
-        this.$store.dispatch('oeecharts/loadData', opt);
+        this.$store.dispatch('oeecharts/getTimeStatus', this.chartTimeOpt);
+        this.$store.dispatch('oeecharts/getReason', this.chartTimeOpt);
+        this.$store.dispatch('oeecharts/loadData', this.chartTimeOpt);
       }
       return arrOptions;
     },
@@ -531,10 +523,11 @@ export default {
 
       // active
       let opt = {
-        id: this.idx,
-        start: this.getChartTime.start,
-        end: this.getChartTime.start + sel.period * 3600,
+        idx: this.idx,
+        start: this.chartTimeOpt.start,
+        end: this.chartTimeOpt.start + sel.period * 3600,
       }
+      this.$store.dispatch('oeecharts/setChartTimeOpt', opt);
       this.$store.dispatch('oeecharts/getTimeStatus', opt);
       this.$store.dispatch('oeecharts/getReason', opt);
       this.$store.dispatch('oeecharts/loadData', opt);
