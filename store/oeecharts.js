@@ -203,6 +203,21 @@ export default {
             state.basicData = [];
         },
         loadData(state, data) {
+            data.map((el,index) => {
+                if(index < 4) {
+                    el.map((item) => {
+                        item[0] *= 1000;
+                        return item;
+                    })
+                } else if(index === 4) {
+                    el.map((item) => {
+                        item[0][0] *= 1000;
+                        item[0][1] *= 1000;
+                        return item;
+                    })
+                }
+                return el;
+            });
             state.basicData = data;
         },
         loadBasicOptions(state, data) {
@@ -261,16 +276,16 @@ export default {
             store.commit('loadBasicOptions', data);
         },
         async getTimeStatus(store, opt) {
-            let data = await this.$axios.$get(`http://185.6.25.155/api/time_status/${opt.id}/${opt.start}/${opt.end}`);
+            let data = await this.$axios.$get(`/api/time_status/${opt.id}/${opt.start}/${opt.end}`);
             store.commit('updateTimeStatus', data.timeStatus);
         },
         async getReason(store, opt) {
-            let data = await this.$axios.$get(`http://185.6.25.155/api/top_stop_line/${opt.id}/${opt.start}/${opt.end}`);
+            let data = await this.$axios.$get(`/api/top_stop_line/${opt.id}/${opt.start}/${opt.end}`);
             store.commit('updateReason', data.reason);
         },
         async loadData(store, opt) {
             store.commit('setLoader', true);
-            let data = await this.$axios.$get(`http://185.6.25.155/api/basic_data/${opt.id}/${opt.start}/${opt.end}`);
+            let data = await this.$axios.$get(`/api/basic_data/${opt.id}/${opt.start}/${opt.end}`);
             store.commit('loadData', data.basicData);
             store.commit('setLoader', false);
         },

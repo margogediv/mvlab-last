@@ -184,10 +184,10 @@ export default {
     return {
       isVchartBoxVisible: false,
 
-      range: (5040 * 3600),
+      range: (8 * 3600 * 1000),
 
-      periodActive: [false, false, false, false, true],
-      cntPoint: 5,
+      periodActive: [false, true, false, false, false],
+      // cntPoint: 5,
       selected: "spline",
       typeChart: [{value: "area"}, {value: "column"}, {value: "line"}],
     };

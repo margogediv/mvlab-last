@@ -66,11 +66,12 @@ export default {
     'nuxt-webfontloader'
   ],
   axios: {
-    proxy: true
+    baseURL: 'http://185.6.25.155',
+    proxy: false
   },
 
   proxy: {
-    '/api/': 'http://ast.devzsg.net/api/',
+    '/api/': '',
   },
 
   webfontloader: {
