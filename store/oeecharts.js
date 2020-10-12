@@ -48,8 +48,8 @@ export default {
 
         loader: false,
         chartTime: {
-            start: ((date.getTime() - (3600 * 24 * 30 * 1000)) / 1000).toFixed(),
-            end: (date.getTime() / 1000).toFixed(),
+            start: parseInt((date.getTime() - (3600 * 8 * 1000))/1000),
+            end: parseInt(date.getTime()/1000),
         }
 
     }),

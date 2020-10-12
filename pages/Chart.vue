@@ -434,8 +434,8 @@ export default {
 
       let opt = {
         id: this.idx,
-        fist: this.getChartTime.start,
-        last: this.getChartTime.end,
+        start: this.getChartTime.start,
+        end: this.getChartTime.end,
       }
 
       let idx = parseInt(localStorage.getItem('idx'));
@@ -530,6 +530,14 @@ export default {
       this.periodActive.splice(sel.id, 1, true);
 
       // active
+      let opt = {
+        id: this.idx,
+        start: this.getChartTime.start,
+        end: this.getChartTime.start + sel.period * 3600,
+      }
+      this.$store.dispatch('oeecharts/getTimeStatus', opt);
+      this.$store.dispatch('oeecharts/getReason', opt);
+      this.$store.dispatch('oeecharts/loadData', opt);
     },
 
     showVchartBoxVisible() {
