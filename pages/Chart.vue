@@ -407,17 +407,17 @@ export default {
         id: this.idx,
         name: this.idx + 1,
         option: chartOption,
-        A: this.basicData.length ? Number(
+        A: (this.basicData.length && this.basicData[0].length) ? Number(
             this.basicData[0][
             this.basicData[0].length - 1
                 ][1] * 100
         ).toFixed() : 0,
-        P: this.basicData.length ? Number(
+        P: (this.basicData.length && this.basicData[1].length) ? Number(
             this.basicData[1][
             this.basicData[1].length - 1
                 ][1] * 100
         ).toFixed() : 0,
-        Q: this.basicData.length ? Number(
+        Q: (this.basicData.length && this.basicData[2].length) ? Number(
             this.basicData[2][
             this.basicData[2].length - 1
                 ][1] * 100
