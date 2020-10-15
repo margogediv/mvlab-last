@@ -321,7 +321,7 @@ export default {
         chart: this.basicOptions.chart,
 
         navigator: {
-          adaptToUpdatedData: false,
+          adaptToUpdatedData: true,
           series: [
             {data: this.basicData[3]},
           ],
@@ -461,7 +461,7 @@ export default {
         chart: this.basicOptions.chart,
 
         navigator: {
-          adaptToUpdatedData: false,
+          adaptToUpdatedData: true,
           series: [
             {data: this.basicData[0]},
           ],
@@ -572,7 +572,7 @@ export default {
         chart: this.basicOptions.chart,
 
         navigator: {
-          adaptToUpdatedData: false,
+          adaptToUpdatedData: true,
           series: [
             {data: this.basicData[1]},
           ],
@@ -683,7 +683,7 @@ export default {
         chart: this.basicOptions.chart,
 
         navigator: {
-          adaptToUpdatedData: false,
+          adaptToUpdatedData: true,
           series: [
             {data: this.basicData[2]},
           ],
@@ -794,7 +794,7 @@ export default {
         chart: this.basicOptions.chart,
 
         navigator: {
-          adaptToUpdatedData: false,
+          adaptToUpdatedData: true,
           series: [
             {data: this.basicData[3]},
           ],
