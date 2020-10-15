@@ -2,42 +2,42 @@
   <div class="overlay" v-on:click="$emit('changeShow')">
     <div class="settings-charts" v-on:click.stop="noChange">
 
-      <div class="tabhead" >
-      <button class="btn_icon">
-        <img v-on:click="$emit('changeShow')" src="../assets/svg/clear_24px.svg" alt />
-        <div class="tabhead_title">{{content.title}}</div>
-      </button>
+      <div class="tabhead">
+        <button class="btn_icon">
+          <img v-on:click="$emit('changeShow')" src="../assets/svg/clear_24px.svg" alt/>
+          <div class="tabhead_title">{{ content.title }}</div>
+        </button>
       </div>
 
-      
-      
+
       <div class="switchBox">
-        <div class="switchOn" v-on:click="toggleSwitchOn">{{content.selectLeft}}</div>
+        <div class="switchOn" v-on:click="toggleSwitchOn">{{ content.selectLeft }}</div>
         <div class="switchcheck" v-on:click="toggleSwitch">
-          
-          <IconifyIcon icon="baselineToggleOff" :style="{color: '#3F51B5', fontSize: '24px'}" v-if="ShowSwitchOn"/>
-          <IconifyIcon icon="baselineToggleOff" :style="{color: '#3F51B5', fontSize: '24px'}" :horizontal-flip="true" v-else />
-           
-          
+
+          <IconifyIcon icon="baselineToggleOff" :style="{color: '#3F51B5', fontSize: '24px'}" v-if="isChartOne"/>
+          <IconifyIcon icon="baselineToggleOff" :style="{color: '#3F51B5', fontSize: '24px'}" :horizontal-flip="true"
+                       v-else/>
+
+
         </div>
-        <div class="switchOff" v-on:click="toggleSwitchOff">{{content.selectRight}}</div>
+        <div class="switchOff" v-on:click="toggleSwitchOff">{{ content.selectRight }}</div>
       </div>
 
       <div class="select-date-title">Задать период времени</div>
       <div class="select-date">
-        <input type="datetime-local" :value="content.fist" />
+        <input type="datetime-local" v-model="start"/>
 
         <label>-</label>
         <!--<span>{{fistDate}}</span>-->
 
-        <input type="datetime-local" :value="content.last" />
+        <input type="datetime-local" v-model="end"/>
       </div>
       <div class="tabfoot">
         <button class="tabfoot-left btn_icon">
-          <div class="tabfoot_title">{{content.btnLeft}}</div>
+          <div class="tabfoot_title">{{ content.btnLeft }}</div>
         </button>
-        <button class="tabfoot-right btn_icon" @click="loadData(opt)">
-          <div class="tabfoot_title">{{content.btnRight}}</div>
+        <button class="tabfoot-right btn_icon" @click="loadData()">
+          <div class="tabfoot_title">{{ content.btnRight }}</div>
         </button>
       </div>
     </div>
@@ -45,31 +45,58 @@
 </template>
 
 <script>
-import { Date } from 'highcharts'
-export default {
-      props:{
-        content: Object,
-      },
-      data() {
-        return {
-          ShowSwitchOn: true,
-        }
-      },
-      methods:{
-        toggleSwitchOn(){
-          this.ShowSwitchOn = true
-        },
-        toggleSwitch(){
-          this.ShowSwitchOn = !this.ShowSwitchOn
-        },
-        toggleSwitchOff(){
-          this.ShowSwitchOn = false
-        },
-        noChange() {
-      1 + 1;
-    },
+import {mapActions, mapGetters} from "vuex";
 
-}}
+const nowDate = new Date();
+const nowDateTime = nowDate.toLocaleTimeString();
+export default {
+  props: {
+    content: Object,
+  },
+  data() {
+    return {
+      ShowSwitchOn: true,
+      start: nowDate.toISOString().substr(0, 10) + "T" + nowDateTime,
+      end: nowDate.toISOString().substr(0, 10) + "T" + nowDateTime,
+    }
+  },
+  computed: {
+    ...mapGetters("oeecharts", {
+      isChartOne: "isChartOne",
+    }),
+  },
+  methods: {
+    ...mapActions("oeecharts", {
+      getBasicData: "getBasicData",
+      getTimeStatus: "getTimeStatus",
+      getReason: "getReason",
+      getTableOEE: "getTableOEE",
+      updateIsChartOne: "updateIsChartOne",
+    }),
+    toggleSwitchOn() {
+      this.updateIsChartOne(true)
+    },
+    toggleSwitch() {
+      this.updateIsChartOne(!this.isChartOne)
+    },
+    toggleSwitchOff() {
+      this.updateIsChartOne(false)
+    },
+    noChange() {
+      console.log("change");
+    },
+    loadData() {
+      this.content.opt.smena = 0;
+      this.content.opt.start = parseInt(new Date(this.start).getTime()/1000);
+      this.content.opt.end = parseInt(new Date(this.end).getTime()/1000);
+      this.getTimeStatus(this.content.opt);
+      this.getReason(this.content.opt);
+      this.getBasicData(this.content.opt);
+      this.getTableOEE(this.content.opt);
+    }
+
+  }
+}
 </script>
 
 <style scoped>
@@ -109,6 +136,7 @@ export default {
   justify-content: baseline;
   outline: none;
 }
+
 .tabhead_title {
   font-weight: 500;
   font-size: 18px;
@@ -140,16 +168,17 @@ export default {
 
 }
 
-.select-date input{
+.select-date input {
   height: 24px;
   padding-left: 3px;
   outline: none;
   font-weight: normal;
-font-size: 12px;
-line-height: 15px;
-color: #9098AF;
-border: 1px solid #9098AF;
-border-radius: 4px;}
+  font-size: 12px;
+  line-height: 15px;
+  color: #9098AF;
+  border: 1px solid #9098AF;
+  border-radius: 4px;
+}
 
 .select-date-title {
   height: 24px;
@@ -160,7 +189,6 @@ border-radius: 4px;}
   line-height: 15px;
   text-align: left;
 }
-
 
 
 .switchBox {
@@ -174,6 +202,7 @@ border-radius: 4px;}
   justify-content: flex-start;
   align-items: center;
 }
+
 .switchcheck {
   cursor: pointer;
   padding: 0 6px;
@@ -181,10 +210,11 @@ border-radius: 4px;}
   height: 24px;
 }
 
-.switchOn{
+.switchOn {
   padding-left: 12px;
 }
-.switchOff{
+
+.switchOff {
   padding-left: 12px;
 }
 
@@ -209,6 +239,7 @@ border-radius: 4px;}
   width: 233px;
   height: 36px;
 }
+
 .tabfoot button:hover {
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
 }
@@ -216,12 +247,15 @@ border-radius: 4px;}
 .tabfoot-left {
   background-color: hsl(211, 100%, 90%);
 }
+
 .tabfoot-left:hover {
   background-color: hsl(211, 100%, 87%);
 }
+
 .tabfoot-right {
   background-color: hsl(134, 41%, 88%);
 }
+
 .tabfoot-right:hover {
   background-color: hsl(134, 41%, 85%);
 }

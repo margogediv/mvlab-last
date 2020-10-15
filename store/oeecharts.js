@@ -55,10 +55,15 @@ export default {
         },
 
         loader: false,
+        isChartOne: true,
 
     }),
 
     getters: {
+
+        isChartOne(state) {
+            return state.isChartOne;
+        },
 
         tableOEE(state) {
             return state.tableOEE;
@@ -245,6 +250,9 @@ export default {
         updateReason(state, payload) {
             state.reason = payload;
         },
+        setIsChartOne(state, payload) {
+            state.isChartOne = payload;
+        }
 
     },
     actions: {
@@ -314,6 +322,9 @@ export default {
         async getTableOEE(store, opt) {
             let data = await this.$axios.$get(`/api/table_oee/${opt.idx}/${opt.start}/${opt.end}/${opt.smena}`);
             store.commit('setTableOEE', data);
+        },
+        updateIsChartOne(store,isChartOne) {
+            store.commit('setIsChartOne', isChartOne);
         }
     },
     strict: process.env.NODE_ENV !== 'production'
@@ -332,7 +343,7 @@ function getBasicOptions() {
             text: "OEE"
         },
         chart: {
-            zoomType: 'x'
+            zoomType: 'xy'
         },
 
         legend: {
