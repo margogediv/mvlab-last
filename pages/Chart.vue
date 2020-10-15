@@ -149,7 +149,8 @@ import Loader from "@/components/Loader";
 
 import Highcharts from "highcharts";
 
-var nowDate = new Date();
+const nowDate = new Date();
+const nowDateTime = nowDate.getTime() + nowDate.getTimezoneOffset()*60*1000;
 let legendVisible = {
   A: false,
   P: false,
@@ -171,6 +172,13 @@ export default {
     this.getTimeStatus(this.opt);
     this.getReason(this.opt);
     this.getBasicData(this.opt);
+    this.getTableOEE(this.opt);
+
+    Highcharts.setOptions({
+        global: {
+            timezoneOffset: -3 * 60,
+        }
+    });
   },
 
   components: {
@@ -188,10 +196,11 @@ export default {
       selected: "spline",
       typeChart: [{value: "area"}, {value: "column"}, {value: "line"}],
       opt: {
+        smena: 1,
         idx: this.idx ? this.idx : 0,
         chart: 'OEE',
-        start: parseInt((nowDate.getTime() + nowDate.getTimezoneOffset()*60*1000 - range) / 1000),
-        end: parseInt((nowDate.getTime() + nowDate.getTimezoneOffset()*60*1000)/ 1000),
+        start: parseInt((nowDateTime - range) / 1000),
+        end: parseInt(nowDateTime/ 1000),
       },
     };
   },
@@ -207,6 +216,7 @@ export default {
       reason: "reason",
       timeStatus: "timeStatus",
       loader: "loader",
+      tableOEE: "tableOEE",
     }),
 
     timeStatusOut() {
@@ -274,7 +284,6 @@ export default {
     chartOptions() {
       let arrOptions = {};
       let chartOption;
-      var vm = this;
       chartOption = {
         chart: this.basicOptions.chart,
 
@@ -335,7 +344,6 @@ export default {
             events: {
               legendItemClick: function (e) {
                 legendVisible[this.name] = !this.visible;
-                console.log(this.name);
               },
             },
 
@@ -423,26 +431,10 @@ export default {
         id: this.idx,
         name: this.idx + 1,
         option: chartOption,
-        A: (this.basicData.length && this.basicData[0].length) ? Number(
-            this.basicData[0][
-            this.basicData[0].length - 1
-                ][1] * 100
-        ).toFixed() : 0,
-        P: (this.basicData.length && this.basicData[1].length) ? Number(
-            this.basicData[1][
-            this.basicData[1].length - 1
-                ][1] * 100
-        ).toFixed() : 0,
-        Q: (this.basicData.length && this.basicData[2].length) ? Number(
-            this.basicData[2][
-            this.basicData[2].length - 1
-                ][1] * 100
-        ).toFixed() : 0,
-        OEE: this.basicData.length ? Number(
-            this.basicData[3][
-            this.basicData[3].length - 1
-                ][1] * 100
-        ).toFixed() : 0,
+        A: (this.tableOEE.A * 100).toFixed(),
+        P: (this.tableOEE.P * 100).toFixed(),
+        Q: (this.tableOEE.Q * 100).toFixed(),
+        OEE: (this.tableOEE.OEE * 100).toFixed(),
       };
 
 
@@ -535,6 +527,7 @@ export default {
       getReason: "getReason",
       loadBasicOptions: "loadBasicOptions",
       getBasicDataAPQ: "getBasicDataAPQ",
+      getTableOEE: "getTableOEE",
     }),
     ...mapActions("users", {
       setActiveTabHeader: "setActiveTabHeader",
@@ -542,12 +535,15 @@ export default {
     }),
 
     setRange(sel) {
-      this.range = 0;
       this.range = sel.period * 1000 * 3600;
       this.periodActive = this.periodActive.map((item) => false);
       this.periodActive.splice(sel.id, 1, true);
 
       this.opt.start = this.opt.end - sel.period * 3600;
+      if(sel.period === 8)
+        this.opt.smena = 1;
+      else
+        this.opt.smena = 0;
       this.getTimeStatus(this.opt);
       this.getReason(this.opt);
       this.getBasicData(this.opt);
@@ -567,7 +563,7 @@ export default {
     changeLastData(val) {
       //this.lastDate =formatDate(val);
     },
-
+/////////////////
     sendPoint(e) {
       let dateX = new Date(e.point.x);
       dateX.getTimezoneOffset();
