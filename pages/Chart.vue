@@ -1094,8 +1094,8 @@ function formatTime(time) {
 </script>
 
 <style scoped>
-html {
 
+html {
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
   Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 18px;
