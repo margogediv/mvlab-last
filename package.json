@@ -30,6 +30,9 @@
     "@iconify/icons-mdi": "^1.0.126",
     "@iconify/icons-ps": "^1.0.3",
     "@iconify/icons-ri": "^1.0.1",
-    "@iconify/vue": "^1.0.2"
+    "@iconify/vue": "^1.0.2",
+    "node-sass": "^4.14.1",
+    "sass-loader": "^10.0.3",
+    "style-loader": "^2.0.0"
   }
 }

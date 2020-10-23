@@ -93,16 +93,204 @@
     </section>
     <section class="charts">
       <div class="block-1">
-        <div class="chart first"></div>
-        <div class="chart second"></div>
+        <div class="chart first">
+          <div class="chart-header">
+            <div class="title">Продолжительность работы,ч</div>
+            <div class="bul">...</div>
+          </div>
+          <div class="chart-content"></div>
+          <div class="chart-footer">
+            <div class="title">Общее рабочее время за день</div>
+            <div class="view">23</div>
+          </div>
+        </div>
+        <div class="chart second">
+          <div class="chart-header">
+            <div class="title">Остатки на складе</div>
+            <div class="bul">...</div>
+          </div>
+          <div class="chart-content"></div>
+          <div class="chart-footer">
+            <div class="title">Итого - ISO: <b>100л</b>; POL: <b>100л</b>; PEN: <b>100л</b></div>
+          </div>
+        </div>
       </div>
       <div class="block-2">
-        <div class="chart-data panel-release"></div>
-        <div class="chart-data total-consumption"></div>
+        <div class="chart-data panel-release">
+          <div class="chart-header">
+            <div class="title">Выпуск панелей</div>
+            <div class="period">
+              <button class="text">месяц</button>
+              <button class="text">сутки</button>
+              <button class="text">смена</button>
+              <button class="num">1</button>
+              <button class="num">2</button>
+              <button class="num">3</button>
+            </div>
+            <div class="bul">...</div>
+          </div>
+        </div>
+        <div class="chart-data consumption">
+          <div class="chart-header">
+            <div class="title">Сумарный расход</div>
+            <div class="period">
+              <button class="text">месяц</button>
+              <button class="text">сутки</button>
+              <button class="text">смена</button>
+              <button class="num">1</button>
+              <button class="num">2</button>
+              <button class="num">3</button>
+            </div>
+            <div class="bul">...</div>
+          </div>
+          <div class="chart-content">
+            <div class="item">
+              <div class="data">
+                <div class="quantity">400</div>
+                <div class="subtitle">Изоцианат, л</div>
+              </div>
+              <div class="icon">
+                <div class="circle" style="background: #2D9AD8">ISO</div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="data">
+                <div class="quantity">250</div>
+                <div class="subtitle">Полиол, л</div>
+              </div>
+              <div class="icon">
+                <div class="circle" style="background: #FC7A7A">POL</div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="data">
+                <div class="quantity">100</div>
+                <div class="subtitle">Пентан, л</div>
+              </div>
+              <div class="icon">
+                <div class="circle" style="background: #4BBEAA">PEN</div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="data">
+                <div class="quantity">24</div>
+                <div class="subtitle">Катализатор1, л</div>
+              </div>
+              <div class="icon">
+                <div class="circle" style="background: #2D9AD8">K1</div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="data">
+                <div class="quantity">10</div>
+                <div class="subtitle">Катализатор2, л</div>
+              </div>
+              <div class="icon">
+                <div class="circle" style="background: #FC7A7A">K2</div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="data">
+                <div class="quantity">5</div>
+                <div class="subtitle">Катализатор3, л</div>
+              </div>
+              <div class="icon">
+                <div class="circle" style="background: #4BBEAA">K3</div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="chart-data-min energy-consumption"></div>
       </div>
       <div class="block-3">
-        <div class="chart-data specific-consumption"></div>
+        <div class="chart-data consumption">
+          <div class="chart-header">
+            <div class="title">Удельный расход на км</div>
+            <div class="period">
+              <button class="text">месяц</button>
+              <button class="text">сутки</button>
+              <button class="text">смена</button>
+              <button class="num">1</button>
+              <button class="num">2</button>
+              <button class="num">3</button>
+            </div>
+            <div class="bul">...</div>
+          </div>
+          <div class="chart-content">
+            <div class="item">
+              <div class="data">
+                <div class="quantity">5,5</div>
+                <div class="subtitle">Изоцианат, л</div>
+              </div>
+              <div class="icon">
+                <div class="circle" style="background: #2D9AD8">
+                  <div class="title">ISO</div>
+                  <div class="subtitle">km</div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="data">
+                <div class="quantity">3,2</div>
+                <div class="subtitle">Полиол, л</div>
+              </div>
+              <div class="icon">
+                <div class="circle" style="background: #FC7A7A">
+                  <div class="title">POL</div>
+                  <div class="subtitle">km</div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="data">
+                <div class="quantity">1,3</div>
+                <div class="subtitle">Пентан, л</div>
+              </div>
+              <div class="icon">
+                <div class="circle" style="background: #4BBEAA">
+                  <div class="title">PEN</div>
+                  <div class="subtitle">km</div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="data">
+                <div class="quantity">0,8</div>
+                <div class="subtitle">Катализатор1, л</div>
+              </div>
+              <div class="icon">
+                <div class="circle" style="background: #2D9AD8">
+                  <div class="title">K1</div>
+                  <div class="subtitle">km</div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="data">
+                <div class="quantity">3,5</div>
+                <div class="subtitle">Катализатор2, л</div>
+              </div>
+              <div class="icon">
+                <div class="circle" style="background: #FC7A7A">
+                  <div class="title">K2</div>
+                  <div class="subtitle">km</div>
+                </div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="data">
+                <div class="quantity">2,1</div>
+                <div class="subtitle">Катализатор3, л</div>
+              </div>
+              <div class="icon">
+                <div class="circle" style="background: #4BBEAA">
+                  <div class="title">K3</div>
+                  <div class="subtitle">km</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="chart-data comparison-module"></div>
       </div>
     </section>
@@ -129,7 +317,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .calender {
   width: 100%;
@@ -139,73 +327,73 @@ export default {
   justify-content: center;
   align-items: center;
   padding: 24px 121px;
-}
 
-.calender::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  width: 40px;
-  height: 40px;
-  /*background-image: url("/_nuxt/assets/img/arrow_prew.png");*/
-  /*background-position: center;*/
-  /*background-repeat: no-repeat;*/
-  /*background-size: cover;*/
-}
+  .day {
+    height: 80px;
+    width: 56px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 9px 12px;
+    background: #FFFFFF;
+    border: 2px solid #ECEDF4;
+    border-radius: 11px;
+    margin-right: 12px;
+    margin-bottom: 6px;
 
-.day {
-  height: 80px;
-  width: 56px;
-  padding: 9px 12px;
-  background: #FFFFFF;
-  border: 2px solid #ECEDF4;
-  border-radius: 11px;
-  margin-right: 12px;
-  margin-bottom: 6px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+    .title {
+      font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      text-align: center;
+      color: #B1B1BC;
+      margin-bottom: 7px;
+    }
 
-.title {
-  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-  Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  text-align: center;
-  color: #B1B1BC;
-  margin-bottom: 7px;
-}
+    .number {
+      font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 24px;
+      font-weight: 500;
+      text-align: center;
+      color: #42435F;
+    }
 
-.number {
-  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-  Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 24px;
-  font-weight: 500;
-  text-align: center;
-  color: #42435F;
-}
+    &.new {
+      border: 2px solid #3F51B5;
+      margin-right: 0;
+    }
 
-.new {
-  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-  Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  text-align: center;
-  color: #42435F;
-  text-transform: uppercase;
-}
+    &.active {
+      background: #272848;
+      border-radius: 11px;
+      color: #BFC0C9;
+    }
+  }
 
-.day.new {
-  border: 2px solid #3F51B5;
-  margin-right: 0;
-}
+  .new {
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: center;
+    color: #42435F;
+    text-transform: uppercase;
+  }
 
-.active {
-  background: #272848;
-  border-radius: 11px;
-  color: #BFC0C9;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 40px;
+    height: 40px;
+    /*background-image: url("/_nuxt/assets/img/arrow_prew.png");*/
+    /*background-position: center;*/
+    /*background-repeat: no-repeat;*/
+    /*background-size: cover;*/
+  }
 }
 
 .charts {
@@ -214,16 +402,210 @@ export default {
   flex-direction: row;
   flex-wrap: wrap;
   padding: 0 36px 52px;
+
+  .block-1 {
+    width: 280px;
+    margin-right: 36px;
+
+      .chart.first {
+        height: 320px;
+        margin-bottom: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .chart.second {
+        height: 354px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+    }
+
+  .block-2 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-right: 48px;
+
+    .consumption {
+      .chart-content {
+        padding: 0 12px;
+        display: flex;
+        flex-wrap: wrap;
+
+        .item {
+          width: 192px;
+          height: 92px;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          padding-bottom: 6px;
+          padding-right: 6px;
+          padding-left: 12px;
+          border: 2px solid #ECEDF4;
+          box-sizing: border-box;
+          border-radius: 12px;
+          margin-right: 12px;
+          margin-top: 11px;
+
+          .data {
+            width: 116px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-right: 6px;
+            margin-top: 6px;
+            .quantity {
+              font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+              Roboto, "Helvetica Neue", Arial, sans-serif;
+              font-weight: 500;
+              font-size: 48px;
+              color: #000000;
+            }
+            .subtitle {
+              width: 100%;
+              font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+              Roboto, "Helvetica Neue", Arial, sans-serif;
+              font-weight: 500;
+              font-size: 12px;
+              color: #B1B1BC;
+            }
+          }
+          .icon {
+            font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+            Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            color: #FFFFFF;
+
+            .circle {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+
+          }
+
+          &:nth-child(3n) {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+
+    .chart-data-min {
+      width: 628px;
+      height: 139px;
+      border: 2px solid #E9E9E9;
+      border-radius: 9px;
+    }
+  }
+
+  .block-3 {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-right: 48px;
+
+    .consumption {
+      .chart-content {
+        padding: 0 12px;
+        display: flex;
+        flex-wrap: wrap;
+
+        .item {
+          width: 192px;
+          height: 92px;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          padding-bottom: 6px;
+          padding-right: 6px;
+          padding-left: 12px;
+          border: 2px solid #ECEDF4;
+          box-sizing: border-box;
+          border-radius: 12px;
+          margin-right: 12px;
+          margin-top: 11px;
+
+          .data {
+            width: 116px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-right: 6px;
+            margin-top: 6px;
+            .quantity {
+              font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+              Roboto, "Helvetica Neue", Arial, sans-serif;
+              font-weight: 500;
+              font-size: 48px;
+              color: #000000;
+            }
+            .subtitle {
+              width: 100%;
+              font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+              Roboto, "Helvetica Neue", Arial, sans-serif;
+              font-weight: 500;
+              font-size: 12px;
+              color: #B1B1BC;
+            }
+          }
+          .icon {
+            .circle {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+
+              .title {
+                font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+                Roboto, "Helvetica Neue", Arial, sans-serif;
+                font-weight: 500;
+                font-size: 16px;
+                color: #FFFFFF;
+                text-align: center;
+              }
+
+              .subtitle {
+                font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+                Roboto, "Helvetica Neue", Arial, sans-serif;
+                font-weight: 500;
+                font-size: 12px;
+                color: #FFFFFF;
+                text-align: center;
+              }
+            }
+
+          }
+
+          &:nth-child(3n) {
+            margin-right: 0;
+          }
+        }
+      }
+    }
+  }
 }
 
-.block-1 {
-  width: 280px;
-  margin-right: 36px;
-  /*display: flex;*/
-  /*flex-wrap: wrap;*/
-  /*justify-content: center;*/
-  /*align-items: center;*/
-  /*flex-direction: column;*/
+.chart-data {
+  width: 628px;
+  height: 246px;
+  border: 2px solid #E9E9E9;
+  border-radius: 9px;
+  margin-bottom: 37px;
 }
 
 .chart {
@@ -232,63 +614,108 @@ export default {
   border-radius: 9px;
 }
 
-.chart.first {
-  height: 320px;
-  margin-bottom: 24px;
-}
-
-.chart.second {
-  height: 354px;
-}
-
-.block-2 {
+.chart-header {
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  margin-right: 48px;
-}
-
-.chart-data {
-  width: 624px;
-  height: 242px;
-  border: 2px solid #E9E9E9;
-  border-radius: 9px;
-  margin-bottom: 37px;
-}
-
-.chart-data-min {
-  width: 624px;
-  height: 139px;
-  border: 2px solid #E9E9E9;
-  border-radius: 9px;
-}
-
-main{
-  width: 100%;
-  height: 100%;
-}
-.btn-rnd {
-  width: 60px;
-  height: 60px;
-  border: none;
-  border-radius: 30px;
-  background-color: hsl(160, 98%, 39%);
-  outline: none;
-  color: #fff;
-  font-weight: 500;
-  font-size: 66.4615px;
-  line-height: 81px;
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  text-transform: uppercase;
+  border-bottom: 1px solid #E9E9E9;
+  padding: 2px 12px;
 
-  position: absolute;
-  bottom: 48px;
-  right: 48px ;
+  .title {
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: center;
+    color: #000000;
+  }
+
+  .period {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 20px;
+      padding: 4px 6px;
+      background: #FFFFFF;
+      border: 1px solid #ECEDF4;
+      box-sizing: border-box;
+      border-radius: 3px;
+      font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-weight: 500;
+      font-size: 12px;
+      color: #42435F;
+      margin-right: 12px;
+    }
+
+    .text {
+      width: 52px;
+    }
+
+    .num {
+      width: 40px;
+    }
+
+    button:last-child {
+      margin-right: 0;
+    }
+  }
 }
-.btn-rnd:hover{
-  background-color: hsl(160, 98%, 36%);
+
+.chart-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #E9E9E9;
+  padding: 2px 24px 0;
+
+  .title {
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 10px;
+    color: #3F51B5;
+  }
+
+  .view {
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: bold;
+    font-size: 10px;
+    color: #3F51B5;
+  }
 }
+
+/*main{*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*}*/
+/*.btn-rnd {*/
+/*  width: 60px;*/
+/*  height: 60px;*/
+/*  border: none;*/
+/*  border-radius: 30px;*/
+/*  background-color: hsl(160, 98%, 39%);*/
+/*  outline: none;*/
+/*  color: #fff;*/
+/*  font-weight: 500;*/
+/*  font-size: 66.4615px;*/
+/*  line-height: 81px;*/
+/*  display: flex;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*  text-align: center;*/
+/*  text-transform: uppercase;*/
+
+/*  position: absolute;*/
+/*  bottom: 48px;*/
+/*  right: 48px ;*/
+/*}*/
+/*.btn-rnd:hover{*/
+/*  background-color: hsl(160, 98%, 36%);*/
+/*}*/
 </style>
