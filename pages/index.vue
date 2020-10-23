@@ -200,7 +200,49 @@
             </div>
           </div>
         </div>
-        <div class="chart-data-min energy-consumption"></div>
+        <div class="chart-data-min energy-consumption">
+          <div class="chart-header">
+            <div class="title">Расход энергоресурсов</div>
+            <div class="period">
+              <button class="text">месяц</button>
+              <button class="text">сутки</button>
+              <button class="text">смена</button>
+              <button class="num">1</button>
+              <button class="num">2</button>
+              <button class="num">3</button>
+            </div>
+            <div class="bul">...</div>
+          </div>
+          <div class="chart-content">
+            <div class="item">
+              <div class="data">
+                <div class="quantity">1000000</div>
+                <div class="subtitle">Ввод1, кВт</div>
+              </div>
+              <div class="icon">
+                <div class="circle" style="background: #EDBE45"></div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="data">
+                <div class="quantity">11110000</div>
+                <div class="subtitle">Ввод2, кВт</div>
+              </div>
+              <div class="icon">
+                <div class="circle" style="background: #EDBE45"></div>
+              </div>
+            </div>
+            <div class="item">
+              <div class="data">
+                <div class="quantity">111010101</div>
+                <div class="subtitle">Газ, м3</div>
+              </div>
+              <div class="icon">
+                <div class="circle" style="background:  #FC7A7A"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="block-3">
         <div class="chart-data consumption">
@@ -505,6 +547,79 @@ export default {
       height: 139px;
       border: 2px solid #E9E9E9;
       border-radius: 9px;
+
+      .chart-content {
+        padding: 0 12px;
+        display: flex;
+        flex-wrap: wrap;
+
+        .item {
+          width: 192px;
+          height: 92px;
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          padding-bottom: 6px;
+          padding-right: 6px;
+          padding-left: 12px;
+          border: 2px solid #ECEDF4;
+          box-sizing: border-box;
+          border-radius: 12px;
+          margin-right: 12px;
+          margin-top: 11px;
+
+          .data {
+            width: 116px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin-right: 6px;
+            margin-top: 6px;
+            .quantity {
+              height: 60px;
+              text-align: center;
+              display: flex;
+              align-items: center;
+              font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+              Roboto, "Helvetica Neue", Arial, sans-serif;
+              font-weight: 500;
+              font-size: 24px;
+              color: #000000;
+            }
+            .subtitle {
+              width: 100%;
+              font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+              Roboto, "Helvetica Neue", Arial, sans-serif;
+              font-weight: 500;
+              font-size: 12px;
+              color: #B1B1BC;
+            }
+          }
+          .icon {
+            font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+            Roboto, "Helvetica Neue", Arial, sans-serif;
+            font-weight: 500;
+            font-size: 16px;
+            color: #FFFFFF;
+
+            .circle {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+
+          }
+
+          &:nth-child(3n) {
+            margin-right: 0;
+          }
+        }
+      }
     }
   }
 
