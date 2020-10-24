@@ -333,7 +333,150 @@
             </div>
           </div>
         </div>
-        <div class="chart-data comparison-module"></div>
+        <div class="chart-data comparison-module">
+          <div class="chart-header">
+            <div class="title">Модуль сравнения</div>
+            <div class="bul">...</div>
+          </div>
+          <div class="chart-content">
+            <div class="content-box">
+              <div class="calender-period">
+                <div class="select-date">
+                  <input type="datetime-local" v-model="start"/>
+                </div>
+              </div>
+              <div class="period">
+                <button class="text">месяц</button>
+                <button class="text">сутки</button>
+                <button class="text">смена</button>
+                <button class="num">1</button>
+                <button class="num">2</button>
+                <button class="num">3</button>
+              </div>
+              <div class="indicators">
+                <div class="module">
+                  <div class="index">500</div>
+                  <div class="resul">
+                    <div class="result-ok">10%</div>
+                    <div class="result-minus"></div>
+                    <div class="resul-null"></div>
+                  </div>
+
+                </div>
+                <div class="data-list">
+                  <div class="list">
+                    <div class="item">
+                      <div class="circle" style="background: #4BBEAA"></div>
+                      <div class="title">годно</div>
+                    </div>
+                    <div class="data">
+                      <div class="index">450</div>
+                      <div class="resul">
+                        <div class="result-ok">+5%</div>
+                        <div class="result-minus"></div>
+                        <div class="resul-null"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list">
+                    <div class="item">
+                      <div class="circle" style="background: #2D9AD8"></div>
+                      <div class="title">некондиция</div>
+                    </div>
+                    <div class="data">
+                      <div class="index">25</div>
+                      <div class="resul">
+                        <div class="result-ok"></div>
+                        <div class="result-minus"></div>
+                        <div class="resul-null">-0%</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list">
+                    <div class="item">
+                      <div class="circle" style="background: #FC7A7A"></div>
+                      <div class="title">брак</div>
+                    </div>
+                    <div class="data">
+                      <div class="index">25</div>
+                      <div class="resul">
+                        <div class="result-ok"></div>
+                        <div class="result-minus"></div>
+                        <div class="resul-null">+3%</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="indicators-footer">
+                  <div class="title">Залито метров</div>
+                  <div class="data">
+                    <div class="index">100000</div>
+                    <div class="resul">
+                      <div class="result-ok">+10%</div>
+                      <div class="result-minus"></div>
+                      <div class="resul-null"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="content-box">
+              <div class="calender-period">
+                <div class="select-date">
+                  <input type="datetime-local" v-model="end"/>
+                </div>
+              </div>
+              <div class="period">
+                <button class="text">месяц</button>
+                <button class="text">сутки</button>
+                <button class="text">смена</button>
+                <button class="num">1</button>
+                <button class="num">2</button>
+                <button class="num">3</button>
+              </div>
+              <div class="indicators">
+                <div class="module">
+                  <div class="index">445</div>
+                </div>
+                <div class="data-list">
+                  <div class="list">
+                    <div class="item">
+                      <div class="circle" style="background: #4BBEAA"></div>
+                      <div class="title">годно</div>
+                    </div>
+                    <div class="data">
+                      <div class="index">430</div>
+                    </div>
+                  </div>
+                  <div class="list">
+                    <div class="item">
+                      <div class="circle" style="background: #2D9AD8"></div>
+                      <div class="title">некондиция</div>
+                    </div>
+                    <div class="data">
+                      <div class="index">25</div>
+                    </div>
+                  </div>
+                  <div class="list">
+                    <div class="item">
+                      <div class="circle" style="background: #FC7A7A"></div>
+                      <div class="title">брак</div>
+                    </div>
+                    <div class="data">
+                      <div class="index">22</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="indicators-footer">
+                  <div class="title">Залито метров</div>
+                  <div class="data">
+                    <div class="index">95000</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -703,7 +846,6 @@ export default {
                 text-align: center;
               }
             }
-
           }
 
           &:nth-child(3n) {
@@ -712,6 +854,120 @@ export default {
         }
       }
     }
+
+    .comparison-module {
+      font-size: 14px;
+      .chart-content {
+        display: flex;
+        width: 100%;
+        height: calc(100% - 21px);
+        padding: 6px 3px;
+
+        .content-box {
+          width: 50%;
+          height: 100%;
+          margin-right: 3px;
+          border-right:  1px solid #E9E9E9;
+
+          .calender-period {
+            padding: 6px 0;
+
+            .select-date {
+              height: 20px;
+              margin-left: 12px;
+              font-weight: 600;
+              font-size: 12px;
+              line-height: 15px;
+              text-align: left;
+              color: #9098AF;
+            }
+
+            .select-date input {
+              height: 20px;
+              padding-left: 3px;
+              outline: none;
+              font-weight: normal;
+              font-size: 12px;
+              line-height: 15px;
+              color: #9098AF;
+              border: 1px solid #9098AF;
+              border-radius: 4px;
+            }
+          }
+          .period {
+            button {
+              margin-right: 6px;
+            }
+
+            button:last-child {
+              margin-right: 3px;
+            }
+
+          }
+
+          .indicators {
+            padding-right: 44px;
+            .module {
+              display: flex;
+              align-items: baseline;
+              padding-left: 68px;
+              padding-top: 12px;
+              margin-bottom: 12px;
+              .index {
+                font-size: 24px;
+                margin-right: 9px;
+              }
+            }
+
+            .data-list {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-end;
+              .list {
+                max-width: 207px;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 12px;
+                .item {
+                  display: flex;
+                  align-items: center;
+                  .circle {
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    margin-right: 6px;
+                  }
+                }
+              }
+            }
+            .indicators-footer {
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+
+              .title {
+                margin-left: 9px;
+              }
+            }
+          }
+        }
+      }
+
+      .content-box:last-child {
+        border-right: none;
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+.data {
+  display: flex;
+
+  .index  {
+    margin-right: 4px;
   }
 }
 
@@ -744,40 +1000,40 @@ export default {
     text-align: center;
     color: #000000;
   }
+}
 
-  .period {
+.period {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
     display: flex;
-    justify-content: center;
     align-items: center;
-    button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 20px;
-      padding: 4px 6px;
-      background: #FFFFFF;
-      border: 1px solid #ECEDF4;
-      box-sizing: border-box;
-      border-radius: 3px;
-      font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-      Roboto, "Helvetica Neue", Arial, sans-serif;
-      font-weight: 500;
-      font-size: 12px;
-      color: #42435F;
-      margin-right: 12px;
-    }
+    justify-content: center;
+    height: 20px;
+    padding: 4px 6px;
+    background: #FFFFFF;
+    border: 1px solid #ECEDF4;
+    box-sizing: border-box;
+    border-radius: 3px;
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    color: #42435F;
+    margin-right: 12px;
+  }
 
-    .text {
-      width: 52px;
-    }
+  .text {
+    width: 52px;
+  }
 
-    .num {
-      width: 40px;
-    }
+  .num {
+    width: 40px;
+  }
 
-    button:last-child {
-      margin-right: 0;
-    }
+  button:last-child {
+    margin-right: 0;
   }
 }
 
