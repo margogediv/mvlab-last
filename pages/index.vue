@@ -342,7 +342,7 @@
             <div class="content-box">
               <div class="calender-period">
                 <div class="select-date">
-                  <input type="datetime-local" v-model="start"/>
+                  <input type="datetime-local"/>
                 </div>
               </div>
               <div class="period">
@@ -423,7 +423,7 @@
             <div class="content-box">
               <div class="calender-period">
                 <div class="select-date">
-                  <input type="datetime-local" v-model="end"/>
+                  <input type="datetime-local"/>
                 </div>
               </div>
               <div class="period">

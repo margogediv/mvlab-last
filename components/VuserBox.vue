@@ -31,10 +31,10 @@
         <IconifyIcon icon="baselineEdit" :style="{color: '#4B6075', fontSize: '24px'}" />
         <div class="userid">Редактировать профиль</div>
       </nuxt-link>
-      <nuxt-link to="/Login" tag="button" class="logout">
+      <div class="logout" @click="logout">
         <IconifyIcon icon="outlineOpenInBrowser" :style="{color: '#4B6075', fontSize: '24px'}" :rotate="1" />
-        <div class="userid">Выйти из профиля</div>
-      </nuxt-link>
+        <div  class="userid">Выйти из профиля</div>
+      </div>
     </div>
   </div>
 </template>
@@ -45,8 +45,8 @@ import { time } from "highcharts";
 
 
 export default {
-  
- 
+
+
   computed: {
     ...mapGetters("users", {
       user: "curentUser"
@@ -62,8 +62,14 @@ export default {
   methods:{
         noChange() {
       1 + 1;
+    },
+    async logout() {
+      try {
+        await this.$auth.logout();
+      } catch(e) {
+        console.log(e);
+      }
     }
-
   }
 };
 </script>
@@ -167,6 +173,6 @@ img {
 }
 
 /* .aboutuser > p,h2{
-     padding: 2px; 
+     padding: 2px;
 } */
 </style>

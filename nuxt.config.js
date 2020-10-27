@@ -9,8 +9,8 @@ export default {
   head: {
     title: process.env.npm_package_name || '',
     meta: [{
-        charset: 'utf-8'
-      },
+      charset: 'utf-8'
+    },
       {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1'
@@ -44,9 +44,9 @@ export default {
    ** Plugins to load before mounting the App
    */
   plugins: [{
-      src: "~/plugins/highcharts.js",
-      ssr: true
-    },
+    src: "~/plugins/highcharts.js",
+    ssr: true
+  },
 
     {
       src: "~/plugins/iconify.js",
@@ -63,15 +63,49 @@ export default {
    */
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/auth',
     'nuxt-webfontloader'
   ],
   axios: {
     baseURL: 'http://185.6.25.155',
-    proxy: false
+    proxy: true,
   },
-
+  router: {
+    middleware: ['auth'],
+  },
+  auth: {
+    localStorage: false,
+    cookie: {
+      options: {
+        expires: 7,
+      }
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/user/login/', method: 'post', propertyName: 'token'},
+          logout: { url: '/user/logout/', method: 'post' },
+          user: { url: '/api/Users/', method: 'get', propertyName: false,}
+        },
+        tokenRequired: true,
+        // tokenType: 'bearer',
+        tokenType: 'Token',
+        globalToken: true,
+        autoFetchUser: true
+      }
+    },
+    redirect: {
+      login: '/login',
+      logout: '/login',
+      callback: '/login',
+      home: '/',
+    },
+    plugins: ['~/plugins/auth.js']
+  },
   proxy: {
-    '/api/': '',
+    '/user/': 'http://77.220.212.211:8000',
+    '/api/Users/': 'http://77.220.212.211:8000',
+    '/api/': 'http://185.6.25.155',
   },
 
   webfontloader: {
