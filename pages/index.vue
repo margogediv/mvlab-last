@@ -129,6 +129,76 @@
             </div>
             <div class="bul">...</div>
           </div>
+          <div class="chart-content">
+            <div class="diagram"></div>
+            <div class="content-box">
+              <div class="indicators">
+                <div class="module">
+                  <div class="index">500</div>
+                  <div class="resul">
+                    <div class="result-ok">10%</div>
+                    <div class="result-minus"></div>
+                    <div class="resul-null"></div>
+                  </div>
+                </div>
+                <div class="data-list">
+                  <div class="list">
+                    <div class="item">
+                      <div class="circle" style="background: #4BBEAA"></div>
+                      <div class="title">годно</div>
+                    </div>
+                    <div class="data">
+                      <div class="index">450</div>
+                      <div class="resul">
+                        <div class="result-ok">+5%</div>
+                        <div class="result-minus"></div>
+                        <div class="resul-null"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list">
+                    <div class="item">
+                      <div class="circle" style="background: #2D9AD8"></div>
+                      <div class="title">некондиция</div>
+                    </div>
+                    <div class="data">
+                      <div class="index">25</div>
+                      <div class="resul">
+                        <div class="result-ok"></div>
+                        <div class="result-minus"></div>
+                        <div class="resul-null">-0%</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="list">
+                    <div class="item">
+                      <div class="circle" style="background: #FC7A7A"></div>
+                      <div class="title">брак</div>
+                    </div>
+                    <div class="data">
+                      <div class="index">25</div>
+                      <div class="resul">
+                        <div class="result-ok"></div>
+                        <div class="result-minus">-3%</div>
+                        <div class="resul-null"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="indicators-footer">
+                  <div class="title">Залито метров</div>
+                  <div class="data">
+                    <div class="index">100000</div>
+                    <div class="resul">
+                      <div class="result-ok">+10%</div>
+                      <div class="result-minus"></div>
+                      <div class="resul-null"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="chart-data consumption">
           <div class="chart-header">
@@ -361,7 +431,6 @@
                     <div class="result-minus"></div>
                     <div class="resul-null"></div>
                   </div>
-
                 </div>
                 <div class="data-list">
                   <div class="list">
@@ -401,8 +470,8 @@
                       <div class="index">25</div>
                       <div class="resul">
                         <div class="result-ok"></div>
-                        <div class="result-minus"></div>
-                        <div class="resul-null">+3%</div>
+                        <div class="result-minus">-3%</div>
+                        <div class="resul-null"></div>
                       </div>
                     </div>
                   </div>
@@ -483,6 +552,7 @@
 </template>
 
 <script>
+
 import { mapActions } from "vuex";
 
 export default {
@@ -491,6 +561,52 @@ export default {
   created() {
     this.setActiveTabHeader("HOME");
     this.setActiveTabSidebar("Dashboard");
+  },
+
+  computed: {
+    chartOptionsPie () {
+      return {
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false,
+          type: 'pie'
+        },
+        title: {
+          text: '500',
+          align: 'center',
+          verticalAlign: 'middle',
+          y: 60
+        },
+        tooltip: {
+          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        accessibility: {
+          point: {
+            valueSuffix: '%'
+          }
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            colors: pieColors,
+            dataLabels: {
+              enabled: false,
+            },
+          }
+        },
+        series: [{
+          name: 'Share',
+          innerSize: '70%',
+          data: [
+            { name: 'Chrome', y: 61.41 },
+            { name: 'Internet Explorer', y: 11.84 },
+            { name: 'Firefox', y: 10.85 }
+          ]
+        }]
+      }
+    }
   },
 
    methods: {
@@ -581,6 +697,73 @@ export default {
   }
 }
 
+.indicators {
+  padding-right: 44px;
+  .module {
+    display: flex;
+    align-items: baseline;
+    padding-left: 68px;
+    padding-top: 12px;
+    margin-bottom: 12px;
+    .index {
+      font-size: 24px;
+      font-weight: 500;
+      margin-right: 9px;
+    }
+    .resul {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      color: #000000;
+    }
+  }
+  .data-list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    .list {
+      max-width: 207px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 14px;
+      .item {
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        .circle {
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          margin-right: 6px;
+        }
+      }
+    }
+  }
+  .indicators-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .title {
+      margin-left: 9px;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 14px;
+    }
+    .data {
+      display: flex;
+      align-items: baseline;
+      .index {
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
 .charts {
   height: 100%;
   display: flex;
@@ -613,13 +796,41 @@ export default {
     flex-direction: column;
     flex-wrap: wrap;
     margin-right: 48px;
+    .panel-release {
+      .chart-content {
+        display: flex;
+        .diagram {
+          width: 45%;
+        }
+        .content-box {
+          width: 55%;
+          padding-top: 25px;
+          .indicators {
+            .module {
+              padding-left: 17px;
+            }
+            .data-list {
+              align-items: end;
+              margin-bottom: 8px;
+            }
 
+            .indicators-footer {
+              .title {
+                font-style: normal;
+                font-weight: normal;
+                font-size: 18px;
+                margin-left: 0;
+              }
+            }
+          }
+        }
+      }
+    }
     .consumption {
       .chart-content {
         padding: 0 12px;
         display: flex;
         flex-wrap: wrap;
-
         .item {
           width: 192px;
           height: 92px;
@@ -635,7 +846,6 @@ export default {
           border-radius: 12px;
           margin-right: 12px;
           margin-top: 11px;
-
           .data {
             width: 116px;
             display: flex;
@@ -666,7 +876,6 @@ export default {
             font-weight: 500;
             font-size: 16px;
             color: #FFFFFF;
-
             .circle {
               width: 50px;
               height: 50px;
@@ -675,9 +884,7 @@ export default {
               justify-content: center;
               align-items: center;
             }
-
           }
-
           &:nth-child(3n) {
             margin-right: 0;
           }
@@ -690,12 +897,10 @@ export default {
       height: 139px;
       border: 2px solid #E9E9E9;
       border-radius: 9px;
-
       .chart-content {
         padding: 0 12px;
         display: flex;
         flex-wrap: wrap;
-
         .item {
           width: 192px;
           height: 92px;
@@ -711,7 +916,6 @@ export default {
           border-radius: 12px;
           margin-right: 12px;
           margin-top: 11px;
-
           .data {
             width: 116px;
             display: flex;
@@ -746,7 +950,6 @@ export default {
             font-weight: 500;
             font-size: 16px;
             color: #FFFFFF;
-
             .circle {
               width: 50px;
               height: 50px;
@@ -755,9 +958,7 @@ export default {
               justify-content: center;
               align-items: center;
             }
-
           }
-
           &:nth-child(3n) {
             margin-right: 0;
           }
@@ -771,13 +972,11 @@ export default {
     flex-direction: column;
     flex-wrap: wrap;
     margin-right: 48px;
-
     .consumption {
       .chart-content {
         padding: 0 12px;
         display: flex;
         flex-wrap: wrap;
-
         .item {
           width: 192px;
           height: 92px;
@@ -793,7 +992,6 @@ export default {
           border-radius: 12px;
           margin-right: 12px;
           margin-top: 11px;
-
           .data {
             width: 116px;
             display: flex;
@@ -827,7 +1025,6 @@ export default {
               justify-content: center;
               align-items: center;
               flex-direction: column;
-
               .title {
                 font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
                 Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -836,7 +1033,6 @@ export default {
                 color: #FFFFFF;
                 text-align: center;
               }
-
               .subtitle {
                 font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
                 Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -847,7 +1043,6 @@ export default {
               }
             }
           }
-
           &:nth-child(3n) {
             margin-right: 0;
           }
@@ -862,16 +1057,13 @@ export default {
         width: 100%;
         height: calc(100% - 21px);
         padding: 6px 3px;
-
         .content-box {
           width: 50%;
           height: 100%;
           margin-right: 3px;
           border-right:  1px solid #E9E9E9;
-
           .calender-period {
             padding: 6px 0;
-
             .select-date {
               height: 20px;
               margin-left: 12px;
@@ -881,7 +1073,6 @@ export default {
               text-align: left;
               color: #9098AF;
             }
-
             .select-date input {
               height: 20px;
               padding-left: 3px;
@@ -898,63 +1089,12 @@ export default {
             button {
               margin-right: 6px;
             }
-
             button:last-child {
               margin-right: 3px;
-            }
-
-          }
-
-          .indicators {
-            padding-right: 44px;
-            .module {
-              display: flex;
-              align-items: baseline;
-              padding-left: 68px;
-              padding-top: 12px;
-              margin-bottom: 12px;
-              .index {
-                font-size: 24px;
-                margin-right: 9px;
-              }
-            }
-
-            .data-list {
-              display: flex;
-              flex-direction: column;
-              align-items: flex-end;
-              .list {
-                max-width: 207px;
-                width: 100%;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-bottom: 12px;
-                .item {
-                  display: flex;
-                  align-items: center;
-                  .circle {
-                    width: 12px;
-                    height: 12px;
-                    border-radius: 50%;
-                    margin-right: 6px;
-                  }
-                }
-              }
-            }
-            .indicators-footer {
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-
-              .title {
-                margin-left: 9px;
-              }
             }
           }
         }
       }
-
       .content-box:last-child {
         border-right: none;
         margin-right: 0;
@@ -999,6 +1139,38 @@ export default {
     font-size: 14px;
     text-align: center;
     color: #000000;
+  }
+}
+
+.resul {
+  .result-ok {
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    color: #7CD420;
+  }
+
+  .result-minus {
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    color: #F3345D;
+  }
+
+  .resul-null {
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
+    color: #96A2B0;
   }
 }
 
