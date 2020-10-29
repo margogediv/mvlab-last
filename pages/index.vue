@@ -98,7 +98,17 @@
             <div class="title">Продолжительность работы,ч</div>
             <div class="bul">...</div>
           </div>
-          <div class="chart-content"></div>
+          <div class="chart-content">
+           <div class="line" v-for="itam in lineDataFirst">
+             <div class="box-line">
+               <div class="bg" :style="'width: ' + itam.progress + '%'">
+                 <div class="start">{{ itam.start }}</div>
+                 <div class="end">{{ itam.end }}</div>
+               </div>
+             </div>
+             <div class="data-line">{{ itam.dataLine }}</div>
+           </div>
+          </div>
           <div class="chart-footer">
             <div class="title">Общее рабочее время за день</div>
             <div class="view">23</div>
@@ -590,7 +600,9 @@ export default {
           y: 30,
         },
         tooltip: {
-          pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+          // pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+          split: false,
+          shared:false,
         },
         accessibility: {
           point: {
@@ -624,7 +636,7 @@ export default {
           visible: false,
         },
         series: [{
-          name: 'Share',
+          name: 'ghvhvg',
           innerSize: '70%',
           data: [
             { name: 'Chrome', y: 61.41, color: '#4BBEA9'},
@@ -633,7 +645,83 @@ export default {
           ]
         }]
       }
-    }
+    },
+    lineDataFirst () {
+      return [
+        {
+          progress: 0,
+          start: '8:10',
+          end: '17:23',
+          dataLine: 0.75,
+        },
+        {
+          progress: 20,
+          start: '4:10',
+          end: '23:23',
+          dataLine: 3.75,
+        },
+        {
+          progress: 50,
+          start: '8:10',
+          end: '17:23',
+          dataLine: 8.75,
+        },
+        {
+          progress: 80,
+          start: '8:10',
+          end: '17:23',
+          dataLine: 9.75,
+        },
+        {
+          progress: 0,
+          start: '8:10',
+          end: '17:23',
+          dataLine: 0.75,
+        },
+        {
+          progress: 20,
+          start: '4:10',
+          end: '23:23',
+          dataLine: 3.75,
+        },
+        {
+          progress: 50,
+          start: '8:10',
+          end: '17:23',
+          dataLine: 8.75,
+        },
+        {
+          progress: 80,
+          start: '8:10',
+          end: '17:23',
+          dataLine: 9.75,
+        },
+        {
+          progress: 20,
+          start: '4:10',
+          end: '23:23',
+          dataLine: 3.75,
+        },
+        {
+          progress: 50,
+          start: '8:10',
+          end: '17:23',
+          dataLine: 8.75,
+        },
+        {
+          progress: 50,
+          start: '8:10',
+          end: '17:23',
+          dataLine: 8.75,
+        },
+        {
+          progress: 80,
+          start: '8:10',
+          end: '17:23',
+          dataLine: 9.75,
+        },
+      ];
+    },
   },
 
    methods: {
@@ -717,10 +805,10 @@ export default {
     top: 0;
     width: 40px;
     height: 40px;
-    /*background-image: url("/_nuxt/assets/img/arrow_prew.png");*/
-    /*background-position: center;*/
-    /*background-repeat: no-repeat;*/
-    /*background-size: cover;*/
+    //background-image: url("~assets/img/arrow_prew.png");
+    //background-position: center;
+    //background-repeat: no-repeat;
+    //background-size: cover;
   }
 }
 
@@ -808,6 +896,58 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
+        .chart-content {
+          height: 100%;
+          padding: 12px 6px;
+          justify-content: flex-end;
+          overflow: auto;
+          .line {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            .box-line {
+              width: 100%;
+              font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+              Roboto, "Helvetica Neue", Arial, sans-serif;
+              font-style: normal;
+              font-weight: normal;
+              font-size: 10px;
+              color: #000000;
+              .bg {
+                padding: 0 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                height: 16px;
+                background: #ECEDF4;
+                .start {
+                  margin-right: 10px;
+                }
+              }
+              .start,
+              .end {
+                display: none;
+              }
+              &:hover {
+                .start,
+                .end {
+                  display: flex;
+                }
+              }
+            }
+            .data-line {
+              font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+              Roboto, "Helvetica Neue", Arial, sans-serif;
+              font-style: normal;
+              font-weight: bold;
+              font-size: 12px;
+              line-height: 15px;
+              color: #000000;
+            }
+          }
+        }
       }
 
       .chart.second {
