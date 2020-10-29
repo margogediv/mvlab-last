@@ -130,7 +130,12 @@
             <div class="bul">...</div>
           </div>
           <div class="chart-content">
-            <div class="diagram"></div>
+            <div class="diagram">
+              <highcharts
+                  :options="chartOptionsPio"
+                  :constructor-type="'stockChart'"
+              ></highcharts>
+            </div>
             <div class="content-box">
               <div class="indicators">
                 <div class="module">
@@ -564,19 +569,25 @@ export default {
   },
 
   computed: {
-    chartOptionsPie () {
+    chartOptionsPio () {
       return {
         chart: {
-          plotBackgroundColor: null,
-          plotBorderWidth: null,
-          plotShadow: false,
+          height: 210,
+          margin: 0,
           type: 'pie'
+        },
+        credits: {
+          enabled: false,
+          style: {
+            text: null,
+          },
         },
         title: {
           text: '500',
+          style: {'font-family':'"Montserrat", sans-serif', 'color':'#000000', 'font-size': '24px', 'font-weight': '500'},
           align: 'center',
           verticalAlign: 'middle',
-          y: 60
+          y: 30,
         },
         tooltip: {
           pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -588,21 +599,37 @@ export default {
         },
         plotOptions: {
           pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            colors: pieColors,
+            slicedOffset: 0,
+            size: 170,
+            center: [140, 110],
             dataLabels: {
               enabled: false,
             },
           }
         },
+        navigator: {
+          enabled: false,
+        },
+        exporting: {
+          enabled: false,
+        },
+        rangeSelector: {
+          enabled: false
+        },
+        legend: false,
+        xAxis: {
+          visible: false,
+        },
+        yAxis: {
+          visible: false,
+        },
         series: [{
           name: 'Share',
           innerSize: '70%',
           data: [
-            { name: 'Chrome', y: 61.41 },
-            { name: 'Internet Explorer', y: 11.84 },
-            { name: 'Firefox', y: 10.85 }
+            { name: 'Chrome', y: 61.41, color: '#4BBEA9'},
+            { name: 'Internet Explorer', y: 11.84, color: ' #FC7A7A' },
+            { name: 'Firefox', y: 10.85, color: '#2D9AD8' }
           ]
         }]
       }
