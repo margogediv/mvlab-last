@@ -1,102 +1,52 @@
 <template>
   <div>
+    <main>
+      <button class="btn-rnd btn-plus">+</button>
+    </main>
     <section class="calender">
-      <div class="day">
-        <div class="title">Пн</div>
-        <div class="number">31</div>
+      <div class="day" v-for="day in calender">
+        <div class="title">{{ day.title }}</div>
+        <div class="number">{{ day.number }}</div>
       </div>
-      <div class="day">
-        <div class="title">Вт</div>
-        <div class="number">1</div>
-      </div>
-      <div class="day">
-        <div class="title">Ср</div>
-        <div class="number">2</div>
-      </div>
-      <div class="day">
-        <div class="title">Чт</div>
-        <div class="number">3</div>
-      </div>
-      <div class="day">
-        <div class="title">Пт</div>
-        <div class="number">4</div>
-      </div>
-      <div class="day">
-        <div class="title">Сб</div>
-        <div class="number">5</div>
-      </div>
-      <div class="day">
-        <div class="title">Вс</div>
-        <div class="number">6</div>
-      </div>
-      <div class="day">
-        <div class="title">Пн</div>
-        <div class="number">7</div>
-      </div>
-      <div class="day">
-        <div class="title">Вт</div>
-        <div class="number">8</div>
-      </div>
-      <div class="day">
-        <div class="title">Ср</div>
-        <div class="number">9</div>
-      </div>
-      <div class="day active">
-        <div class="title">Чт</div>
-        <div class="number">10</div>
-      </div>
-      <div class="day">
-        <div class="title">Пт</div>
-        <div class="number">11</div>
-      </div>
-      <div class="day">
-        <div class="title">Сб</div>
-        <div class="number">12</div>
-      </div>
-      <div class="day">
-        <div class="title">Вс</div>
-        <div class="number">13</div>
-      </div>
-      <div class="day">
-        <div class="title">Пн</div>
-        <div class="number">14</div>
-      </div>
-      <div class="day">
-        <div class="title">Вт</div>
-        <div class="number">15</div>
-      </div>
-      <div class="day">
-        <div class="title">Ср</div>
-        <div class="number">16</div>
-      </div>
-      <div class="day">
-        <div class="title">Чт</div>
-        <div class="number">17</div>
-      </div>
-      <div class="day">
-        <div class="title">Пт</div>
-        <div class="number">18</div>
-      </div>
-      <div class="day">
-        <div class="title">Сб</div>
-        <div class="number">19</div>
-      </div>
-      <div class="day">
-        <div class="title">Вс</div>
-        <div class="number">20</div>
-      </div>
-      <div class="day">
-        <div class="title">Пн</div>
-        <div class="number">21</div>
-      </div>
-      <div class="day new">new</div>
+      <div class="day new">now</div>
     </section>
     <section class="charts">
       <div class="block-1">
         <div class="chart first">
           <div class="chart-header">
-            <div class="title">Продолжительность работы,ч</div>
-            <div class="bul">...</div>
+            <div class="box-header">
+              <div class="title">Продолжительность работы,ч</div>
+              <div class="bul">
+                <span></span>
+              </div>
+            </div>
+            <div class="period">
+              <button
+                  class="btn text"
+                  :class="{active: periodActive[1]}"
+              >сутки
+              </button>
+              <button
+                  class="btn text"
+                  :class="{active: periodActive[2]}"
+              >смена
+              </button>
+              <button
+                  class="btn num"
+                  :class="{active: periodActive[3]}"
+              >1
+              </button>
+              <button
+                  class="btn num"
+                  :class="{active: periodActive[4]}"
+              >2
+              </button>
+              <button
+                  class="btn num"
+                  :class="{active: periodActive[5]}"
+              >3
+              </button>
+            </div>
           </div>
           <div class="chart-content">
            <div class="line" v-for="itam in lineDataFirst">
@@ -116,8 +66,10 @@
         </div>
         <div class="chart second">
           <div class="chart-header">
-            <div class="title">Остатки на складе</div>
-            <div class="bul">...</div>
+            <div class="title">Остатки на складах</div>
+            <div class="bul">
+              <span></span>
+            </div>
           </div>
           <div class="chart-content"></div>
           <div class="chart-footer">
@@ -130,14 +82,40 @@
           <div class="chart-header">
             <div class="title">Выпуск панелей</div>
             <div class="period">
-              <button class="text">месяц</button>
-              <button class="text">сутки</button>
-              <button class="text">смена</button>
-              <button class="num">1</button>
-              <button class="num">2</button>
-              <button class="num">3</button>
+              <button
+                  class="btn text"
+                  :class="{active: periodActive[0]}"
+              >месяц
+              </button>
+              <button
+                  class="btn text"
+                  :class="{active: periodActive[1]}"
+              >сутки
+              </button>
+              <button
+                  class="btn text"
+                  :class="{active: periodActive[2]}"
+              >смена
+              </button>
+              <button
+                  class="btn num"
+                  :class="{active: periodActive[3]}"
+              >1
+              </button>
+              <button
+                  class="btn num"
+                  :class="{active: periodActive[4]}"
+              >2
+              </button>
+              <button
+                  class="btn num"
+                  :class="{active: periodActive[5]}"
+              >3
+              </button>
             </div>
-            <div class="bul">...</div>
+            <div class="bul">
+              <span></span>
+            </div>
           </div>
           <div class="chart-content">
             <div class="diagram">
@@ -219,14 +197,40 @@
           <div class="chart-header">
             <div class="title">Сумарный расход</div>
             <div class="period">
-              <button class="text">месяц</button>
-              <button class="text">сутки</button>
-              <button class="text">смена</button>
-              <button class="num">1</button>
-              <button class="num">2</button>
-              <button class="num">3</button>
+              <button
+                  class="btn text"
+                  :class="{active: periodActive[0]}"
+              >месяц
+              </button>
+              <button
+                  class="btn text"
+                  :class="{active: periodActive[1]}"
+              >сутки
+              </button>
+              <button
+                  class="btn text"
+                  :class="{active: periodActive[2]}"
+              >смена
+              </button>
+              <button
+                  class="btn num"
+                  :class="{active: periodActive[3]}"
+              >1
+              </button>
+              <button
+                  class="btn num"
+                  :class="{active: periodActive[4]}"
+              >2
+              </button>
+              <button
+                  class="btn num"
+                  :class="{active: periodActive[5]}"
+              >3
+              </button>
             </div>
-            <div class="bul">...</div>
+            <div class="bul">
+              <span></span>
+            </div>
           </div>
           <div class="chart-content">
             <div class="item">
@@ -289,14 +293,40 @@
           <div class="chart-header">
             <div class="title">Расход энергоресурсов</div>
             <div class="period">
-              <button class="text">месяц</button>
-              <button class="text">сутки</button>
-              <button class="text">смена</button>
-              <button class="num">1</button>
-              <button class="num">2</button>
-              <button class="num">3</button>
+              <button
+                  class="btn text"
+                  :class="{active: periodActive[0]}"
+              >месяц
+              </button>
+              <button
+                  class="btn text"
+                  :class="{active: periodActive[1]}"
+              >сутки
+              </button>
+              <button
+                  class="btn text"
+                  :class="{active: periodActive[2]}"
+              >смена
+              </button>
+              <button
+                  class="btn num"
+                  :class="{active: periodActive[3]}"
+              >1
+              </button>
+              <button
+                  class="btn num"
+                  :class="{active: periodActive[4]}"
+              >2
+              </button>
+              <button
+                  class="btn num"
+                  :class="{active: periodActive[5]}"
+              >3
+              </button>
             </div>
-            <div class="bul">...</div>
+            <div class="bul">
+              <span></span>
+            </div>
           </div>
           <div class="chart-content">
             <div class="item">
@@ -334,14 +364,40 @@
           <div class="chart-header">
             <div class="title">Удельный расход на км</div>
             <div class="period">
-              <button class="text">месяц</button>
-              <button class="text">сутки</button>
-              <button class="text">смена</button>
-              <button class="num">1</button>
-              <button class="num">2</button>
-              <button class="num">3</button>
+              <button
+                  class="btn text"
+                  :class="{active: periodActive[0]}"
+              >месяц
+              </button>
+              <button
+                  class="btn text"
+                  :class="{active: periodActive[1]}"
+              >сутки
+              </button>
+              <button
+                  class="btn text"
+                  :class="{active: periodActive[2]}"
+              >смена
+              </button>
+              <button
+                  class="btn num"
+                  :class="{active: periodActive[3]}"
+              >1
+              </button>
+              <button
+                  class="btn num"
+                  :class="{active: periodActive[4]}"
+              >2
+              </button>
+              <button
+                  class="btn num"
+                  :class="{active: periodActive[5]}"
+              >3
+              </button>
             </div>
-            <div class="bul">...</div>
+            <div class="bul">
+              <span></span>
+            </div>
           </div>
           <div class="chart-content">
             <div class="item">
@@ -421,7 +477,9 @@
         <div class="chart-data comparison-module">
           <div class="chart-header">
             <div class="title">Модуль сравнения</div>
-            <div class="bul">...</div>
+            <div class="bul">
+              <span></span>
+            </div>
           </div>
           <div class="chart-content">
             <div class="content-box">
@@ -431,12 +489,36 @@
                 </div>
               </div>
               <div class="period">
-                <button class="text">месяц</button>
-                <button class="text">сутки</button>
-                <button class="text">смена</button>
-                <button class="num">1</button>
-                <button class="num">2</button>
-                <button class="num">3</button>
+                <button
+                    class="btn text"
+                    :class="{active: periodActive[0]}"
+                >месяц
+                </button>
+                <button
+                    class="btn text"
+                    :class="{active: periodActive[1]}"
+                >сутки
+                </button>
+                <button
+                    class="btn text"
+                    :class="{active: periodActive[2]}"
+                >смена
+                </button>
+                <button
+                    class="btn num"
+                    :class="{active: periodActive[3]}"
+                >1
+                </button>
+                <button
+                    class="btn num"
+                    :class="{active: periodActive[4]}"
+                >2
+                </button>
+                <button
+                    class="btn num"
+                    :class="{active: periodActive[5]}"
+                >3
+                </button>
               </div>
               <div class="indicators">
                 <div class="module">
@@ -511,12 +593,36 @@
                 </div>
               </div>
               <div class="period">
-                <button class="text">месяц</button>
-                <button class="text">сутки</button>
-                <button class="text">смена</button>
-                <button class="num">1</button>
-                <button class="num">2</button>
-                <button class="num">3</button>
+                <button
+                    class="btn text"
+                    :class="{active: periodActive[0]}"
+                >месяц
+                </button>
+                <button
+                    class="btn text"
+                    :class="{active: periodActive[1]}"
+                >сутки
+                </button>
+                <button
+                    class="btn text"
+                    :class="{active: periodActive[2]}"
+                >смена
+                </button>
+                <button
+                    class="btn num"
+                    :class="{active: periodActive[3]}"
+                >1
+                </button>
+                <button
+                    class="btn num"
+                    :class="{active: periodActive[4]}"
+                >2
+                </button>
+                <button
+                    class="btn num"
+                    :class="{active: periodActive[5]}"
+                >3
+                </button>
               </div>
               <div class="indicators">
                 <div class="module">
@@ -578,7 +684,105 @@ export default {
     this.setActiveTabSidebar("Dashboard");
   },
 
+  data() {
+    return {
+      periodActive: [false, true, false, false, false, false],
+    }
+  },
+
   computed: {
+    calender () {
+      return [
+        {
+          title: "Пн",
+          number: 31,
+        },
+        {
+          title: "Вт",
+          number: 1,
+        },
+        {
+          title: "Ср",
+          number: 2,
+        },
+        {
+          title: "Чт",
+          number: 3,
+        },
+        {
+          title: "Пт",
+          number: 4,
+        },
+        {
+          title: "Сб",
+          number: 5,
+        },
+        {
+          title: "Вс",
+          number: 6,
+        },
+        {
+          title: "Пн",
+          number: 7,
+        },
+        {
+          title: "Вт",
+          number: 8,
+        },
+        {
+          title: "Ср",
+          number: 9,
+        },
+        {
+          title: "Чт",
+          number: 10,
+        },
+        {
+          title: "Пт",
+          number: 11,
+        },
+        {
+          title: "Сб",
+          number: 12,
+        },
+        {
+          title: "Вс",
+          number: 13,
+        },
+        {
+          title: "Пн",
+          number: 14,
+        },
+        {
+          title: "Вт",
+          number: 15,
+        },
+        {
+          title: "Ср",
+          number: 16,
+        },
+        {
+          title: "Чт",
+          number: 17,
+        },
+        {
+          title: "Пт",
+          number: 18,
+        },
+        {
+          title: "Сб",
+          number: 19,
+        },
+        {
+          title: "Вс",
+          number: 20,
+        },
+        {
+          title: "Пн",
+          number: 21,
+        },
+      ]
+    },
     chartOptionsPio () {
       return {
         chart: {
@@ -781,12 +985,6 @@ export default {
       border: 2px solid #3F51B5;
       margin-right: 0;
     }
-
-    &.active {
-      background: #272848;
-      border-radius: 11px;
-      color: #BFC0C9;
-    }
   }
 
   .new {
@@ -891,12 +1089,30 @@ export default {
     margin-right: 36px;
 
       .chart.first {
-        height: 320px;
+        height: 324px;
         margin-bottom: 24px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
 
+        .chart-header {
+          padding-bottom: 6px;
+          display: flex;
+          flex-wrap: wrap;
+          .box-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 9px;
+          }
+
+          .period {
+            .btn {
+              margin-right: 6px;
+            }
+          }
+        }
         .chart-content {
           height: 100%;
           padding: 12px 6px;
@@ -951,10 +1167,16 @@ export default {
       }
 
       .chart.second {
-        height: 354px;
+        height: 358px;
+        margin-bottom: 24px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+
+
+        .chart-header {
+          padding: 3px 12px;
+        }
       }
     }
 
@@ -996,11 +1218,12 @@ export default {
     .consumption {
       .chart-content {
         padding: 0 12px;
+        padding-bottom: 12px;
         display: flex;
         flex-wrap: wrap;
         .item {
           width: 192px;
-          height: 92px;
+          height: 90px;
           display: flex;
           flex-direction: row;
           justify-content: center;
@@ -1061,16 +1284,17 @@ export default {
 
     .chart-data-min {
       width: 628px;
-      height: 139px;
+      height: 144px;
       border: 2px solid #E9E9E9;
       border-radius: 9px;
+      margin-bottom: 36px;
       .chart-content {
         padding: 0 12px;
         display: flex;
         flex-wrap: wrap;
         .item {
           width: 192px;
-          height: 92px;
+          height: 90px;
           display: flex;
           flex-direction: row;
           justify-content: center;
@@ -1146,7 +1370,7 @@ export default {
         flex-wrap: wrap;
         .item {
           width: 192px;
-          height: 92px;
+          height: 90px;
           display: flex;
           flex-direction: row;
           justify-content: center;
@@ -1307,6 +1531,46 @@ export default {
     text-align: center;
     color: #000000;
   }
+
+  .bul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      position: relative;
+      background-color: #CFCDCD;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      font-size: 0;
+      left: -10px;
+    }
+
+    span:before {
+      position: absolute;
+      left: 5px;
+      top: 0;
+      content: '';
+
+      background-color: #CFCDCD;
+      font-size: 0;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+    }
+
+    span:after {
+      position: absolute;
+      left: 10px;
+      top: 0;
+      content: '';
+      background-color: #CFCDCD;
+      font-size: 0;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+    }
+  }
 }
 
 .resul {
@@ -1345,30 +1609,51 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  button {
+
+  .btn {
+    cursor: pointer;
+    outline: none;
+    height: 23px;
+
     display: flex;
-    align-items: center;
     justify-content: center;
-    height: 20px;
-    padding: 4px 6px;
-    background: #FFFFFF;
+    align-items: center;
+
+    margin-right: 12px;
+    padding: 0 6px;
+
     border: 1px solid #ECEDF4;
-    box-sizing: border-box;
     border-radius: 3px;
-    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: #FFFFFF;
+
     font-weight: 500;
     font-size: 12px;
     color: #42435F;
-    margin-right: 12px;
+
+    &:hover {
+      border: 1px solid #272848;
+    }
   }
 
   .text {
     width: 52px;
+
+  }
+
+  .btn.text:nth-child(3) {
+    margin-right: 6px;
   }
 
   .num {
-    width: 40px;
+    width: 42px;
+    background: #FFFFFF;
+    margin-right: 6px;
+  }
+
+  .active {
+    background: #272848;
+    color: #BFC0C9;
+    text-align: center;
   }
 
   button:last-child {
@@ -1400,32 +1685,32 @@ export default {
   }
 }
 
-/*main{*/
-/*  width: 100%;*/
-/*  height: 100%;*/
-/*}*/
-/*.btn-rnd {*/
-/*  width: 60px;*/
-/*  height: 60px;*/
-/*  border: none;*/
-/*  border-radius: 30px;*/
-/*  background-color: hsl(160, 98%, 39%);*/
-/*  outline: none;*/
-/*  color: #fff;*/
-/*  font-weight: 500;*/
-/*  font-size: 66.4615px;*/
-/*  line-height: 81px;*/
-/*  display: flex;*/
-/*  align-items: center;*/
-/*  justify-content: center;*/
-/*  text-align: center;*/
-/*  text-transform: uppercase;*/
+main{
+  width: 100%;
+  height: 100%;
+}
+.btn-rnd {
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 30px;
+  background-color: hsl(160, 98%, 39%);
+  outline: none;
+  color: #fff;
+  font-weight: 500;
+  font-size: 66.4615px;
+  line-height: 81px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-transform: uppercase;
 
-/*  position: absolute;*/
-/*  bottom: 48px;*/
-/*  right: 48px ;*/
-/*}*/
-/*.btn-rnd:hover{*/
-/*  background-color: hsl(160, 98%, 36%);*/
-/*}*/
+  position: absolute;
+  bottom: 48px;
+  right: 48px ;
+}
+.btn-rnd:hover{
+  background-color: hsl(160, 98%, 36%);
+}
 </style>
