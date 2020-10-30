@@ -4,9 +4,9 @@
       <button class="btn-rnd btn-plus">+</button>
     </main>
     <section class="calender">
-      <div class="day" v-for="day in calender">
-        <div class="title">{{ day.title }}</div>
-        <div class="number">{{ day.number }}</div>
+      <div class="day" v-for="calender in calenders">
+        <div class="title">{{ calender.title }}</div>
+        <div class="number">{{ calender.number }}</div>
       </div>
       <div class="day new">now</div>
     </section>
@@ -71,7 +71,21 @@
               <span></span>
             </div>
           </div>
-          <div class="chart-content"></div>
+          <div class="chart-content">
+            <div class="box" v-for="el in lineDataSecond">
+              <div class="name-block">{{ el.box }}</div>
+              <div class="block-content" v-for="elem in el.data">
+                <div class="title-position">{{ elem.titlePosition }}</div>
+                <div class="group">
+                  <div class="number-lit" v-for="i in elem.capacitys">{{ i }}л
+                    <div class="line-progress">
+                      <div class="data-progress" :style="'width: ' + elem.dataProgress + '%'"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="chart-footer">
             <div class="title">Итого - ISO: <b>100л</b>; POL: <b>100л</b>; PEN: <b>100л</b></div>
           </div>
@@ -691,7 +705,7 @@ export default {
   },
 
   computed: {
-    calender () {
+    calenders () {
       return [
         {
           title: "Пн",
@@ -926,6 +940,56 @@ export default {
         },
       ];
     },
+    lineDataSecond () {
+      return [
+        {
+          box: "Скалад 1",
+          data: [
+            {
+              titlePosition: 'Изоционат',
+              // dimension: 'л',
+              capacitys: [40, 50],
+              dataProgress: 25,
+            },
+            {
+              titlePosition: 'Полиол',
+              // dimension: 'л',
+              capacitys: [25, 45],
+              dataProgress: 60,
+            }
+          ]
+        },
+        {
+          box: "Скалад 2",
+          data: [
+            {
+              titlePosition: 'Пентан',
+              // dimension: 'л',
+              capacitys: [100],
+              dataProgress: 30,
+            },
+          ]
+        },
+        {
+          box: "Скалад 3",
+          data: [
+            {
+              titlePosition: 'Изоционат',
+              // dimension: 'л',
+              capacitys: [100, 50, 50],
+              dataProgress: 10,
+            },
+            {
+              titlePosition: 'Полиол',
+              // dimension: 'л',
+              capacitys: [25, 45],
+              dataProgress: 30,
+            }
+          ]
+        },
+
+      ];
+    }
   },
 
    methods: {
@@ -1116,7 +1180,7 @@ export default {
         .chart-content {
           height: 100%;
           padding: 12px 6px;
-          justify-content: flex-end;
+          justify-content: flex-start;
           overflow: auto;
           .line {
             display: flex;
@@ -1154,9 +1218,6 @@ export default {
               }
             }
             .data-line {
-              font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-              Roboto, "Helvetica Neue", Arial, sans-serif;
-              font-style: normal;
               font-weight: bold;
               font-size: 12px;
               line-height: 15px;
@@ -1173,9 +1234,70 @@ export default {
         flex-direction: column;
         justify-content: space-between;
 
-
         .chart-header {
           padding: 3px 12px;
+        }
+        .chart-content {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          overflow: auto;
+          .box {
+            display: flex;
+            flex-direction: column;
+            padding: 6px 8px 6px 12px;
+            font-weight: normal;
+            font-size: 10px;
+            line-height: 12px;
+            color: #000000;
+            border-bottom: 1px solid #E9E9E9;
+            .name-block {
+              margin-bottom: 6px;
+            }
+            .block-content {
+              display: flex;
+              flex-direction: column;
+              padding-left: 12px;
+              margin-bottom: 6px;
+
+              .title-position {
+                font-weight: normal;
+                font-size: 10px;
+                line-height: 12px;
+                color: #000000;
+              }
+
+              .group {
+                display: flex;
+                flex-direction: column;
+                .number-lit {
+                  display: flex;
+                  align-items: center;
+                  justify-content: flex-end;
+                  font-weight: 500;
+                  font-size: 12px;
+                  line-height: 15px;
+                  color: #000000;
+                }
+
+                .line-progress {
+                  width: 178px;
+                  height: 8px;
+                  background: #ECEDF4;
+                  border-radius: 2px;
+                  margin-left: 6px;
+
+                  .data-progress {
+                    height: 8px;
+                    background: #3F51B5;
+                    border-radius: 2px;
+                    z-index: 2;
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -1511,7 +1633,7 @@ export default {
 }
 
 .chart {
-  width: 280px;
+  width: 284px;
   border: 2px solid #E9E9E9;
   border-radius: 9px;
 }
