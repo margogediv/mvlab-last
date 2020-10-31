@@ -1,14 +1,22 @@
 <template>
   <div>
-    <main>
-      <button class="btn-rnd btn-plus">+</button>
-    </main>
-    <section class="calender">
-      <div class="day" v-for="calender in calenders">
-        <div class="title">{{ calender.title }}</div>
-        <div class="number">{{ calender.number }}</div>
+    <div>
+      <main>
+        <button class="btn-rnd btn-plus">+</button>
+      </main>
+      <div class="menu-bul">
+        <div class="hide">Скрыть</div>
+        <div class="show">Обновить</div>
       </div>
-      <div class="day new">now</div>
+    </div>
+    <section class="calender">
+      <div class="calender-box">
+        <div class="day" v-for="calender in calenders">
+          <div class="title">{{ calender.title }}</div>
+          <div class="number">{{ calender.number }}</div>
+        </div>
+        <div class="day new">now</div>
+      </div>
     </section>
     <section class="charts">
       <div class="block-1">
@@ -20,33 +28,7 @@
                 <span></span>
               </div>
             </div>
-            <div class="period">
-              <button
-                  class="btn text"
-                  :class="{active: periodActive[1]}"
-              >сутки
-              </button>
-              <button
-                  class="btn text"
-                  :class="{active: periodActive[2]}"
-              >смена
-              </button>
-              <button
-                  class="btn num"
-                  :class="{active: periodActive[3]}"
-              >1
-              </button>
-              <button
-                  class="btn num"
-                  :class="{active: periodActive[4]}"
-              >2
-              </button>
-              <button
-                  class="btn num"
-                  :class="{active: periodActive[5]}"
-              >3
-              </button>
-            </div>
+            <period />
           </div>
           <div class="chart-content">
            <div class="line" v-for="itam in lineDataFirst">
@@ -77,9 +59,9 @@
               <div class="block-content" v-for="elem in el.data">
                 <div class="title-position">{{ elem.titlePosition }}</div>
                 <div class="group">
-                  <div class="number-lit" v-for="i in elem.capacitys">{{ i }}л
+                  <div class="number-lit" v-for="i in elem.capacitys">{{ i.value }}л
                     <div class="line-progress">
-                      <div class="data-progress" :style="'width: ' + elem.dataProgress + '%'"></div>
+                      <div class="data-progress" :style="'width: ' + i.remainder + '%'"></div>
                     </div>
                   </div>
                 </div>
@@ -95,38 +77,7 @@
         <div class="chart-data panel-release">
           <div class="chart-header">
             <div class="title">Выпуск панелей</div>
-            <div class="period">
-              <button
-                  class="btn text"
-                  :class="{active: periodActive[0]}"
-              >месяц
-              </button>
-              <button
-                  class="btn text"
-                  :class="{active: periodActive[1]}"
-              >сутки
-              </button>
-              <button
-                  class="btn text"
-                  :class="{active: periodActive[2]}"
-              >смена
-              </button>
-              <button
-                  class="btn num"
-                  :class="{active: periodActive[3]}"
-              >1
-              </button>
-              <button
-                  class="btn num"
-                  :class="{active: periodActive[4]}"
-              >2
-              </button>
-              <button
-                  class="btn num"
-                  :class="{active: periodActive[5]}"
-              >3
-              </button>
-            </div>
+            <period />
             <div class="bul">
               <span></span>
             </div>
@@ -210,38 +161,7 @@
         <div class="chart-data consumption">
           <div class="chart-header">
             <div class="title">Сумарный расход</div>
-            <div class="period">
-              <button
-                  class="btn text"
-                  :class="{active: periodActive[0]}"
-              >месяц
-              </button>
-              <button
-                  class="btn text"
-                  :class="{active: periodActive[1]}"
-              >сутки
-              </button>
-              <button
-                  class="btn text"
-                  :class="{active: periodActive[2]}"
-              >смена
-              </button>
-              <button
-                  class="btn num"
-                  :class="{active: periodActive[3]}"
-              >1
-              </button>
-              <button
-                  class="btn num"
-                  :class="{active: periodActive[4]}"
-              >2
-              </button>
-              <button
-                  class="btn num"
-                  :class="{active: periodActive[5]}"
-              >3
-              </button>
-            </div>
+            <period />
             <div class="bul">
               <span></span>
             </div>
@@ -306,38 +226,7 @@
         <div class="chart-data-min energy-consumption">
           <div class="chart-header">
             <div class="title">Расход энергоресурсов</div>
-            <div class="period">
-              <button
-                  class="btn text"
-                  :class="{active: periodActive[0]}"
-              >месяц
-              </button>
-              <button
-                  class="btn text"
-                  :class="{active: periodActive[1]}"
-              >сутки
-              </button>
-              <button
-                  class="btn text"
-                  :class="{active: periodActive[2]}"
-              >смена
-              </button>
-              <button
-                  class="btn num"
-                  :class="{active: periodActive[3]}"
-              >1
-              </button>
-              <button
-                  class="btn num"
-                  :class="{active: periodActive[4]}"
-              >2
-              </button>
-              <button
-                  class="btn num"
-                  :class="{active: periodActive[5]}"
-              >3
-              </button>
-            </div>
+            <period />
             <div class="bul">
               <span></span>
             </div>
@@ -377,38 +266,7 @@
         <div class="chart-data consumption">
           <div class="chart-header">
             <div class="title">Удельный расход на км</div>
-            <div class="period">
-              <button
-                  class="btn text"
-                  :class="{active: periodActive[0]}"
-              >месяц
-              </button>
-              <button
-                  class="btn text"
-                  :class="{active: periodActive[1]}"
-              >сутки
-              </button>
-              <button
-                  class="btn text"
-                  :class="{active: periodActive[2]}"
-              >смена
-              </button>
-              <button
-                  class="btn num"
-                  :class="{active: periodActive[3]}"
-              >1
-              </button>
-              <button
-                  class="btn num"
-                  :class="{active: periodActive[4]}"
-              >2
-              </button>
-              <button
-                  class="btn num"
-                  :class="{active: periodActive[5]}"
-              >3
-              </button>
-            </div>
+            <period />
             <div class="bul">
               <span></span>
             </div>
@@ -502,38 +360,7 @@
                   <input type="datetime-local"/>
                 </div>
               </div>
-              <div class="period">
-                <button
-                    class="btn text"
-                    :class="{active: periodActive[0]}"
-                >месяц
-                </button>
-                <button
-                    class="btn text"
-                    :class="{active: periodActive[1]}"
-                >сутки
-                </button>
-                <button
-                    class="btn text"
-                    :class="{active: periodActive[2]}"
-                >смена
-                </button>
-                <button
-                    class="btn num"
-                    :class="{active: periodActive[3]}"
-                >1
-                </button>
-                <button
-                    class="btn num"
-                    :class="{active: periodActive[4]}"
-                >2
-                </button>
-                <button
-                    class="btn num"
-                    :class="{active: periodActive[5]}"
-                >3
-                </button>
-              </div>
+              <period />
               <div class="indicators">
                 <div class="module">
                   <div class="index">500</div>
@@ -606,38 +433,7 @@
                   <input type="datetime-local"/>
                 </div>
               </div>
-              <div class="period">
-                <button
-                    class="btn text"
-                    :class="{active: periodActive[0]}"
-                >месяц
-                </button>
-                <button
-                    class="btn text"
-                    :class="{active: periodActive[1]}"
-                >сутки
-                </button>
-                <button
-                    class="btn text"
-                    :class="{active: periodActive[2]}"
-                >смена
-                </button>
-                <button
-                    class="btn num"
-                    :class="{active: periodActive[3]}"
-                >1
-                </button>
-                <button
-                    class="btn num"
-                    :class="{active: periodActive[4]}"
-                >2
-                </button>
-                <button
-                    class="btn num"
-                    :class="{active: periodActive[5]}"
-                >3
-                </button>
-              </div>
+              <period />
               <div class="indicators">
                 <div class="module">
                   <div class="index">445</div>
@@ -689,6 +485,7 @@
 <script>
 
 import { mapActions } from "vuex";
+import Period from "@/components/home/period";
 
 export default {
   layout: "header_footer",
@@ -701,11 +498,16 @@ export default {
   data() {
     return {
       periodActive: [false, true, false, false, false, false],
+      // showBul: false,
     }
   },
 
+  components: {
+    period: Period,
+  },
+
   computed: {
-    calenders () {
+    calenders() {
       return [
         {
           title: "Пн",
@@ -797,7 +599,7 @@ export default {
         },
       ]
     },
-    chartOptionsPio () {
+    chartOptionsPio() {
       return {
         chart: {
           height: 210,
@@ -812,7 +614,12 @@ export default {
         },
         title: {
           text: '500',
-          style: {'font-family':'"Montserrat", sans-serif', 'color':'#000000', 'font-size': '24px', 'font-weight': '500'},
+          style: {
+            'font-family': '"Montserrat", sans-serif',
+            'color': '#000000',
+            'font-size': '24px',
+            'font-weight': '500'
+          },
           align: 'center',
           verticalAlign: 'middle',
           y: 30,
@@ -820,7 +627,7 @@ export default {
         tooltip: {
           // pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
           split: false,
-          shared:false,
+          shared: false,
         },
         accessibility: {
           point: {
@@ -857,14 +664,14 @@ export default {
           name: 'ghvhvg',
           innerSize: '70%',
           data: [
-            { name: 'Chrome', y: 61.41, color: '#4BBEA9'},
-            { name: 'Internet Explorer', y: 11.84, color: ' #FC7A7A' },
-            { name: 'Firefox', y: 10.85, color: '#2D9AD8' }
+            {name: 'Chrome', y: 61.41, color: '#4BBEA9'},
+            {name: 'Internet Explorer', y: 11.84, color: ' #FC7A7A'},
+            {name: 'Firefox', y: 10.85, color: '#2D9AD8'}
           ]
         }]
       }
     },
-    lineDataFirst () {
+    lineDataFirst() {
       return [
         {
           progress: 0,
@@ -940,22 +747,36 @@ export default {
         },
       ];
     },
-    lineDataSecond () {
+    lineDataSecond() {
       return [
         {
           box: "Скалад 1",
           data: [
             {
               titlePosition: 'Изоционат',
-              // dimension: 'л',
-              capacitys: [40, 50],
-              dataProgress: 25,
+              capacitys: [
+                {
+                  value: 40,
+                  remainder: 30,
+                },
+                {
+                  value: 50,
+                  remainder: 60,
+                }
+              ],
             },
             {
               titlePosition: 'Полиол',
-              // dimension: 'л',
-              capacitys: [25, 45],
-              dataProgress: 60,
+              capacitys: [
+                {
+                  value: 25,
+                  remainder: 30,
+                },
+                {
+                  value: 45,
+                  remainder: 60,
+                }
+              ],
             }
           ]
         },
@@ -964,9 +785,12 @@ export default {
           data: [
             {
               titlePosition: 'Пентан',
-              // dimension: 'л',
-              capacitys: [100],
-              dataProgress: 30,
+              capacitys: [
+                {
+                  value: 25,
+                  remainder: 30,
+                }
+              ],
             },
           ]
         },
@@ -975,28 +799,48 @@ export default {
           data: [
             {
               titlePosition: 'Изоционат',
-              // dimension: 'л',
-              capacitys: [100, 50, 50],
-              dataProgress: 10,
+              capacitys: [
+                {
+                  value: 100,
+                  remainder: 10,
+                },
+                {
+                  value: 25,
+                  remainder: 50,
+                },
+                {
+                  value: 25,
+                  remainder: 80,
+                }
+              ],
             },
             {
               titlePosition: 'Полиол',
-              // dimension: 'л',
-              capacitys: [25, 45],
-              dataProgress: 30,
-            }
+              capacitys: [
+                {
+                  value: 45,
+                  remainder: 60,
+                },
+                {
+                  value: 25,
+                  remainder: 10,
+                },
+              ]
+            },
           ]
         },
-
       ];
-    }
+    },
   },
 
    methods: {
-    ...mapActions("users", {
-      setActiveTabHeader: "setActiveTabHeader",
-      setActiveTabSidebar: "setActiveTabSidebar",
-    }),
+     ...mapActions("users", {
+       setActiveTabHeader: "setActiveTabHeader",
+       setActiveTabSidebar: "setActiveTabSidebar",
+     }),
+     // changeShowBul () {
+     //   this.ShowBul = !this.ShowBul;
+     // }
    }
 };
 </script>
@@ -1005,72 +849,92 @@ export default {
 
 .calender {
   width: 100%;
-  position: relative;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  align-items: center;
-  padding: 24px 121px;
+  position: relative;
+  padding: 24px 0;
 
-  .day {
-    height: 80px;
-    width: 56px;
+  .calender-box {
+    width: calc(100% - 242px);
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    //justify-content: flex-end;
     align-items: center;
-    padding: 9px 12px;
-    background: #FFFFFF;
-    border: 2px solid #ECEDF4;
-    border-radius: 11px;
-    margin-right: 12px;
-    margin-bottom: 6px;
+    overflow: auto;
 
-    .title {
-      font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-      Roboto, "Helvetica Neue", Arial, sans-serif;
-      font-size: 16px;
-      font-weight: 400;
-      text-align: center;
-      color: #B1B1BC;
-      margin-bottom: 7px;
+    .day {
+      height: 80px;
+      width: 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 9px 12px;
+      background: #FFFFFF;
+      border: 2px solid #ECEDF4;
+      border-radius: 11px;
+      margin-right: 12px;
+      margin-bottom: 6px;
+
+      .title {
+        font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        text-align: center;
+        color: #B1B1BC;
+        margin-bottom: 7px;
+      }
+
+      .number {
+        font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-size: 24px;
+        font-weight: 500;
+        text-align: center;
+        color: #42435F;
+      }
+
+      &.new {
+        border: 2px solid #3F51B5;
+        margin-right: 0;
+      }
     }
 
-    .number {
+    .new {
       font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
       Roboto, "Helvetica Neue", Arial, sans-serif;
-      font-size: 24px;
+      font-size: 14px;
       font-weight: 500;
       text-align: center;
       color: #42435F;
+      text-transform: uppercase;
     }
 
-    &.new {
-      border: 2px solid #3F51B5;
-      margin-right: 0;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 44px;
+      left: 57px;
+      width: 40px;
+      height: 40px;
+      background-image: url("~assets/img/arrow_prew.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
     }
-  }
 
-  .new {
-    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    text-align: center;
-    color: #42435F;
-    text-transform: uppercase;
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    width: 40px;
-    height: 40px;
-    //background-image: url("~assets/img/arrow_prew.png");
-    //background-position: center;
-    //background-repeat: no-repeat;
-    //background-size: cover;
+    &::after {
+      content: '';
+      position: absolute;
+      top: 44px;
+      right: 57px;
+      width: 40px;
+      height: 40px;
+      background-image: url("~assets/img/arrow_next.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
   }
 }
 
@@ -1727,62 +1591,6 @@ export default {
   }
 }
 
-.period {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .btn {
-    cursor: pointer;
-    outline: none;
-    height: 23px;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    margin-right: 12px;
-    padding: 0 6px;
-
-    border: 1px solid #ECEDF4;
-    border-radius: 3px;
-    background: #FFFFFF;
-
-    font-weight: 500;
-    font-size: 12px;
-    color: #42435F;
-
-    &:hover {
-      border: 1px solid #272848;
-    }
-  }
-
-  .text {
-    width: 52px;
-
-  }
-
-  .btn.text:nth-child(3) {
-    margin-right: 6px;
-  }
-
-  .num {
-    width: 42px;
-    background: #FFFFFF;
-    margin-right: 6px;
-  }
-
-  .active {
-    background: #272848;
-    color: #BFC0C9;
-    text-align: center;
-  }
-
-  button:last-child {
-    margin-right: 0;
-  }
-}
-
 .chart-footer {
   width: 100%;
   display: flex;
@@ -1834,5 +1642,18 @@ main{
 }
 .btn-rnd:hover{
   background-color: hsl(160, 98%, 36%);
+}
+
+.menu-bul {
+  display: none;
+  height: 80px;
+  width: 110px;
+  //display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #F7F8FA;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+  border-radius: 4px 0px 4px 4px;
 }
 </style>

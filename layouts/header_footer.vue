@@ -58,7 +58,8 @@ html {
 .Site-content {
   padding-left: 120px;
   padding-right: 6px;
-  height: 800px;
+  height: calc(100vh - 72px);
+  overflow: auto;
   width: 100%;
   flex: 1;
 }
