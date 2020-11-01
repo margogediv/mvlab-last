@@ -1,26 +1,37 @@
 <template>
   <div class="period">
     <button
+        v-on:click="setPeriod(0)"
         class="btn text"
         :class="{active: periodActive[0]}"
+    >месяц
+    </button>
+    <button
+        v-on:click="setPeriod(1)"
+        class="btn text"
+        :class="{active: periodActive[1]}"
     >сутки
     </button>
     <button
+        v-on:click="setPeriod(2)"
         class="btn text"
-        :class="{active: periodActive[1]}"
+        :class="{active: periodActive[2] || periodActive[3] || periodActive[4]}"
     >смена
     </button>
     <button
+        v-on:click="setPeriod(2)"
         class="btn num"
         :class="{active: periodActive[2]}"
     >1
     </button>
     <button
+        v-on:click="setPeriod(3)"
         class="btn num"
         :class="{active: periodActive[3]}"
     >2
     </button>
     <button
+        v-on:click="setPeriod(4)"
         class="btn num"
         :class="{active: periodActive[4]}"
     >3
@@ -29,12 +40,22 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
 name: "period",
 
   data() {
     return {
-      periodActive: [false, true, false, false, false, false],
+      periodActive: [false, true, false, false, false],
+    }
+  },
+  props: ['title'],
+  methods: {
+    setPeriod (id) {
+      let arr = [false, false, false, false, false];
+      arr[id] = true;
+      this.periodActive = arr;
     }
   },
 }

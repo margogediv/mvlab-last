@@ -9,75 +9,17 @@
         <div class="show">Обновить</div>
       </div>
     </div>
-    <section class="calender">
-      <div class="calender-box">
-        <div class="day" v-for="calender in calenders">
-          <div class="title">{{ calender.title }}</div>
-          <div class="number">{{ calender.number }}</div>
-        </div>
-        <div class="day new">now</div>
-      </div>
-    </section>
+   <calendar></calendar>
     <section class="charts">
       <div class="block-1">
-        <div class="chart first">
-          <div class="chart-header">
-            <div class="box-header">
-              <div class="title">Продолжительность работы,ч</div>
-              <div class="bul">
-                <span></span>
-              </div>
-            </div>
-            <period />
-          </div>
-          <div class="chart-content">
-           <div class="line" v-for="itam in lineDataFirst">
-             <div class="box-line">
-               <div class="bg" :style="'width: ' + itam.progress + '%'">
-                 <div class="start">{{ itam.start }}</div>
-                 <div class="end">{{ itam.end }}</div>
-               </div>
-             </div>
-             <div class="data-line">{{ itam.dataLine }}</div>
-           </div>
-          </div>
-          <div class="chart-footer">
-            <div class="title">Общее рабочее время за день</div>
-            <div class="view">23</div>
-          </div>
-        </div>
-        <div class="chart second">
-          <div class="chart-header">
-            <div class="title">Остатки на складах</div>
-            <div class="bul">
-              <span></span>
-            </div>
-          </div>
-          <div class="chart-content">
-            <div class="box" v-for="el in lineDataSecond">
-              <div class="name-block">{{ el.box }}</div>
-              <div class="block-content" v-for="elem in el.data">
-                <div class="title-position">{{ elem.titlePosition }}</div>
-                <div class="group">
-                  <div class="number-lit" v-for="i in elem.capacitys">{{ i.value }}л
-                    <div class="line-progress">
-                      <div class="data-progress" :style="'width: ' + i.remainder + '%'"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="chart-footer">
-            <div class="title">Итого - ISO: <b>100л</b>; POL: <b>100л</b>; PEN: <b>100л</b></div>
-          </div>
-        </div>
+        <durationWork></durationWork>
+        <stockBalances></stockBalances>
       </div>
       <div class="block-2">
         <div class="chart-data panel-release">
           <div class="chart-header">
             <div class="title">Выпуск панелей</div>
-            <period />
+            <period title="PanelRelease"></period>
             <div class="bul">
               <span></span>
             </div>
@@ -161,7 +103,7 @@
         <div class="chart-data consumption">
           <div class="chart-header">
             <div class="title">Сумарный расход</div>
-            <period />
+            <period title="TotalСonsumption"></period>
             <div class="bul">
               <span></span>
             </div>
@@ -226,7 +168,7 @@
         <div class="chart-data-min energy-consumption">
           <div class="chart-header">
             <div class="title">Расход энергоресурсов</div>
-            <period />
+            <period title="EnergyConsumption"></period>
             <div class="bul">
               <span></span>
             </div>
@@ -238,7 +180,7 @@
                 <div class="subtitle">Ввод1, кВт</div>
               </div>
               <div class="icon">
-                <div class="circle" style="background: #EDBE45"></div>
+                <div class="circle"></div>
               </div>
             </div>
             <div class="item">
@@ -247,7 +189,7 @@
                 <div class="subtitle">Ввод2, кВт</div>
               </div>
               <div class="icon">
-                <div class="circle" style="background: #EDBE45"></div>
+                <div class="circle"></div>
               </div>
             </div>
             <div class="item">
@@ -255,8 +197,8 @@
                 <div class="quantity">111010101</div>
                 <div class="subtitle">Газ, м3</div>
               </div>
-              <div class="icon">
-                <div class="circle" style="background:  #FC7A7A"></div>
+              <div class="iconLast">
+                <div class="circle"></div>
               </div>
             </div>
           </div>
@@ -266,7 +208,7 @@
         <div class="chart-data consumption">
           <div class="chart-header">
             <div class="title">Удельный расход на км</div>
-            <period />
+            <period title="SpecificConsumption"></period>
             <div class="bul">
               <span></span>
             </div>
@@ -355,12 +297,12 @@
           </div>
           <div class="chart-content">
             <div class="content-box">
-              <div class="calender-period">
+              <div class="calendar-period">
                 <div class="select-date">
                   <input type="datetime-local"/>
                 </div>
               </div>
-              <period />
+              <period title="ComparisonModuleStart"></period>
               <div class="indicators">
                 <div class="module">
                   <div class="index">500</div>
@@ -428,12 +370,12 @@
               </div>
             </div>
             <div class="content-box">
-              <div class="calender-period">
+              <div class="calendar-period">
                 <div class="select-date">
                   <input type="datetime-local"/>
                 </div>
               </div>
-              <period />
+              <period title="ComparisonModuleEnd"></period>
               <div class="indicators">
                 <div class="module">
                   <div class="index">445</div>
@@ -486,6 +428,9 @@
 
 import { mapActions } from "vuex";
 import Period from "@/components/home/period";
+import Calendar from "@/components/home/calendar";
+import DurationWork from "@/components/home/DurationWork";
+import StockBalances from "@/components/home/StockBalances";
 
 export default {
   layout: "header_footer",
@@ -495,110 +440,15 @@ export default {
     this.setActiveTabSidebar("Dashboard");
   },
 
-  data() {
-    return {
-      periodActive: [false, true, false, false, false, false],
-      // showBul: false,
-    }
-  },
-
   components: {
     period: Period,
+    calendar: Calendar,
+    durationWork: DurationWork,
+    stockBalances: StockBalances,
+
   },
 
   computed: {
-    calenders() {
-      return [
-        {
-          title: "Пн",
-          number: 31,
-        },
-        {
-          title: "Вт",
-          number: 1,
-        },
-        {
-          title: "Ср",
-          number: 2,
-        },
-        {
-          title: "Чт",
-          number: 3,
-        },
-        {
-          title: "Пт",
-          number: 4,
-        },
-        {
-          title: "Сб",
-          number: 5,
-        },
-        {
-          title: "Вс",
-          number: 6,
-        },
-        {
-          title: "Пн",
-          number: 7,
-        },
-        {
-          title: "Вт",
-          number: 8,
-        },
-        {
-          title: "Ср",
-          number: 9,
-        },
-        {
-          title: "Чт",
-          number: 10,
-        },
-        {
-          title: "Пт",
-          number: 11,
-        },
-        {
-          title: "Сб",
-          number: 12,
-        },
-        {
-          title: "Вс",
-          number: 13,
-        },
-        {
-          title: "Пн",
-          number: 14,
-        },
-        {
-          title: "Вт",
-          number: 15,
-        },
-        {
-          title: "Ср",
-          number: 16,
-        },
-        {
-          title: "Чт",
-          number: 17,
-        },
-        {
-          title: "Пт",
-          number: 18,
-        },
-        {
-          title: "Сб",
-          number: 19,
-        },
-        {
-          title: "Вс",
-          number: 20,
-        },
-        {
-          title: "Пн",
-          number: 21,
-        },
-      ]
-    },
     chartOptionsPio() {
       return {
         chart: {
@@ -671,166 +521,6 @@ export default {
         }]
       }
     },
-    lineDataFirst() {
-      return [
-        {
-          progress: 0,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 0.75,
-        },
-        {
-          progress: 20,
-          start: '4:10',
-          end: '23:23',
-          dataLine: 3.75,
-        },
-        {
-          progress: 50,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 8.75,
-        },
-        {
-          progress: 80,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 9.75,
-        },
-        {
-          progress: 0,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 0.75,
-        },
-        {
-          progress: 20,
-          start: '4:10',
-          end: '23:23',
-          dataLine: 3.75,
-        },
-        {
-          progress: 50,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 8.75,
-        },
-        {
-          progress: 80,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 9.75,
-        },
-        {
-          progress: 20,
-          start: '4:10',
-          end: '23:23',
-          dataLine: 3.75,
-        },
-        {
-          progress: 50,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 8.75,
-        },
-        {
-          progress: 50,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 8.75,
-        },
-        {
-          progress: 80,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 9.75,
-        },
-      ];
-    },
-    lineDataSecond() {
-      return [
-        {
-          box: "Скалад 1",
-          data: [
-            {
-              titlePosition: 'Изоционат',
-              capacitys: [
-                {
-                  value: 40,
-                  remainder: 30,
-                },
-                {
-                  value: 50,
-                  remainder: 60,
-                }
-              ],
-            },
-            {
-              titlePosition: 'Полиол',
-              capacitys: [
-                {
-                  value: 25,
-                  remainder: 30,
-                },
-                {
-                  value: 45,
-                  remainder: 60,
-                }
-              ],
-            }
-          ]
-        },
-        {
-          box: "Скалад 2",
-          data: [
-            {
-              titlePosition: 'Пентан',
-              capacitys: [
-                {
-                  value: 25,
-                  remainder: 30,
-                }
-              ],
-            },
-          ]
-        },
-        {
-          box: "Скалад 3",
-          data: [
-            {
-              titlePosition: 'Изоционат',
-              capacitys: [
-                {
-                  value: 100,
-                  remainder: 10,
-                },
-                {
-                  value: 25,
-                  remainder: 50,
-                },
-                {
-                  value: 25,
-                  remainder: 80,
-                }
-              ],
-            },
-            {
-              titlePosition: 'Полиол',
-              capacitys: [
-                {
-                  value: 45,
-                  remainder: 60,
-                },
-                {
-                  value: 25,
-                  remainder: 10,
-                },
-              ]
-            },
-          ]
-        },
-      ];
-    },
   },
 
    methods: {
@@ -847,93 +537,59 @@ export default {
 
 <style lang="scss" scoped>
 
-.calender {
-  width: 100%;
+.chart-header {
   display: flex;
-  justify-content: center;
-  position: relative;
-  padding: 24px 0;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #E9E9E9;
+  padding: 2px 12px;
 
-  .calender-box {
-    width: calc(100% - 242px);
+  .title {
+    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: center;
+    color: #000000;
+  }
+
+  .bul {
     display: flex;
-    //justify-content: flex-end;
+    justify-content: center;
     align-items: center;
-    overflow: auto;
-
-    .day {
-      height: 80px;
-      width: 56px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 9px 12px;
-      background: #FFFFFF;
-      border: 2px solid #ECEDF4;
-      border-radius: 11px;
-      margin-right: 12px;
-      margin-bottom: 6px;
-
-      .title {
-        font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, "Helvetica Neue", Arial, sans-serif;
-        font-size: 16px;
-        font-weight: 400;
-        text-align: center;
-        color: #B1B1BC;
-        margin-bottom: 7px;
-      }
-
-      .number {
-        font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, "Helvetica Neue", Arial, sans-serif;
-        font-size: 24px;
-        font-weight: 500;
-        text-align: center;
-        color: #42435F;
-      }
-
-      &.new {
-        border: 2px solid #3F51B5;
-        margin-right: 0;
-      }
+    span {
+      position: relative;
+      background-color: #CFCDCD;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      font-size: 0;
+      left: -10px;
     }
 
-    .new {
-      font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-      Roboto, "Helvetica Neue", Arial, sans-serif;
-      font-size: 14px;
-      font-weight: 500;
-      text-align: center;
-      color: #42435F;
-      text-transform: uppercase;
-    }
-
-    &::before {
-      content: '';
+    span:before {
       position: absolute;
-      top: 44px;
-      left: 57px;
-      width: 40px;
-      height: 40px;
-      background-image: url("~assets/img/arrow_prew.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
+      left: 5px;
+      top: 0;
+      content: '';
+
+      background-color: #CFCDCD;
+      font-size: 0;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
     }
 
-    &::after {
-      content: '';
+    span:after {
       position: absolute;
-      top: 44px;
-      right: 57px;
-      width: 40px;
-      height: 40px;
-      background-image: url("~assets/img/arrow_next.png");
-      background-position: center;
-      background-repeat: no-repeat;
-      background-size: cover;
+      left: 10px;
+      top: 0;
+      content: '';
+      background-color: #CFCDCD;
+      font-size: 0;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
     }
   }
 }
@@ -1010,161 +666,12 @@ export default {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  padding: 0 36px 52px;
+  padding: 0 36px;
 
   .block-1 {
     width: 280px;
     margin-right: 36px;
-
-      .chart.first {
-        height: 324px;
-        margin-bottom: 24px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-        .chart-header {
-          padding-bottom: 6px;
-          display: flex;
-          flex-wrap: wrap;
-          .box-header {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 9px;
-          }
-
-          .period {
-            .btn {
-              margin-right: 6px;
-            }
-          }
-        }
-        .chart-content {
-          height: 100%;
-          padding: 12px 6px;
-          justify-content: flex-start;
-          overflow: auto;
-          .line {
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            .box-line {
-              width: 100%;
-              font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-              Roboto, "Helvetica Neue", Arial, sans-serif;
-              font-style: normal;
-              font-weight: normal;
-              font-size: 10px;
-              color: #000000;
-              .bg {
-                padding: 0 10px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                height: 16px;
-                background: #ECEDF4;
-                .start {
-                  margin-right: 10px;
-                }
-              }
-              .start,
-              .end {
-                display: none;
-              }
-              &:hover {
-                .start,
-                .end {
-                  display: flex;
-                }
-              }
-            }
-            .data-line {
-              font-weight: bold;
-              font-size: 12px;
-              line-height: 15px;
-              color: #000000;
-            }
-          }
-        }
-      }
-
-      .chart.second {
-        height: 358px;
-        margin-bottom: 24px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-        .chart-header {
-          padding: 3px 12px;
-        }
-        .chart-content {
-          height: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          overflow: auto;
-          .box {
-            display: flex;
-            flex-direction: column;
-            padding: 6px 8px 6px 12px;
-            font-weight: normal;
-            font-size: 10px;
-            line-height: 12px;
-            color: #000000;
-            border-bottom: 1px solid #E9E9E9;
-            .name-block {
-              margin-bottom: 6px;
-            }
-            .block-content {
-              display: flex;
-              flex-direction: column;
-              padding-left: 12px;
-              margin-bottom: 6px;
-
-              .title-position {
-                font-weight: normal;
-                font-size: 10px;
-                line-height: 12px;
-                color: #000000;
-              }
-
-              .group {
-                display: flex;
-                flex-direction: column;
-                .number-lit {
-                  display: flex;
-                  align-items: center;
-                  justify-content: flex-end;
-                  font-weight: 500;
-                  font-size: 12px;
-                  line-height: 15px;
-                  color: #000000;
-                }
-
-                .line-progress {
-                  width: 178px;
-                  height: 8px;
-                  background: #ECEDF4;
-                  border-radius: 2px;
-                  margin-left: 6px;
-
-                  .data-progress {
-                    height: 8px;
-                    background: #3F51B5;
-                    border-radius: 2px;
-                    z-index: 2;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
+  }
 
   .block-2 {
     display: flex;
@@ -1322,15 +829,29 @@ export default {
             }
           }
           .icon {
-            font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-            Roboto, "Helvetica Neue", Arial, sans-serif;
-            font-weight: 500;
-            font-size: 16px;
-            color: #FFFFFF;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-image: url("~assets/img/lightning.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
             .circle {
-              width: 50px;
-              height: 50px;
-              border-radius: 50%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+            }
+          }
+
+          .iconLast {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-image: url("~assets/img/fire.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: contain;
+            .circle {
               display: flex;
               justify-content: center;
               align-items: center;
@@ -1439,7 +960,7 @@ export default {
           height: 100%;
           margin-right: 3px;
           border-right:  1px solid #E9E9E9;
-          .calender-period {
+          .calendar-period {
             padding: 6px 0;
             .select-date {
               height: 20px;
@@ -1496,69 +1017,6 @@ export default {
   margin-bottom: 37px;
 }
 
-.chart {
-  width: 284px;
-  border: 2px solid #E9E9E9;
-  border-radius: 9px;
-}
-
-.chart-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #E9E9E9;
-  padding: 2px 12px;
-
-  .title {
-    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    text-align: center;
-    color: #000000;
-  }
-
-  .bul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    span {
-      position: relative;
-      background-color: #CFCDCD;
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      font-size: 0;
-      left: -10px;
-    }
-
-    span:before {
-      position: absolute;
-      left: 5px;
-      top: 0;
-      content: '';
-
-      background-color: #CFCDCD;
-      font-size: 0;
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-    }
-
-    span:after {
-      position: absolute;
-      left: 10px;
-      top: 0;
-      content: '';
-      background-color: #CFCDCD;
-      font-size: 0;
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-    }
-  }
-}
-
 .resul {
   .result-ok {
     font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -1591,34 +1049,11 @@ export default {
   }
 }
 
-.chart-footer {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 1px solid #E9E9E9;
-  padding: 2px 24px 0;
-
-  .title {
-    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 10px;
-    color: #3F51B5;
-  }
-
-  .view {
-    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-weight: bold;
-    font-size: 10px;
-    color: #3F51B5;
-  }
-}
-
-main{
+main {
   width: 100%;
   height: 100%;
 }
+
 .btn-rnd {
   width: 60px;
   height: 60px;
