@@ -2,29 +2,44 @@
   <div>
     <div>
       <main>
-        <button class="btn-rnd btn-plus">+</button>
+        <button class="btn-rnd btn-plus"
+                @click="showChartAll">+
+        </button>
       </main>
-      <div class="menu-bul">
-        <div class="hide">Скрыть</div>
-        <div class="show">Обновить</div>
-      </div>
     </div>
-   <calendar></calendar>
+    <calendar></calendar>
     <section class="charts">
       <div class="block-1">
         <durationWork></durationWork>
         <stockBalances></stockBalances>
       </div>
       <div class="block-2">
-        <div class="chart-data panel-release">
+        <div
+            class="chart-data panel-release"
+            v-if="PanelRelease.cardShow"
+        >
           <div class="chart-header">
             <div class="title">Выпуск панелей</div>
             <period title="PanelRelease"></period>
-            <div class="bul">
+            <div
+                class="bul"
+                @click="PanelRelease.modalBul=!PanelRelease.modalBul"
+            >
               <span></span>
             </div>
           </div>
           <div class="chart-content">
+            <div
+                class="menu-bul"
+                v-if="PanelRelease.modalBul"
+            >
+              <div
+                  class="btn-bul"
+                  @click="PanelRelease.cardShow=!PanelRelease.cardShow; PanelRelease.modalBul=false"
+              >Скрыть
+              </div>
+              <div class="btn-bul">Обновить</div>
+            </div>
             <div class="diagram">
               <highcharts
                   :options="chartOptionsPio"
@@ -426,7 +441,7 @@
 
 <script>
 
-import { mapActions } from "vuex";
+import {mapActions} from "vuex";
 import Period from "@/components/home/period";
 import Calendar from "@/components/home/calendar";
 import DurationWork from "@/components/home/DurationWork";
@@ -438,6 +453,34 @@ export default {
   created() {
     this.setActiveTabHeader("HOME");
     this.setActiveTabSidebar("Dashboard");
+  },
+
+  data() {
+    return {
+      DurationWork: {
+        modalBul: false,
+      },
+      PanelRelease: {
+        modalBul: false,
+        cardShow: true,
+      },
+      TotalСonsumption: {
+        modalBul: false,
+        carcardShowd: true,
+      },
+      EnergyConsumption: {
+        modalBul: false,
+        cardShow: true,
+      },
+      SpecificConsumption: {
+        modalBul: false,
+        cardShow: true,
+      },
+      ComparisonModule: {
+        modalBul: false,
+        cardShow: true,
+      },
+    }
   },
 
   components: {
@@ -523,15 +566,19 @@ export default {
     },
   },
 
-   methods: {
-     ...mapActions("users", {
-       setActiveTabHeader: "setActiveTabHeader",
-       setActiveTabSidebar: "setActiveTabSidebar",
-     }),
-     // changeShowBul () {
-     //   this.ShowBul = !this.ShowBul;
-     // }
-   }
+  methods: {
+    ...mapActions("users", {
+      setActiveTabHeader: "setActiveTabHeader",
+      setActiveTabSidebar: "setActiveTabSidebar",
+    }),
+    showChartAll() {
+      this.PanelRelease.cardShow = true;
+      this.TotalСonsumption.cardShow = true;
+      this.EnergyConsumption.cardShow = true;
+      this.SpecificConsumption.cardShow = true;
+      this.ComparisonModule.cardShow = true;
+    },
+  }
 };
 </script>
 
@@ -542,7 +589,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #E9E9E9;
-  padding: 2px 12px;
+  padding: 2px 8px 0 12px;
 
   .title {
     font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -554,9 +601,13 @@ export default {
   }
 
   .bul {
+    cursor: pointer;
+    width: 25px;
+    height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+
     span {
       position: relative;
       background-color: #CFCDCD;
@@ -596,17 +647,20 @@ export default {
 
 .indicators {
   padding-right: 44px;
+
   .module {
     display: flex;
     align-items: baseline;
     padding-left: 68px;
     padding-top: 12px;
     margin-bottom: 12px;
+
     .index {
       font-size: 24px;
       font-weight: 500;
       margin-right: 9px;
     }
+
     .resul {
       font-style: normal;
       font-weight: 500;
@@ -614,10 +668,12 @@ export default {
       color: #000000;
     }
   }
+
   .data-list {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+
     .list {
       max-width: 207px;
       width: 100%;
@@ -626,10 +682,12 @@ export default {
       align-items: center;
       margin-bottom: 12px;
       font-size: 14px;
+
       .item {
         display: flex;
         align-items: center;
         font-weight: 500;
+
         .circle {
           width: 12px;
           height: 12px;
@@ -639,19 +697,23 @@ export default {
       }
     }
   }
+
   .indicators-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     .title {
       margin-left: 9px;
       font-style: normal;
       font-weight: normal;
       font-size: 14px;
     }
+
     .data {
       display: flex;
       align-items: baseline;
+
       .index {
         font-style: normal;
         font-weight: 500;
@@ -678,19 +740,24 @@ export default {
     flex-direction: column;
     flex-wrap: wrap;
     margin-right: 48px;
+
     .panel-release {
       .chart-content {
         display: flex;
+
         .diagram {
           width: 45%;
         }
+
         .content-box {
           width: 55%;
           padding-top: 25px;
+
           .indicators {
             .module {
               padding-left: 17px;
             }
+
             .data-list {
               align-items: end;
               margin-bottom: 8px;
@@ -708,12 +775,14 @@ export default {
         }
       }
     }
+
     .consumption {
       .chart-content {
         padding: 0 12px;
         padding-bottom: 12px;
         display: flex;
         flex-wrap: wrap;
+
         .item {
           width: 192px;
           height: 90px;
@@ -729,6 +798,7 @@ export default {
           border-radius: 12px;
           margin-right: 12px;
           margin-top: 11px;
+
           .data {
             width: 116px;
             display: flex;
@@ -737,6 +807,7 @@ export default {
             flex-direction: column;
             margin-right: 6px;
             margin-top: 6px;
+
             .quantity {
               font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
               Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -744,6 +815,7 @@ export default {
               font-size: 48px;
               color: #000000;
             }
+
             .subtitle {
               width: 100%;
               font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -753,12 +825,14 @@ export default {
               color: #B1B1BC;
             }
           }
+
           .icon {
             font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
             Roboto, "Helvetica Neue", Arial, sans-serif;
             font-weight: 500;
             font-size: 16px;
             color: #FFFFFF;
+
             .circle {
               width: 50px;
               height: 50px;
@@ -768,6 +842,7 @@ export default {
               align-items: center;
             }
           }
+
           &:nth-child(3n) {
             margin-right: 0;
           }
@@ -781,10 +856,12 @@ export default {
       border: 2px solid #E9E9E9;
       border-radius: 9px;
       margin-bottom: 36px;
+
       .chart-content {
         padding: 0 12px;
         display: flex;
         flex-wrap: wrap;
+
         .item {
           width: 192px;
           height: 90px;
@@ -800,6 +877,7 @@ export default {
           border-radius: 12px;
           margin-right: 12px;
           margin-top: 11px;
+
           .data {
             width: 116px;
             display: flex;
@@ -808,6 +886,7 @@ export default {
             flex-direction: column;
             margin-right: 6px;
             margin-top: 6px;
+
             .quantity {
               height: 60px;
               text-align: center;
@@ -819,6 +898,7 @@ export default {
               font-size: 24px;
               color: #000000;
             }
+
             .subtitle {
               width: 100%;
               font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -828,6 +908,7 @@ export default {
               color: #B1B1BC;
             }
           }
+
           .icon {
             width: 50px;
             height: 50px;
@@ -836,6 +917,7 @@ export default {
             background-repeat: no-repeat;
             background-position: center;
             background-size: contain;
+
             .circle {
               display: flex;
               justify-content: center;
@@ -851,12 +933,14 @@ export default {
             background-repeat: no-repeat;
             background-position: center;
             background-size: contain;
+
             .circle {
               display: flex;
               justify-content: center;
               align-items: center;
             }
           }
+
           &:nth-child(3n) {
             margin-right: 0;
           }
@@ -870,11 +954,13 @@ export default {
     flex-direction: column;
     flex-wrap: wrap;
     margin-right: 48px;
+
     .consumption {
       .chart-content {
         padding: 0 12px;
         display: flex;
         flex-wrap: wrap;
+
         .item {
           width: 192px;
           height: 90px;
@@ -890,6 +976,7 @@ export default {
           border-radius: 12px;
           margin-right: 12px;
           margin-top: 11px;
+
           .data {
             width: 116px;
             display: flex;
@@ -898,6 +985,7 @@ export default {
             flex-direction: column;
             margin-right: 6px;
             margin-top: 6px;
+
             .quantity {
               font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
               Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -905,6 +993,7 @@ export default {
               font-size: 48px;
               color: #000000;
             }
+
             .subtitle {
               width: 100%;
               font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -914,6 +1003,7 @@ export default {
               color: #B1B1BC;
             }
           }
+
           .icon {
             .circle {
               width: 50px;
@@ -923,6 +1013,7 @@ export default {
               justify-content: center;
               align-items: center;
               flex-direction: column;
+
               .title {
                 font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
                 Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -931,6 +1022,7 @@ export default {
                 color: #FFFFFF;
                 text-align: center;
               }
+
               .subtitle {
                 font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
                 Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -941,6 +1033,7 @@ export default {
               }
             }
           }
+
           &:nth-child(3n) {
             margin-right: 0;
           }
@@ -950,18 +1043,22 @@ export default {
 
     .comparison-module {
       font-size: 14px;
+
       .chart-content {
         display: flex;
         width: 100%;
         height: calc(100% - 21px);
         padding: 6px 3px;
+
         .content-box {
           width: 50%;
           height: 100%;
           margin-right: 3px;
-          border-right:  1px solid #E9E9E9;
+          border-right: 1px solid #E9E9E9;
+
           .calendar-period {
             padding: 6px 0;
+
             .select-date {
               height: 20px;
               margin-left: 12px;
@@ -971,6 +1068,7 @@ export default {
               text-align: left;
               color: #9098AF;
             }
+
             .select-date input {
               height: 20px;
               padding-left: 3px;
@@ -983,16 +1081,19 @@ export default {
               border-radius: 4px;
             }
           }
+
           .period {
             button {
               margin-right: 6px;
             }
+
             button:last-child {
               margin-right: 3px;
             }
           }
         }
       }
+
       .content-box:last-child {
         border-right: none;
         margin-right: 0;
@@ -1004,7 +1105,7 @@ export default {
 .data {
   display: flex;
 
-  .index  {
+  .index {
     margin-right: 4px;
   }
 }
@@ -1073,22 +1174,50 @@ main {
 
   position: absolute;
   bottom: 48px;
-  right: 48px ;
+  right: 48px;
 }
-.btn-rnd:hover{
+
+.btn-rnd:hover {
   background-color: hsl(160, 98%, 36%);
 }
 
+.chart-content {
+  position: relative;
+}
+
 .menu-bul {
-  display: none;
-  height: 80px;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: auto;
   width: 110px;
-  //display: flex;
+  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   background: #F7F8FA;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
   border-radius: 4px 0px 4px 4px;
+
+  .btn-bul {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 12px;
+    color: #000000;
+
+    &:hover {
+      color: #F7F8FA;
+      background: #4B6075;
+      border-radius: 4px 0px 4px 4px;
+      transition: 0.2s;
+    }
+  }
 }
 </style>
