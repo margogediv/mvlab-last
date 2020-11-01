@@ -1,30 +1,72 @@
 <template>
   <div class="chart first">
-    <div class="chart-header">
-      <div class="box-header">
-        <div class="title">Продолжительность работы,ч</div>
-        <div class="bul">
-          <span></span>
-        </div>
-      </div>
-<!--      <period title="DurationWork"></period>-->
-    </div>
-    <div class="chart-content">
-      <div class="line" v-for="itam in lineDataFirst">
-        <div class="box-line">
-          <div class="bg" :style="'width: ' + itam.progress + '%'">
-            <div class="start">{{ itam.start }}</div>
-            <div class="end">{{ itam.end }}</div>
+      <div class="chart-header">
+        <div class="box-header">
+          <div class="title">Продолжительность работы,ч</div>
+          <div class="bul" @click="DurationWork.modalBul=!DurationWork.modalBul">
+            <span></span>
+          </div>
+          <div
+              class="menu-bul"
+              v-if="DurationWork.modalBul"
+          >
+            <div
+                class="btn-bul"
+                @click="DurationWork.modalBul=false"
+            >Скрыть
+            </div>
+            <div class="btn-bul">Обновить</div>
           </div>
         </div>
-        <div class="data-line">{{ itam.dataLine }}</div>
+        <div class="period">
+          <button
+              v-on:click="setPeriod(1)"
+              class="btn text"
+              :class="{active: periodActive[1]}"
+          >сутки
+          </button>
+          <button
+              v-on:click="setPeriod(2)"
+              class="btn text"
+              :class="{active: periodActive[2] || periodActive[3] || periodActive[4]}"
+          >смена
+          </button>
+          <button
+              v-on:click="setPeriod(2)"
+              class="btn num"
+              :class="{active: periodActive[2]}"
+          >1
+          </button>
+          <button
+              v-on:click="setPeriod(3)"
+              class="btn num"
+              :class="{active: periodActive[3]}"
+          >2
+          </button>
+          <button
+              v-on:click="setPeriod(4)"
+              class="btn num"
+              :class="{active: periodActive[4]}"
+          >3
+          </button>
+        </div>
+      </div>
+      <div class="chart-content">
+        <div class="line" v-for="itam in lineDataFirst">
+          <div class="box-line">
+            <div class="bg" :style="'width: ' + itam.progress + '%'">
+              <div class="start">{{ itam.start }}</div>
+              <div class="end">{{ itam.end }}</div>
+            </div>
+          </div>
+          <div class="data-line">{{ itam.dataLine }}</div>
+        </div>
+      </div>
+      <div class="chart-footer">
+        <div class="title">Общее рабочее время за день</div>
+        <div class="view">23</div>
       </div>
     </div>
-    <div class="chart-footer">
-      <div class="title">Общее рабочее время за день</div>
-      <div class="view">23</div>
-    </div>
-  </div>
 </template>
 
 <script>
@@ -34,8 +76,13 @@ import Calendar from "~/components/home/calendar";
 
 export default {
   name: "DurationWork",
-  components: {
-    period: Period,
+  data() {
+    return {
+      DurationWork: {
+        modalBul: false,
+      },
+      periodActive: [false, true, false, false, false],
+    }
   },
   computed: {
     lineDataFirst() {
@@ -115,12 +162,74 @@ export default {
       ];
     },
   },
+  methods: {
+    setPeriod (id) {
+      let arr = [false, false, false, false, false];
+      arr[id] = true;
+      this.periodActive = arr;
+    }
+  },
 
 }
 </script>
 
 <style lang="scss" scoped>
 
+.period {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .btn {
+    cursor: pointer;
+    outline: none;
+    height: 23px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-right: 12px;
+    padding: 0 6px;
+
+    border: 1px solid #ECEDF4;
+    border-radius: 3px;
+    background: #FFFFFF;
+
+    font-weight: 500;
+    font-size: 12px;
+    color: #42435F;
+
+    &:hover {
+      border: 1px solid #272848;
+    }
+  }
+
+  .text {
+    width: 52px;
+
+  }
+
+  .btn.text:nth-child(3) {
+    margin-right: 6px;
+  }
+
+  .num {
+    width: 42px;
+    background: #FFFFFF;
+    margin-right: 6px;
+  }
+
+  .active {
+    background: #272848;
+    color: #BFC0C9;
+    text-align: center;
+  }
+
+  button:last-child {
+    margin-right: 0;
+  }
+}
 .chart {
   width: 284px;
   border: 2px solid #E9E9E9;
@@ -137,19 +246,29 @@ export default {
     padding-bottom: 6px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 
     .box-header {
       width: 100%;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 9px;
+      padding-left: 12px;
+      padding-right: 6px;
     }
 
     .period {
-
+      padding-left: 12px;
+      padding-right: 6px;
       .btn {
         margin-right: 6px;
+
+        &:nth-child(1) {
+          margin-right: 12px;
+        }
       }
     }
   }
@@ -215,7 +334,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #E9E9E9;
-  padding: 2px 12px;
+  padding: 2px 0;
 
   .title {
     font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -227,9 +346,13 @@ export default {
   }
 
   .bul {
+    cursor: pointer;
+    width: 15px;
+    height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+
     span {
       position: relative;
       background-color: #CFCDCD;
@@ -287,6 +410,41 @@ export default {
     font-weight: bold;
     font-size: 10px;
     color: #3F51B5;
+  }
+}
+.menu-bul {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+  position: absolute;
+  top: 25px;
+  right: 0;
+  height: auto;
+  width: 110px;
+  display: flex;
+  flex-direction: column;
+  background: #F7F8FA;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+  border-radius: 4px 0px 4px 4px;
+
+  .btn-bul {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 12px;
+    color: #000000;
+
+    &:hover {
+      color: #F7F8FA;
+      background: #4B6075;
+      border-radius: 4px 0px 4px 4px;
+      transition: 0.2s;
+    }
   }
 }
 

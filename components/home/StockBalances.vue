@@ -2,8 +2,19 @@
   <div class="chart second">
     <div class="chart-header">
       <div class="title">Остатки на складах</div>
-      <div class="bul">
+      <div class="bul"  @click="StockBalances.modalBul=!StockBalances.modalBul">
         <span></span>
+      </div>
+      <div
+          class="menu-bul"
+          v-if="StockBalances.modalBul"
+      >
+        <div
+            class="btn-bul"
+            @click="StockBalances.modalBul=false"
+        >Скрыть
+        </div>
+        <div class="btn-bul">Обновить</div>
       </div>
     </div>
     <div class="chart-content">
@@ -30,7 +41,13 @@
 <script>
 export default {
   name: "StockBalances",
-
+  data() {
+    return {
+      StockBalances: {
+        modalBul: false,
+      },
+    }
+  },
   computed: {
     lineDataSecond() {
       return [
@@ -135,9 +152,6 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 
-  .chart-header {
-    padding: 3px 12px;
-  }
   .chart-content {
     height: 100%;
     display: flex;
@@ -203,10 +217,11 @@ export default {
 }
 .chart-header {
   display: flex;
+  position: relative;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #E9E9E9;
-  padding: 2px 12px;
+  padding: 3px 6px 3px 12px;
 
   .title {
     font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -218,9 +233,13 @@ export default {
   }
 
   .bul {
+    cursor: pointer;
+    width: 25px;
+    height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
+
     span {
       position: relative;
       background-color: #CFCDCD;
@@ -278,6 +297,42 @@ export default {
     font-weight: bold;
     font-size: 10px;
     color: #3F51B5;
+  }
+}
+
+.menu-bul {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+  position: absolute;
+  top: 25px;
+  right: 0;
+  height: auto;
+  width: 110px;
+  display: flex;
+  flex-direction: column;
+  background: #F7F8FA;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
+  border-radius: 4px 0px 4px 4px;
+
+  .btn-bul {
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 12px;
+    color: #000000;
+
+    &:hover {
+      color: #F7F8FA;
+      background: #4B6075;
+      border-radius: 4px 0px 4px 4px;
+      transition: 0.2s;
+    }
   }
 }
 

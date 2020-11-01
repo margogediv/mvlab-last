@@ -457,9 +457,6 @@ export default {
 
   data() {
     return {
-      DurationWork: {
-        modalBul: false,
-      },
       PanelRelease: {
         modalBul: false,
         cardShow: true,
@@ -1220,4 +1217,5 @@ main {
     }
   }
 }
+
 </style>
