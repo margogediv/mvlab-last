@@ -115,202 +115,217 @@
             </div>
           </div>
         </div>
-        <div class="chart-data consumption">
-          <div class="chart-header">
-            <div class="title">Сумарный расход</div>
-            <period title="TotalСonsumption"></period>
-            <div class="bul">
-              <span></span>
-            </div>
-          </div>
-          <div class="chart-content">
-            <div class="item">
-              <div class="data">
-                <div class="quantity">400</div>
-                <div class="subtitle">Изоцианат, л</div>
-              </div>
-              <div class="icon">
-                <div class="circle" style="background: #2D9AD8">ISO</div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="data">
-                <div class="quantity">250</div>
-                <div class="subtitle">Полиол, л</div>
-              </div>
-              <div class="icon">
-                <div class="circle" style="background: #FC7A7A">POL</div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="data">
-                <div class="quantity">100</div>
-                <div class="subtitle">Пентан, л</div>
-              </div>
-              <div class="icon">
-                <div class="circle" style="background: #4BBEAA">PEN</div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="data">
-                <div class="quantity">24</div>
-                <div class="subtitle">Катализатор1, л</div>
-              </div>
-              <div class="icon">
-                <div class="circle" style="background: #2D9AD8">K1</div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="data">
-                <div class="quantity">10</div>
-                <div class="subtitle">Катализатор2, л</div>
-              </div>
-              <div class="icon">
-                <div class="circle" style="background: #FC7A7A">K2</div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="data">
-                <div class="quantity">5</div>
-                <div class="subtitle">Катализатор3, л</div>
-              </div>
-              <div class="icon">
-                <div class="circle" style="background: #4BBEAA">K3</div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="chart-data-min energy-consumption">
-          <div class="chart-header">
-            <div class="title">Расход энергоресурсов</div>
-            <period title="EnergyConsumption"></period>
-            <div class="bul">
-              <span></span>
-            </div>
-          </div>
-          <div class="chart-content">
-            <div class="item">
-              <div class="data">
-                <div class="quantity">1000000</div>
-                <div class="subtitle">Ввод1, кВт</div>
-              </div>
-              <div class="icon">
-                <div class="circle"></div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="data">
-                <div class="quantity">11110000</div>
-                <div class="subtitle">Ввод2, кВт</div>
-              </div>
-              <div class="icon">
-                <div class="circle"></div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="data">
-                <div class="quantity">111010101</div>
-                <div class="subtitle">Газ, м3</div>
-              </div>
-              <div class="iconLast">
-                <div class="circle"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="block-3">
-        <div class="chart-data consumption">
+        <div
+            class="chart-data consumption"
+            v-if="SpecificConsumption.cardShow"
+        >
           <div class="chart-header">
             <div class="title">Удельный расход на км</div>
             <period title="SpecificConsumption"></period>
-            <div class="bul">
+            <div
+                class="bul"
+                @click="SpecificConsumption.modalBul=!SpecificConsumption.modalBul"
+            >
               <span></span>
             </div>
           </div>
           <div class="chart-content">
-            <div class="item">
-              <div class="data">
-                <div class="quantity">5,5</div>
-                <div class="subtitle">Изоцианат, л</div>
+            <div
+                class="menu-bul"
+                v-if="SpecificConsumption.modalBul"
+            >
+              <div
+                  class="btn-bul"
+                  @click="SpecificConsumption.cardShow=!SpecificConsumption.cardShow; SpecificConsumption.modalBul=false"
+              >Скрыть
               </div>
-              <div class="icon">
-                <div class="circle" style="background: #2D9AD8">
-                  <div class="title">ISO</div>
-                  <div class="subtitle">km</div>
+              <div class="btn-bul">Обновить</div>
+            </div>
+            <div class="iteam-group">
+              <div class="item">
+                <div class="data">
+                  <div class="quantity">5,5</div>
+                  <div class="subtitle">Изоцианат, л</div>
+                </div>
+                <div class="icon">
+                  <div class="circle" style="background: #2D9AD8">
+                    <div class="title">ISO</div>
+                    <div class="subtitle">km</div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="item">
-              <div class="data">
-                <div class="quantity">3,2</div>
-                <div class="subtitle">Полиол, л</div>
-              </div>
-              <div class="icon">
-                <div class="circle" style="background: #FC7A7A">
-                  <div class="title">POL</div>
-                  <div class="subtitle">km</div>
+              <div class="item">
+                <div class="data">
+                  <div class="quantity">3,2</div>
+                  <div class="subtitle">Полиол, л</div>
+                </div>
+                <div class="icon">
+                  <div class="circle" style="background: #FC7A7A">
+                    <div class="title">POL</div>
+                    <div class="subtitle">km</div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="item">
-              <div class="data">
-                <div class="quantity">1,3</div>
-                <div class="subtitle">Пентан, л</div>
-              </div>
-              <div class="icon">
-                <div class="circle" style="background: #4BBEAA">
-                  <div class="title">PEN</div>
-                  <div class="subtitle">km</div>
+              <div class="item">
+                <div class="data">
+                  <div class="quantity">1,3</div>
+                  <div class="subtitle">Пентан, л</div>
+                </div>
+                <div class="icon">
+                  <div class="circle" style="background: #4BBEAA">
+                    <div class="title">PEN</div>
+                    <div class="subtitle">km</div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="item">
-              <div class="data">
-                <div class="quantity">0,8</div>
-                <div class="subtitle">Катализатор1, л</div>
-              </div>
-              <div class="icon">
-                <div class="circle" style="background: #2D9AD8">
-                  <div class="title">K1</div>
-                  <div class="subtitle">km</div>
+              <div class="item">
+                <div class="data">
+                  <div class="quantity">0,8</div>
+                  <div class="subtitle">Катализатор1, л</div>
+                </div>
+                <div class="icon">
+                  <div class="circle" style="background: #2D9AD8">
+                    <div class="title">K1</div>
+                    <div class="subtitle">km</div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="item">
-              <div class="data">
-                <div class="quantity">3,5</div>
-                <div class="subtitle">Катализатор2, л</div>
-              </div>
-              <div class="icon">
-                <div class="circle" style="background: #FC7A7A">
-                  <div class="title">K2</div>
-                  <div class="subtitle">km</div>
+              <div class="item">
+                <div class="data">
+                  <div class="quantity">3,5</div>
+                  <div class="subtitle">Катализатор2, л</div>
+                </div>
+                <div class="icon">
+                  <div class="circle" style="background: #FC7A7A">
+                    <div class="title">K2</div>
+                    <div class="subtitle">km</div>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="item">
-              <div class="data">
-                <div class="quantity">2,1</div>
-                <div class="subtitle">Катализатор3, л</div>
-              </div>
-              <div class="icon">
-                <div class="circle" style="background: #4BBEAA">
-                  <div class="title">K3</div>
-                  <div class="subtitle">km</div>
+              <div class="item">
+                <div class="data">
+                  <div class="quantity">2,1</div>
+                  <div class="subtitle">Катализатор3, л</div>
+                </div>
+                <div class="icon">
+                  <div class="circle" style="background: #4BBEAA">
+                    <div class="title">K3</div>
+                    <div class="subtitle">km</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="chart-data comparison-module">
+        <div
+            class="chart-data consumption"
+            v-if="TotalСonsumption.cardShow"
+        >
           <div class="chart-header">
-            <div class="title">Модуль сравнения</div>
-            <div class="bul">
+            <div class="title">Сумарный расход</div>
+            <period title="TotalСonsumption"></period>
+            <div
+                class="bul"
+                @click="TotalСonsumption.modalBul=!TotalСonsumption.modalBul"
+            >
               <span></span>
             </div>
           </div>
           <div class="chart-content">
+            <div
+                class="menu-bul"
+                v-if="TotalСonsumption.modalBul"
+            >
+              <div
+                  class="btn-bul"
+                  @click="TotalСonsumption.cardShow=!TotalСonsumption.cardShow; TotalСonsumption.modalBul=false"
+              >Скрыть
+              </div>
+              <div class="btn-bul">Обновить</div>
+            </div>
+            <div class="iteam-group">
+              <div class="item">
+                <div class="data">
+                  <div class="quantity">400</div>
+                  <div class="subtitle">Изоцианат, л</div>
+                </div>
+                <div class="icon">
+                  <div class="circle" style="background: #2D9AD8">ISO</div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="data">
+                  <div class="quantity">250</div>
+                  <div class="subtitle">Полиол, л</div>
+                </div>
+                <div class="icon">
+                  <div class="circle" style="background: #FC7A7A">POL</div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="data">
+                  <div class="quantity">100</div>
+                  <div class="subtitle">Пентан, л</div>
+                </div>
+                <div class="icon">
+                  <div class="circle" style="background: #4BBEAA">PEN</div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="data">
+                  <div class="quantity">24</div>
+                  <div class="subtitle">Катализатор1, л</div>
+                </div>
+                <div class="icon">
+                  <div class="circle" style="background: #2D9AD8">K1</div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="data">
+                  <div class="quantity">10</div>
+                  <div class="subtitle">Катализатор2, л</div>
+                </div>
+                <div class="icon">
+                  <div class="circle" style="background: #FC7A7A">K2</div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="data">
+                  <div class="quantity">5</div>
+                  <div class="subtitle">Катализатор3, л</div>
+                </div>
+                <div class="icon">
+                  <div class="circle" style="background: #4BBEAA">K3</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+            class="chart-data comparison-module"
+            v-if="ComparisonModule.cardShow"
+        >
+          <div class="chart-header">
+            <div class="title">Модуль сравнения</div>
+            <div
+                class="bul"
+                @click="ComparisonModule.modalBul=!ComparisonModule.modalBul"
+            >
+              <span></span>
+            </div>
+          </div>
+          <div class="chart-content">
+            <div
+                class="menu-bul"
+                v-if="ComparisonModule.modalBul"
+            >
+              <div
+                  class="btn-bul"
+                  @click="ComparisonModule.cardShow=!ComparisonModule.cardShow; ComparisonModule.modalBul=false"
+              >Скрыть
+              </div>
+              <div class="btn-bul">Обновить</div>
+            </div>
             <div class="content-box">
               <div class="calendar-period">
                 <div class="select-date">
@@ -434,6 +449,63 @@
             </div>
           </div>
         </div>
+        <div
+            class="chart-data-min energy-consumption"
+            v-if="EnergyConsumption.cardShow"
+        >
+          <div class="chart-header">
+            <div class="title">Расход энергоресурсов</div>
+            <period title="EnergyConsumption"></period>
+            <div
+                class="bul"
+                @click="EnergyConsumption.modalBul=!EnergyConsumption.modalBul"
+            >
+              <span></span>
+            </div>
+          </div>
+          <div class="chart-content">
+            <div
+                class="menu-bul"
+                v-if="EnergyConsumption.modalBul"
+            >
+              <div
+                  class="btn-bul"
+                  @click="EnergyConsumption.cardShow=!EnergyConsumption.cardShow; EnergyConsumption.modalBul=false"
+              >Скрыть
+              </div>
+              <div class="btn-bul">Обновить</div>
+            </div>
+            <div class="iteam-group">
+              <div class="item">
+                <div class="data">
+                  <div class="quantity">1000000</div>
+                  <div class="subtitle">Ввод1, кВт</div>
+                </div>
+                <div class="icon">
+                  <div class="circle"></div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="data">
+                  <div class="quantity">11110000</div>
+                  <div class="subtitle">Ввод2, кВт</div>
+                </div>
+                <div class="icon">
+                  <div class="circle"></div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="data">
+                  <div class="quantity">111010101</div>
+                  <div class="subtitle">Газ, м3</div>
+                </div>
+                <div class="iconLast">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </div>
@@ -463,7 +535,7 @@ export default {
       },
       TotalСonsumption: {
         modalBul: false,
-        carcardShowd: true,
+        cardShow: true,
       },
       EnergyConsumption: {
         modalBul: false,
@@ -724,7 +796,6 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
   padding: 0 36px;
 
   .block-1 {
@@ -734,9 +805,7 @@ export default {
 
   .block-2 {
     display: flex;
-    flex-direction: column;
     flex-wrap: wrap;
-    margin-right: 48px;
 
     .panel-release {
       .chart-content {
@@ -775,73 +844,73 @@ export default {
 
     .consumption {
       .chart-content {
-        padding: 0 12px;
-        padding-bottom: 12px;
-        display: flex;
-        flex-wrap: wrap;
-
-        .item {
-          width: 192px;
-          height: 90px;
+        .iteam-group {
+          padding-bottom: 12px;
           display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
-          padding-bottom: 6px;
-          padding-right: 6px;
-          padding-left: 12px;
-          border: 2px solid #ECEDF4;
-          box-sizing: border-box;
-          border-radius: 12px;
-          margin-right: 12px;
-          margin-top: 11px;
-
-          .data {
-            width: 116px;
+          flex-wrap: wrap;
+          .item {
+            width: 192px;
+            height: 90px;
             display: flex;
+            flex-direction: row;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            margin-right: 6px;
-            margin-top: 6px;
+            padding-bottom: 6px;
+            padding-right: 6px;
+            padding-left: 12px;
+            border: 2px solid #ECEDF4;
+            box-sizing: border-box;
+            border-radius: 12px;
+            margin-right: 12px;
+            margin-top: 11px;
 
-            .quantity {
-              font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-              Roboto, "Helvetica Neue", Arial, sans-serif;
-              font-weight: 500;
-              font-size: 48px;
-              color: #000000;
-            }
-
-            .subtitle {
-              width: 100%;
-              font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-              Roboto, "Helvetica Neue", Arial, sans-serif;
-              font-weight: 500;
-              font-size: 12px;
-              color: #B1B1BC;
-            }
-          }
-
-          .icon {
-            font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-            Roboto, "Helvetica Neue", Arial, sans-serif;
-            font-weight: 500;
-            font-size: 16px;
-            color: #FFFFFF;
-
-            .circle {
-              width: 50px;
-              height: 50px;
-              border-radius: 50%;
+            .data {
+              width: 116px;
               display: flex;
               justify-content: center;
               align-items: center;
-            }
-          }
+              flex-direction: column;
+              margin-right: 6px;
+              margin-top: 6px;
 
-          &:nth-child(3n) {
-            margin-right: 0;
+              .quantity {
+                font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+                Roboto, "Helvetica Neue", Arial, sans-serif;
+                font-weight: 500;
+                font-size: 48px;
+                color: #000000;
+              }
+
+              .subtitle {
+                width: 100%;
+                font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+                Roboto, "Helvetica Neue", Arial, sans-serif;
+                font-weight: 500;
+                font-size: 12px;
+                color: #B1B1BC;
+              }
+            }
+
+            .icon {
+              font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+              Roboto, "Helvetica Neue", Arial, sans-serif;
+              font-weight: 500;
+              font-size: 16px;
+              color: #FFFFFF;
+
+              .circle {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+            }
+
+            &:nth-child(3n) {
+              margin-right: 0;
+            }
           }
         }
       }
@@ -859,98 +928,95 @@ export default {
         display: flex;
         flex-wrap: wrap;
 
-        .item {
-          width: 192px;
-          height: 90px;
+        .iteam-group {
           display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
-          padding-bottom: 6px;
-          padding-right: 6px;
-          padding-left: 12px;
-          border: 2px solid #ECEDF4;
-          box-sizing: border-box;
-          border-radius: 12px;
-          margin-right: 12px;
-          margin-top: 11px;
-
-          .data {
-            width: 116px;
+          flex-wrap: wrap;
+          .item {
+            width: 192px;
+            height: 90px;
             display: flex;
+            flex-direction: row;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
-            margin-right: 6px;
-            margin-top: 6px;
+            padding-bottom: 6px;
+            padding-right: 6px;
+            padding-left: 12px;
+            border: 2px solid #ECEDF4;
+            box-sizing: border-box;
+            border-radius: 12px;
+            margin-right: 12px;
+            margin-top: 11px;
 
-            .quantity {
-              height: 60px;
-              text-align: center;
-              display: flex;
-              align-items: center;
-              font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-              Roboto, "Helvetica Neue", Arial, sans-serif;
-              font-weight: 500;
-              font-size: 24px;
-              color: #000000;
-            }
-
-            .subtitle {
-              width: 100%;
-              font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-              Roboto, "Helvetica Neue", Arial, sans-serif;
-              font-weight: 500;
-              font-size: 12px;
-              color: #B1B1BC;
-            }
-          }
-
-          .icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-image: url("~assets/img/lightning.png");
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
-
-            .circle {
+            .data {
+              width: 116px;
               display: flex;
               justify-content: center;
               align-items: center;
+              flex-direction: column;
+              margin-right: 6px;
+              margin-top: 6px;
+
+              .quantity {
+                height: 60px;
+                text-align: center;
+                display: flex;
+                align-items: center;
+                font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+                Roboto, "Helvetica Neue", Arial, sans-serif;
+                font-weight: 500;
+                font-size: 24px;
+                color: #000000;
+              }
+
+              .subtitle {
+                width: 100%;
+                font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
+                Roboto, "Helvetica Neue", Arial, sans-serif;
+                font-weight: 500;
+                font-size: 12px;
+                color: #B1B1BC;
+              }
             }
-          }
 
-          .iconLast {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-image: url("~assets/img/fire.png");
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: contain;
+            .icon {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              background-image: url("~assets/img/lightning.png");
+              background-repeat: no-repeat;
+              background-position: center;
+              background-size: contain;
 
-            .circle {
-              display: flex;
-              justify-content: center;
-              align-items: center;
+              .circle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
             }
-          }
 
-          &:nth-child(3n) {
-            margin-right: 0;
+            .iconLast {
+              width: 50px;
+              height: 50px;
+              border-radius: 50%;
+              background-image: url("~assets/img/fire.png");
+              background-repeat: no-repeat;
+              background-position: center;
+              background-size: contain;
+
+              .circle {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+              }
+            }
+
+            &:nth-child(3n) {
+              margin-right: 0;
+            }
           }
         }
       }
     }
-  }
-
-  .block-3 {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    margin-right: 48px;
 
     .consumption {
       .chart-content {
@@ -1113,6 +1179,7 @@ export default {
   border: 2px solid #E9E9E9;
   border-radius: 9px;
   margin-bottom: 37px;
+  margin-right: 48px;
 }
 
 .resul {
