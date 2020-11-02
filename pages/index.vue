@@ -2,45 +2,54 @@
   <div>
     <div class="btn-group">
       <main>
-        <button class="btn-rnd btn-plus"
-                @click="ShowModalPlus.modalBul=!ShowModalPlus.modalBul">+
+        <button class="btn-rnd"
+                :class="{'btn-close' : ShowModalPlus.modalBul}"
+                @click="ShowModalPlus.modalBul=!ShowModalPlus.modalBul;">+
         </button>
         <div class="plus-form" v-if="ShowModalPlus.modalBul">
-          <div class="plus-form-item">Продолжительность работы</div>
-          <div class="plus-form-item">Остатки на складах</div>
           <div
               class="plus-form-item"
-              @click="showCartItem('PanelRelease'); ShowModalPlus.modalBul=false;"
+              @click="showCartItem('DurationWork');"
+            >Продолжительность работы
+          </div>
+          <div
+              class="plus-form-item"
+              @click="showCartItem('StockBalances');"
+            >Остатки на складах
+          </div>
+          <div
+              class="plus-form-item"
+              @click="showCartItem('PanelRelease');"
           >Выпуск панелей
           </div>
           <div
               class="plus-form-item"
-              @click="showCartItem('TotalСonsumption'); ShowModalPlus.modalBul=false;"
+              @click="showCartItem('TotalСonsumption')"
           >Суммарный расход
           </div>
           <div
               class="plus-form-item"
-              @click="showCartItem('EnergyConsumption'); ShowModalPlus.modalBul=false;"
+              @click="showCartItem('EnergyConsumption')"
           >Расход электроэнергии
           </div>
           <div
               class="plus-form-item"
-              @click="showCartItem('SpecificConsumption'); ShowModalPlus.modalBul=false;"
+              @click="showCartItem('SpecificConsumption')"
           >Удельный расход на км
           </div>
           <div
               class="plus-form-item"
-              @click="showCartItem('ComparisonModule'); ShowModalPlus.modalBul=false;"
+              @click="showCartItem('ComparisonModule')"
           >Модуль сравнения
           </div>
         </div>
       </main>
     </div>
     <calendar></calendar>
-    <section class="charts" >
+    <section class="charts">
       <div class="block-1">
-        <durationWork></durationWork>
-        <stockBalances></stockBalances>
+        <durationWork v-if="DurationWork.cardShow"></durationWork>
+        <stockBalances v-if="StockBalances.cardShow"></stockBalances>
       </div>
       <div class="block-2">
         <div
@@ -52,7 +61,7 @@
             <period title="PanelRelease"></period>
             <div
                 class="bul"
-                @click="PanelRelease.modalBul=!PanelRelease.modalBul"
+                @click="PanelRelease.modalBul=!PanelRelease.modalBul;"
             >
               <span></span>
             </div>
@@ -61,11 +70,11 @@
             <div
                 class="menu-bul"
                 v-if="PanelRelease.modalBul"
-              >
+            >
               <div
                   class="btn-bul"
                   @click="PanelRelease.cardShow=!PanelRelease.cardShow; PanelRelease.modalBul=false"
-                ><span class="show"></span>
+              ><span class="show"></span>
                 <span>Скрыть</span>
               </div>
               <div class="btn-bul">
@@ -84,8 +93,14 @@
                 <div class="module">
                   <div class="index">500</div>
                   <div class="resul">
-                    <div class="result-ok">10%</div>
-                    <div class="result-minus"></div>
+                    <div class="result-ok">
+                      <div class="arrow"></div>
+                      <div class="index-res">10%</div>
+                    </div>
+                    <div class="result-minus">
+                      <div class="arrow"></div>
+                      <div class="index"></div>
+                    </div>
                     <div class="resul-null"></div>
                   </div>
                 </div>
@@ -138,7 +153,10 @@
                   <div class="data">
                     <div class="index">100000</div>
                     <div class="resul">
-                      <div class="result-ok">+10%</div>
+                      <div class="result-ok">
+                        <div class="arrow"></div>
+                        <div class="index-res">10%</div>
+                      </div>
                       <div class="result-minus"></div>
                       <div class="resul-null"></div>
                     </div>
@@ -157,7 +175,7 @@
             <period title="SpecificConsumption"></period>
             <div
                 class="bul"
-                @click="SpecificConsumption.modalBul=!SpecificConsumption.modalBul"
+                @click="SpecificConsumption.modalBul = !SpecificConsumption.modalBul"
             >
               <span></span>
             </div>
@@ -259,11 +277,11 @@
             v-if="TotalСonsumption.cardShow"
         >
           <div class="chart-header">
-            <div class="title">Сумарный расход</div>
+            <div class="title">Суммарный расход</div>
             <period title="TotalСonsumption"></period>
             <div
                 class="bul"
-                @click="TotalСonsumption.modalBul=!TotalСonsumption.modalBul"
+                @click="TotalСonsumption.modalBul=!TotalСonsumption.modalBul;"
             >
               <span></span>
             </div>
@@ -276,7 +294,7 @@
               <div
                   class="btn-bul"
                   @click="TotalСonsumption.cardShow=!TotalСonsumption.cardShow; TotalСonsumption.modalBul=false"
-                ><span class="show"></span>
+              ><span class="show"></span>
                 <span>Скрыть</span>
               </div>
               <div class="btn-bul">
@@ -350,7 +368,7 @@
             <div class="title">Модуль сравнения</div>
             <div
                 class="bul"
-                @click="ComparisonModule.modalBul=!ComparisonModule.modalBul"
+                @click="ComparisonModule.modalBul=!ComparisonModule.modalBul;"
             >
               <span></span>
             </div>
@@ -503,7 +521,7 @@
             <period title="EnergyConsumption"></period>
             <div
                 class="bul"
-                @click="EnergyConsumption.modalBul=!EnergyConsumption.modalBul"
+                @click="EnergyConsumption.modalBul=!EnergyConsumption.modalBul;"
             >
               <span></span>
             </div>
@@ -557,6 +575,7 @@
         </div>
       </div>
     </section>
+
   </div>
 </template>
 
@@ -574,6 +593,9 @@ export default {
   created() {
     this.setActiveTabHeader("HOME");
     this.setActiveTabSidebar("Dashboard");
+    this.$on('hideCartItem', (name) => {
+      this[name].cardShow = false;
+    });
   },
 
   data() {
@@ -598,6 +620,14 @@ export default {
         cardShow: true,
       },
       ComparisonModule: {
+        modalBul: false,
+        cardShow: true,
+      },
+      DurationWork: {
+        modalBul: false,
+        cardShow: true,
+      },
+      StockBalances: {
         modalBul: false,
         cardShow: true,
       },
@@ -692,11 +722,12 @@ export default {
       setActiveTabHeader: "setActiveTabHeader",
       setActiveTabSidebar: "setActiveTabSidebar",
     }),
-    showCartItem (name) {
+    showCartItem(name) {
+      this.ShowModalPlus.modalBul = false;
       this[name].cardShow = true;
     },
-  }
-};
+  },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -766,6 +797,7 @@ export default {
   padding-right: 44px;
 
   .module {
+    position: relative;
     display: flex;
     align-items: baseline;
     padding-left: 68px;
@@ -777,13 +809,48 @@ export default {
       font-weight: 500;
       margin-right: 9px;
     }
+  }
 
-    .resul {
-      font-style: normal;
-      font-weight: 500;
-      font-size: 14px;
-      color: #000000;
+  .resul {
+    .result-ok {
+      display: flex;
+      color: #7CD420;
+
+      .arrow {
+        width: 7px;
+        height: 12px;
+        background-image: url("~assets/img/arrow_green.png");
+        background-repeat: no-repeat;
+        background-position: bottom;
+        background-size: 100%;
+      }
+
+      .index_res {
+        margin-left: 2px;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 14px;
+      }
     }
+
+    //.result-minus {
+    //  display: flex;
+    //  color: #F3345D;
+    //  .arrow {
+    //    width: 7px;
+    //    height: 12px;
+    //    background-image: url("~assets/img/arrow_red.png");
+    //    background-repeat: no-repeat;
+    //    background-position: bottom;
+    //    background-size: 100%;
+    //  }
+    //  .index_res {
+    //    margin-left: 2px;
+    //    font-weight: 500;
+    //    font-size: 14px;
+    //    line-height: 14px;
+    //  }
+    //}
   }
 
   .data-list {
@@ -896,6 +963,7 @@ export default {
           padding-bottom: 12px;
           display: flex;
           flex-wrap: wrap;
+
           .item {
             width: 192px;
             height: 90px;
@@ -979,6 +1047,7 @@ export default {
         .iteam-group {
           display: flex;
           flex-wrap: wrap;
+
           .item {
             width: 192px;
             height: 90px;
@@ -1276,7 +1345,7 @@ export default {
     border-radius: 50%;
     border: 2px #FF7167 solid;
     cursor: pointer;
-    background:  #FFFFFF;
+    background: #FFFFFF;
     color: #FF7167;
     font-weight: 500;
     font-size: 48.4615px;
@@ -1291,6 +1360,12 @@ export default {
     bottom: 48px;
     right: 48px;
     z-index: 2;
+
+    &.btn-close {
+      transform: rotate(45deg);
+      background: #FF7167;
+      color: #FFFFFF;
+    }
   }
 
   .btn-rnd:hover {
@@ -1412,5 +1487,4 @@ export default {
     background-size: contain;
   }
 }
-
 </style>

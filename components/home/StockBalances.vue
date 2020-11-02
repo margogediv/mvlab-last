@@ -2,7 +2,7 @@
   <div class="chart second">
     <div class="chart-header">
       <div class="title">Остатки на складах</div>
-      <div class="bul"  @click="StockBalances.modalBul=!StockBalances.modalBul">
+      <div class="bul" @click="StockBalances.modalBul=!StockBalances.modalBul">
         <span></span>
       </div>
       <div
@@ -11,7 +11,7 @@
       >
         <div
             class="btn-bul"
-            @click="StockBalances.modalBul=false"
+            @click="$parent.$emit('hideCartItem','StockBalances')"
           ><span class="show"></span>
           <span>Скрыть</span>
         </div>
@@ -43,13 +43,13 @@
 </template>
 
 <script>
+
 export default {
   name: "StockBalances",
   data() {
     return {
       StockBalances: {
         modalBul: false,
-        cardShow: true,
       },
     }
   },
@@ -139,7 +139,6 @@ export default {
       ];
     },
   },
-
 }
 </script>
 

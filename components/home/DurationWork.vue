@@ -12,7 +12,7 @@
           >
             <div
                 class="btn-bul"
-                @click="DurationWork.modalBul=false"
+                @click="$parent.$emit('hideCartItem','DurationWork')"
               ><span class="show"></span>
               <span>Скрыть</span>
             </div>
@@ -59,8 +59,8 @@
         <div class="line" v-for="itam in lineDataFirst">
           <div class="box-line">
             <div class="bg" :style="'width: ' + itam.progress + '%'">
-              <div class="start">{{ itam.start }}</div>
-              <div class="end">{{ itam.end }}</div>
+              <div class="start" v-if="itam.progress >= 50">{{ itam.start }}</div>
+              <div class="end" v-if="itam.progress >= 50">{{ itam.end }}</div>
             </div>
           </div>
           <div class="data-line">{{ itam.dataLine }}</div>
@@ -313,14 +313,7 @@ export default {
 
         .start,
         .end {
-          display: none;
-        }
-
-        &:hover {
-          .start,
-          .end {
-            display: flex;
-          }
+          display: flex;
         }
       }
 
