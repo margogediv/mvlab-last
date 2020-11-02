@@ -430,20 +430,19 @@ export default {
   .btn-bul {
     width: 100%;
     height: 40px;
+    padding-left: 32px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     font-weight: 500;
     font-size: 10px;
     line-height: 12px;
-    color: #000000;
+    color: #BABABA;
 
     &:hover {
-      color: #F7F8FA;
-      background: #4B6075;
-      border-radius: 4px 0px 4px 4px;
-      transition: 0.2s;
+      color: #727272;
+      transition: 0.2s linear;
     }
   }
 }

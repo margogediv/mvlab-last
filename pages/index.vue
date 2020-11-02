@@ -1,10 +1,39 @@
 <template>
   <div>
-    <div>
+    <div class="btn-group">
       <main>
         <button class="btn-rnd btn-plus"
-                @click="showChartAll">+
+                @click="ShowModalPlus.modalBul=!ShowModalPlus.modalBul">+
         </button>
+        <div class="plus-form" v-if="ShowModalPlus.modalBul">
+          <div class="plus-form-item">Продолжительность работы</div>
+          <div class="plus-form-item">Остатки на складах</div>
+          <div
+              class="plus-form-item"
+              @click="showCartItem('PanelRelease'); ShowModalPlus.modalBul=false;"
+          >Выпуск панелей
+          </div>
+          <div
+              class="plus-form-item"
+              @click="showCartItem('TotalСonsumption'); ShowModalPlus.modalBul=false;"
+          >Суммарный расход
+          </div>
+          <div
+              class="plus-form-item"
+              @click="showCartItem('EnergyConsumption'); ShowModalPlus.modalBul=false;"
+          >Расход электроэнергии
+          </div>
+          <div
+              class="plus-form-item"
+              @click="showCartItem('SpecificConsumption'); ShowModalPlus.modalBul=false;"
+          >Удельный расход на км
+          </div>
+          <div
+              class="plus-form-item"
+              @click="showCartItem('ComparisonModule'); ShowModalPlus.modalBul=false;"
+          >Модуль сравнения
+          </div>
+        </div>
       </main>
     </div>
     <calendar></calendar>
@@ -529,6 +558,9 @@ export default {
 
   data() {
     return {
+      ShowModalPlus: {
+        modalBul: false,
+      },
       PanelRelease: {
         modalBul: false,
         cardShow: true,
@@ -640,12 +672,8 @@ export default {
       setActiveTabHeader: "setActiveTabHeader",
       setActiveTabSidebar: "setActiveTabSidebar",
     }),
-    showChartAll() {
-      this.PanelRelease.cardShow = true;
-      this.TotalСonsumption.cardShow = true;
-      this.EnergyConsumption.cardShow = true;
-      this.SpecificConsumption.cardShow = true;
-      this.ComparisonModule.cardShow = true;
+    showCartItem (name) {
+      this[name].cardShow = true;
     },
   }
 };
@@ -1214,35 +1242,80 @@ export default {
   }
 }
 
-main {
-  width: 100%;
-  height: 100%;
-}
+.btn-group {
 
-.btn-rnd {
-  width: 60px;
-  height: 60px;
-  border: none;
-  border-radius: 30px;
-  background-color: hsl(160, 98%, 39%);
-  outline: none;
-  color: #fff;
-  font-weight: 500;
-  font-size: 66.4615px;
-  line-height: 81px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  text-transform: uppercase;
+  main {
+    width: 100%;
+    height: 100%;
+  }
 
-  position: absolute;
-  bottom: 48px;
-  right: 48px;
-}
+  .btn-rnd {
+    width: 60px;
+    height: 60px;
+    border-radius: 30px;
+    border: 2px #FF7167 solid;
+    outline: none;
+    cursor: pointer;
+    background:  #FFFFFF;
+    color: #FF7167;
+    font-weight: 500;
+    font-size: 48.4615px;
+    line-height: 81px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-transform: uppercase;
 
-.btn-rnd:hover {
-  background-color: hsl(160, 98%, 36%);
+    position: absolute;
+    bottom: 48px;
+    right: 48px;
+    z-index: 2;
+  }
+
+  .btn-rnd:hover {
+    background: #FF7167;
+    color: #FFFFFF;
+    transition: 0.2s linear;
+  }
+
+  .plus-form {
+    width: 244px;
+    height: auto;
+    background: #FFFFFF;
+    border: 2px solid #F3F3F3;
+    border-radius: 5px;
+
+    position: absolute;
+    bottom: 112px;
+    right: 48px;
+
+    z-index: 2;
+
+    .plus-form-item {
+      cursor: pointer;
+      height: 36px;
+      padding-left: 24px;
+      padding-right: 24px;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      color: #BABABA;
+      border-bottom: 2px solid #F3F3F3;
+
+      &:hover {
+        color: #727272;
+        transition: 0.2s linear;
+      }
+    }
+
+    .plus-form-item:last-child {
+      border-bottom: none;
+    }
+  }
 }
 
 .chart-content {
@@ -1267,20 +1340,19 @@ main {
   .btn-bul {
     width: 100%;
     height: 40px;
+    padding-left: 32px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     font-weight: 500;
     font-size: 10px;
     line-height: 12px;
-    color: #000000;
+    color: #BABABA;
 
     &:hover {
-      color: #F7F8FA;
-      background: #4B6075;
-      border-radius: 4px 0px 4px 4px;
-      transition: 0.2s;
+      color: #727272;
+      transition: 0.2s linear;
     }
   }
 }
