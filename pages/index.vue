@@ -37,7 +37,7 @@
       </main>
     </div>
     <calendar></calendar>
-    <section class="charts">
+    <section class="charts" >
       <div class="block-1">
         <durationWork></durationWork>
         <stockBalances></stockBalances>
@@ -61,13 +61,17 @@
             <div
                 class="menu-bul"
                 v-if="PanelRelease.modalBul"
-            >
+              >
               <div
                   class="btn-bul"
                   @click="PanelRelease.cardShow=!PanelRelease.cardShow; PanelRelease.modalBul=false"
-              >Скрыть
+                ><span class="show"></span>
+                <span>Скрыть</span>
               </div>
-              <div class="btn-bul">Обновить</div>
+              <div class="btn-bul">
+                <span class="new"></span>
+                <span>Обновить</span>
+              </div>
             </div>
             <div class="diagram">
               <highcharts
@@ -166,9 +170,13 @@
               <div
                   class="btn-bul"
                   @click="SpecificConsumption.cardShow=!SpecificConsumption.cardShow; SpecificConsumption.modalBul=false"
-              >Скрыть
+              ><span class="show"></span>
+                <span>Скрыть</span>
               </div>
-              <div class="btn-bul">Обновить</div>
+              <div class="btn-bul">
+                <span class="new"></span>
+                <span>Обновить</span>
+              </div>
             </div>
             <div class="iteam-group">
               <div class="item">
@@ -268,9 +276,13 @@
               <div
                   class="btn-bul"
                   @click="TotalСonsumption.cardShow=!TotalСonsumption.cardShow; TotalСonsumption.modalBul=false"
-              >Скрыть
+                ><span class="show"></span>
+                <span>Скрыть</span>
               </div>
-              <div class="btn-bul">Обновить</div>
+              <div class="btn-bul">
+                <span class="new"></span>
+                <span>Обновить</span>
+              </div>
             </div>
             <div class="iteam-group">
               <div class="item">
@@ -351,9 +363,13 @@
               <div
                   class="btn-bul"
                   @click="ComparisonModule.cardShow=!ComparisonModule.cardShow; ComparisonModule.modalBul=false"
-              >Скрыть
+              ><span class="show"></span>
+                <span>Скрыть</span>
               </div>
-              <div class="btn-bul">Обновить</div>
+              <div class="btn-bul">
+                <span class="new"></span>
+                <span>Обновить</span>
+              </div>
             </div>
             <div class="content-box">
               <div class="calendar-period">
@@ -500,9 +516,13 @@
               <div
                   class="btn-bul"
                   @click="EnergyConsumption.cardShow=!EnergyConsumption.cardShow; EnergyConsumption.modalBul=false"
-              >Скрыть
+              ><span class="show"></span>
+                <span>Скрыть</span>
               </div>
-              <div class="btn-bul">Обновить</div>
+              <div class="btn-bul">
+                <span class="new"></span>
+                <span>Обновить</span>
+              </div>
             </div>
             <div class="iteam-group">
               <div class="item">
@@ -1250,11 +1270,11 @@ export default {
   }
 
   .btn-rnd {
+    outline: none;
     width: 60px;
     height: 60px;
-    border-radius: 30px;
+    border-radius: 50%;
     border: 2px #FF7167 solid;
-    outline: none;
     cursor: pointer;
     background:  #FFFFFF;
     color: #FF7167;
@@ -1338,6 +1358,7 @@ export default {
   border-radius: 4px 0px 4px 4px;
 
   .btn-bul {
+    position: relative;
     width: 100%;
     height: 40px;
     padding-left: 32px;
@@ -1353,7 +1374,42 @@ export default {
     &:hover {
       color: #727272;
       transition: 0.2s linear;
+
+      .show {
+        background-image: url('https://api.iconify.design/ant-design:eye-invisible-outlined.svg?color=%23727272');
+      }
+
+      .new {
+        background-image: url('https://api.iconify.design/ic:baseline-update.svg?color=%23727272');
+      }
     }
+  }
+
+  .show {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    background-image: url('https://api.iconify.design/ant-design:eye-invisible-outlined.svg?color=%23BABABA');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+
+  .new {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    background-image: url('https://api.iconify.design/ic:baseline-update.svg?color=%23BABABA');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
   }
 }
 

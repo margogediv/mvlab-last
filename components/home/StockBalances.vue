@@ -12,9 +12,13 @@
         <div
             class="btn-bul"
             @click="StockBalances.modalBul=false"
-        >Скрыть
+          ><span class="show"></span>
+          <span>Скрыть</span>
         </div>
-        <div class="btn-bul">Обновить</div>
+        <div class="btn-bul">
+          <span class="new"></span>
+          <span>Обновить</span>
+        </div>
       </div>
     </div>
     <div class="chart-content">
@@ -317,6 +321,7 @@ export default {
   border-radius: 4px 0px 4px 4px;
 
   .btn-bul {
+    position: relative;
     width: 100%;
     height: 40px;
     padding-left: 32px;
@@ -332,7 +337,42 @@ export default {
     &:hover {
       color: #727272;
       transition: 0.2s linear;
+
+      .show {
+        background-image: url('https://api.iconify.design/ant-design:eye-invisible-outlined.svg?color=%23727272');
+      }
+
+      .new {
+        background-image: url('https://api.iconify.design/ic:baseline-update.svg?color=%23727272');
+      }
     }
+  }
+
+  .show {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    background-image: url('https://api.iconify.design/ant-design:eye-invisible-outlined.svg?color=%23BABABA');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+
+  .new {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    background-image: url('https://api.iconify.design/ic:baseline-update.svg?color=%23BABABA');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
   }
 }
 
