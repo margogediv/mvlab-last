@@ -3,12 +3,16 @@
       <div class="chart-header">
         <div class="box-header">
           <div class="title">Продолжительность работы,ч</div>
-          <div class="bul" @click="DurationWork.modalBul=!DurationWork.modalBul">
+          <div
+              class="bul"
+              @click="$parent.$emit('showModalBul', 'DurationWork')"
+              @click.stop="$parent.$emit('noChange')"
+          >
             <span></span>
           </div>
           <div
               class="menu-bul"
-              v-if="DurationWork.modalBul"
+              v-if="card.modalBul"
           >
             <div
                 class="btn-bul"
@@ -80,11 +84,11 @@ import Calendar from "~/components/home/calendar";
 
 export default {
   name: "DurationWork",
+  props: [
+      'card'
+  ],
   data() {
     return {
-      DurationWork: {
-        modalBul: false,
-      },
       periodActive: [false, true, false, false, false],
     }
   },
@@ -171,7 +175,7 @@ export default {
       let arr = [false, false, false, false, false];
       arr[id] = true;
       this.periodActive = arr;
-    }
+    },
   },
 
 }

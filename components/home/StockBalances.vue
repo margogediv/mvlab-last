@@ -2,12 +2,16 @@
   <div class="chart second">
     <div class="chart-header">
       <div class="title">Остатки на складах</div>
-      <div class="bul" @click="StockBalances.modalBul=!StockBalances.modalBul">
+      <div
+          class="bul"
+          @click="$parent.$emit('showModalBul', 'StockBalances')"
+          @click.stop="$parent.$emit('noChange')"
+      >
         <span></span>
       </div>
       <div
           class="menu-bul"
-          v-if="StockBalances.modalBul"
+          v-if="card.modalBul"
       >
         <div
             class="btn-bul"
@@ -46,12 +50,17 @@
 
 export default {
   name: "StockBalances",
+  props: [
+    'card'
+  ],
   data() {
     return {
-      StockBalances: {
-        modalBul: false,
-      },
     }
+  },
+  methods: {
+    noChange() {
+      console.log('change');
+    },
   },
   computed: {
     lineDataSecond() {

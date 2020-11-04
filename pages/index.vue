@@ -1,10 +1,12 @@
 <template>
-  <div>
+  <div @click="hideModals">
     <div class="btn-group">
       <main>
         <button class="btn-rnd"
                 :class="{'btn-close' : ShowModalPlus.modalBul}"
-                @click="ShowModalPlus.modalBul=!ShowModalPlus.modalBul;">+
+                @click="ShowModalPlus.modalBul=!ShowModalPlus.modalBul;"
+                @click.stop="noChange"
+        >+
         </button>
         <div class="plus-form" v-if="ShowModalPlus.modalBul">
           <div
@@ -48,8 +50,8 @@
     <calendar></calendar>
     <section class="charts">
       <div class="block-1">
-        <durationWork v-if="DurationWork.cardShow"></durationWork>
-        <stockBalances v-if="StockBalances.cardShow"></stockBalances>
+        <durationWork v-if="DurationWork.cardShow" :card="DurationWork" :key="new Date().getTime()"></durationWork>
+        <stockBalances v-if="StockBalances.cardShow" :card="StockBalances"></stockBalances>
       </div>
       <div class="block-2">
         <div
@@ -61,7 +63,8 @@
             <period title="PanelRelease"></period>
             <div
                 class="bul"
-                @click="PanelRelease.modalBul=!PanelRelease.modalBul;"
+                @click="PanelRelease.modalBul=!PanelRelease.modalBul"
+                @click.stop="noChange"
             >
               <span></span>
             </div>
@@ -176,6 +179,7 @@
             <div
                 class="bul"
                 @click="SpecificConsumption.modalBul = !SpecificConsumption.modalBul"
+                @click.stop="noChange"
             >
               <span></span>
             </div>
@@ -282,6 +286,7 @@
             <div
                 class="bul"
                 @click="TotalСonsumption.modalBul=!TotalСonsumption.modalBul;"
+                @click.stop="noChange"
             >
               <span></span>
             </div>
@@ -369,6 +374,7 @@
             <div
                 class="bul"
                 @click="ComparisonModule.modalBul=!ComparisonModule.modalBul;"
+                @click.stop="noChange"
             >
               <span></span>
             </div>
@@ -522,6 +528,7 @@
             <div
                 class="bul"
                 @click="EnergyConsumption.modalBul=!EnergyConsumption.modalBul;"
+                @click.stop="noChange"
             >
               <span></span>
             </div>
@@ -595,6 +602,14 @@ export default {
     this.setActiveTabSidebar("Dashboard");
     this.$on('hideCartItem', (name) => {
       this[name].cardShow = false;
+    });
+    this.$on('showModalBul', (name) => {
+      this[name].modalBul = !this[name].modalBul;
+      console.log(name);
+      console.log(this[name].modalBul);
+    });
+    this.$on('noChange', (name) => {
+      console.log('noChange');
     });
   },
 
@@ -726,6 +741,30 @@ export default {
       this.ShowModalPlus.modalBul = false;
       this[name].cardShow = true;
     },
+    hideModals() {
+      if( this.ShowModalPlus.modalBul ||
+          this.PanelRelease.modalBul ||
+          this.TotalСonsumption.modalBul ||
+          this.EnergyConsumption.modalBul ||
+          this.SpecificConsumption.modalBul ||
+          this.ComparisonModule.modalBul ||
+          this.DurationWork.modalBul ||
+          this.StockBalances.modalBul
+      ) {
+        this.DurationWork.modalBul = false;
+        this.StockBalances.modalBul = false;
+        this.ShowModalPlus.modalBul = false;
+        this.PanelRelease.modalBul = false;
+        this.TotalСonsumption.modalBul = false;
+        this.EnergyConsumption.modalBul = false;
+        this.SpecificConsumption.modalBul = false;
+        this.ComparisonModule.modalBul = false;
+
+      }
+    },
+    noChange() {
+      console.log('change');
+    },
   },
 }
 </script>
@@ -832,25 +871,6 @@ export default {
         line-height: 14px;
       }
     }
-
-    //.result-minus {
-    //  display: flex;
-    //  color: #F3345D;
-    //  .arrow {
-    //    width: 7px;
-    //    height: 12px;
-    //    background-image: url("~assets/img/arrow_red.png");
-    //    background-repeat: no-repeat;
-    //    background-position: bottom;
-    //    background-size: 100%;
-    //  }
-    //  .index_res {
-    //    margin-left: 2px;
-    //    font-weight: 500;
-    //    font-size: 14px;
-    //    line-height: 14px;
-    //  }
-    //}
   }
 
   .data-list {
