@@ -9,14 +9,14 @@
       <nuxt-link :to="`/${sidetab.link}`" tag="button" class="button_item">
         <!-- <img class="img_item" :src="require(`../assets/svg/${sidetab.img}.svg`)" :alt="sidetab">        -->
         <!-- <IconifyIcon class="img_item" :icon="icons.monitorIcon" :style="{fontSize: '38px'}" />  -->
-        <IconifyIcon :icon="sidetab.icon" :style="{fontSize: '38px'}" /> 
-        <p>{{sidetab.name}}</p>  
-      </nuxt-link> 
+        <IconifyIcon :icon="sidetab.icon" :style="{fontSize: '38px'}" />
+        <p>{{sidetab.name}}</p>
+      </nuxt-link>
     </div>
 
   </div>
 </template>
-<script> 
+<script>
 
 import { mapGetters } from "vuex";
 
@@ -49,11 +49,11 @@ export default {
         //   { name: "Archive Event", link: "", img: "Archive_Event", icon: "calendar4Event" },
         //   { name: "Admin", link: "", img: "Admin", icon: "guyUser" }
         // ],
-        // RECORDER: [
-        //   { name: "Online", link: "Charts", img: "feather_monitor", icon: "monitorIcon" },
-        //   { name: "Report", link: "", img: "carbon_report", icon: "reportIcon" },
-        //   { name: "Setting", link: "Projects", img: "carbon_data-structured", icon: "dataStructured" }
-        // ],
+        RECORDER: [
+          { name: "Online", link: "Charts", img: "feather_monitor", icon: "monitorIcon" },
+          { name: "Report", link: "", img: "carbon_report", icon: "reportIcon" },
+          { name: "Setting", link: "Projects", img: "carbon_data-structured", icon: "dataStructured" }
+        ],
       }
     };
   },
@@ -85,7 +85,8 @@ export default {
 .button_item {
   cursor: pointer;
   margin: auto;
-  padding-top: 15px;
+  padding-top: 12px;
+  padding-bottom: 12px;
   background: none;
   border: none;
   display: flex;
@@ -120,22 +121,22 @@ export default {
   position: absolute;
   bottom: 0;
   left: 12px;
-  
+
   width: 96px;
   border-bottom: 1px solid #AEA8A8;
   opacity: 0.3;
-  
+
 }
 .item::before{
   content: "";
   position: absolute;
   top: 0;
   left: 12px;
-  
+
   width: 96px;
   border-top: 1px solid #AEA8A8;
   opacity: 0.3;
-  
+
 }
 
 .item:hover {
@@ -148,17 +149,17 @@ export default {
   /* border-bottom: 1px solid rgba(174, 168, 168, 0.3);
   border-top: 1px solid rgba(174, 168, 168, 0.3); */
   color: #FF7167;
-  
+
 }
 .item.active::after {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
-  
+
   width: 100%;
   border-top: 1px solid #AEA8A8;
-  opacity: 0.3;  
+  opacity: 0.3;
 }
 
 .item.active::before {
@@ -166,10 +167,10 @@ export default {
   position: absolute;
   bottom: 0;
   left: 0;
-  
+
   width: 100%;
   border-bottom: 1px solid #AEA8A8;
-  opacity: 0.3;  
+  opacity: 0.3;
 }
 
 img {

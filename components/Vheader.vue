@@ -145,7 +145,7 @@ export default {
   right: 0;
 }
 .wraper_header {
-  
+
   z-index: 10;
   height: 48px;
 }
@@ -200,11 +200,11 @@ export default {
   justify-content: baseline;
   outline: none;
 
-  
+
 }
 
 .btn_user {
-  margin-left: 24px;
+  /*margin-left: 24px;*/
 }
 
 .logo {

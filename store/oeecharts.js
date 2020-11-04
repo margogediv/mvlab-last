@@ -111,7 +111,7 @@ export default {
             let arr = state.arrPoint.filter(item => item.machineid === state.selectChart);
             return arr.length;
         },
-/////////////////
+
         basicData(state) {
             let arrayData = [];
 
@@ -137,7 +137,7 @@ export default {
             return arrayData;
         },
 
-        basicOptions(state) {
+        npmbasicOptions(state) {
             return state.basicOptions;
         },
 

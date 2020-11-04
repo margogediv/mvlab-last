@@ -82,11 +82,16 @@ export default {
     },
     strategies: {
       local: {
-        endpoints: {
-          login: { url: '/user/login/', method: 'post', propertyName: 'token'},
-          logout: { url: '/user/logout/', method: 'post' },
-          user: { url: '/api/Users/', method: 'get', propertyName: false,}
-        },
+          endpoints: {
+              login: { url: '/user/login/', method: 'post', propertyName: 'token'},
+              logout: { url: '/user/logout/', method: 'post' },
+              user: { url: '/api/Users/', method: 'get', propertyName: false,}
+          },
+        // endpoints: {
+        //   login: { url: 'http://77.220.212.211:8000/user/login/', method: 'post', propertyName: 'token'},
+        //   logout: { url: 'http://77.220.212.211:8000/user/logout/', method: 'post' },
+        //   user: { url: 'http://77.220.212.211:8000/api/Users/', method: 'get', propertyName: false,}
+        // },
         tokenRequired: true,
         // tokenType: 'bearer',
         tokenType: 'Token',

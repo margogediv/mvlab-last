@@ -1,27 +1,36 @@
 <template>
-<main>
-  <button class="btn-rnd btn-plus">+</button>
-</main>
-  
+  <div>
+    <onlinePeriod />
+  </div>
 </template>
 <script>
 
+import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 
-export default {  
+import OnlineHeader from "@/components/recorder/onlineHeader";
+
+var nowDate = new Date();
+
+export default {
   layout: "header_footer",
+
+
+  components: {
+    onlinePeriod: OnlineHeader,
+  },
 
   created() {
     this.setActiveTabHeader("RECORDER");
   },
-  
-   methods: {
+
+  methods: {
     ...mapActions("users", {
       setActiveTabHeader: "setActiveTabHeader"
     }),
-   }
+  },
 
-  
+
 };
 </script>
 

@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div class="section">
     <!-- верхняя панель -->
     <div class="title-panel">
@@ -8,8 +8,8 @@
             v-for="factory in factories"
             :key="factory.factoryid"
             :value="factory"
-            
-            
+
+
           >{{ factory.name }}</option>
         </select>
       </div>
@@ -64,7 +64,7 @@
     <!-- sub панель -->
     <div class="sub-panel">
       <div class="subMenu" v-for="shop in selectedshops" :key="shop.shopid">
-        <button href="#" 
+        <button href="#"
                 class="subMenu_item btn_icon"
                 :class="{ actived: shop.shopid == activeshop.shopid }"
                 @click="setActiveshop(shop)"
@@ -155,7 +155,7 @@ export default {
       // ],
       // selectedfactory: "Завод нефтепродуктов г. Гомель",
       currentsubMenu: "2",
-      
+
       // selectedshop:  {name: "Цех ковки тяжелых конструкций и древесины г. Гомель", shopid: "2", factoryid: "10"},
       // arrShow: [],
 
@@ -179,16 +179,16 @@ export default {
       factories: "factories",
       shops: "shops",
       activeshop: "activeshop",
-    }),  
+    }),
 
     selectedfactory:  {
-      get () { 
+      get () {
         let item = this.$store.getters['oeecharts/selectedfactory']
         return item
          },
-      set (value) { 
+      set (value) {
         console.log(value);
-        this.$store.dispatch('oeecharts/setSelectedfactory', value) 
+        this.$store.dispatch('oeecharts/setSelectedfactory', value)
         }
 
     },
@@ -216,7 +216,7 @@ export default {
     chartOptions: function () {
       let arrOptions = [];
       let tempArrayShow = this.showCharts.length ? this.showCharts : [];
-      
+
       let chartOption;
 
       for (let idx = 0; idx < this.basicData.length; idx++) {
@@ -370,7 +370,7 @@ export default {
       console.log("arrShow ",arrShow);
 
       // console.log(this.showCharts);
-      this.setshowCharts(arrShow);  
+      this.setshowCharts(arrShow);
       // console.log(this.showCharts);
     },
 
@@ -487,15 +487,15 @@ html {
   align-self: center;
   text-align: center;
   padding-top: 108px;
-  
-  
+
+
 
 }
 
 .charts-items {
   max-height: 750px;
   width: 100%;
-  
+
 
   overflow-y: auto;
 }
@@ -504,11 +504,11 @@ html {
 }
 .charts-items::-webkit-scrollbar {
   -webkit-appearance: none;
- 
+
   width: 2px;
 }
 .charts-items::-webkit-scrollbar-thumb {
-  
+
   border-radius: 2px;
   background-color: #3F51B5;
 }
