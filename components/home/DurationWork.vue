@@ -60,27 +60,27 @@
         </div>
       </div>
       <div class="chart-content">
-        <div class="line" v-for="itam in lineDataFirst">
+        <div class="line" v-for="item in lineDataFirst.interval">
           <div class="box-line">
-            <div class="bg" :style="'width: ' + itam.progress + '%'">
-              <div class="start" v-if="itam.progress >= 50">{{ itam.start }}</div>
-              <div class="end" v-if="itam.progress >= 50">{{ itam.end }}</div>
+            <div class="bg" :style="'width: ' + item.progress + '%'">
+              <div class="start" v-if="item.progress >= 50">{{ item.start }}</div>
+              <div class="end" v-if="item.progress >= 50">{{ item.end }}</div>
             </div>
           </div>
-          <div class="data-line">{{ itam.dataLine }}</div>
+          <div class="data-line">{{ item.duration }}</div>
         </div>
       </div>
       <div class="chart-footer">
         <div class="title">Общее рабочее время за день</div>
-        <div class="view">23</div>
+        <div class="view">{{ lineDataFirst.sum }}</div>
       </div>
     </div>
 </template>
 
 <script>
 
-import Period from "@/components/home/period";
-import Calendar from "~/components/home/calendar";
+import {mapGetters} from "vuex";
+import {mapActions} from "vuex";
 
 export default {
   name: "DurationWork",
@@ -92,85 +92,19 @@ export default {
       periodActive: [false, true, false, false, false],
     }
   },
+  created() {
+    let now = new Date();
+    this.getLineDataFirst(now);
+  },
   computed: {
-    lineDataFirst() {
-      return [
-        {
-          progress: 0,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 0.75,
-        },
-        {
-          progress: 20,
-          start: '4:10',
-          end: '23:23',
-          dataLine: 3.75,
-        },
-        {
-          progress: 50,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 8.75,
-        },
-        {
-          progress: 80,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 9.75,
-        },
-        {
-          progress: 0,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 0.75,
-        },
-        {
-          progress: 20,
-          start: '4:10',
-          end: '23:23',
-          dataLine: 3.75,
-        },
-        {
-          progress: 50,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 8.75,
-        },
-        {
-          progress: 80,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 9.75,
-        },
-        {
-          progress: 20,
-          start: '4:10',
-          end: '23:23',
-          dataLine: 3.75,
-        },
-        {
-          progress: 50,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 8.75,
-        },
-        {
-          progress: 50,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 8.75,
-        },
-        {
-          progress: 80,
-          start: '8:10',
-          end: '17:23',
-          dataLine: 9.75,
-        },
-      ];
-    },
+    ...mapGetters("home", {
+      lineDataFirst: "lineDataFirst",
+    }),
   },
   methods: {
+    ...mapActions("home", {
+      getLineDataFirst: "getLineDataFirst",
+    }),
     setPeriod (id) {
       let arr = [false, false, false, false, false];
       arr[id] = true;
