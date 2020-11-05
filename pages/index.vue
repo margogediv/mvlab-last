@@ -12,12 +12,12 @@
           <div
               class="plus-form-item"
               @click="showCartItem('DurationWork');"
-            >Продолжительность работы
+          >Продолжительность работы
           </div>
           <div
               class="plus-form-item"
               @click="showCartItem('StockBalances');"
-            >Остатки на складах
+          >Остатки на складах
           </div>
           <div
               class="plus-form-item"
@@ -50,8 +50,8 @@
     <calendar></calendar>
     <section class="charts">
       <div class="block-1">
-        <durationWork v-if="DurationWork.cardShow" :card="DurationWork"></durationWork>
-        <stockBalances v-if="StockBalances.cardShow" :card="StockBalances"></stockBalances>
+        <durationWork v-if="DurationWork.cardShow" :card="DurationWork" :calendar="calendar"></durationWork>
+        <stockBalances v-if="StockBalances.cardShow" :card="StockBalances" :calendar="calendar"></stockBalances>
       </div>
       <div class="block-2">
         <div
@@ -94,18 +94,8 @@
             <div class="content-box">
               <div class="indicators">
                 <div class="module">
-                  <div class="index">500</div>
-                  <div class="resul">
-                    <div class="result-ok">
-                      <div class="arrow"></div>
-                      <div class="index-res">10%</div>
-                    </div>
-                    <div class="result-minus">
-                      <div class="arrow"></div>
-                      <div class="index"></div>
-                    </div>
-                    <div class="resul-null"></div>
-                  </div>
+                  <div class="index">{{ PanelRelease.data.sum }}</div>
+                  <indicator :change="PanelRelease.data.change_sum"></indicator>
                 </div>
                 <div class="data-list">
                   <div class="list">
@@ -118,7 +108,7 @@
                       <div class="resul">
                         <div class="result-ok">+5%</div>
                         <div class="result-minus"></div>
-                        <div class="resul-null"></div>
+                        <div class="result-null"></div>
                       </div>
                     </div>
                   </div>
@@ -132,7 +122,7 @@
                       <div class="resul">
                         <div class="result-ok"></div>
                         <div class="result-minus"></div>
-                        <div class="resul-null">-0%</div>
+                        <div class="result-null">-0%</div>
                       </div>
                     </div>
                   </div>
@@ -146,7 +136,7 @@
                       <div class="resul">
                         <div class="result-ok"></div>
                         <div class="result-minus">-3%</div>
-                        <div class="resul-null"></div>
+                        <div class="result-null"></div>
                       </div>
                     </div>
                   </div>
@@ -161,7 +151,7 @@
                         <div class="index-res">10%</div>
                       </div>
                       <div class="result-minus"></div>
-                      <div class="resul-null"></div>
+                      <div class="result-null"></div>
                     </div>
                   </div>
                 </div>
@@ -408,7 +398,7 @@
                   <div class="resul">
                     <div class="result-ok">10%</div>
                     <div class="result-minus"></div>
-                    <div class="resul-null"></div>
+                    <div class="result-null"></div>
                   </div>
                 </div>
                 <div class="data-list">
@@ -422,7 +412,7 @@
                       <div class="resul">
                         <div class="result-ok">+5%</div>
                         <div class="result-minus"></div>
-                        <div class="resul-null"></div>
+                        <div class="result-null"></div>
                       </div>
                     </div>
                   </div>
@@ -436,7 +426,7 @@
                       <div class="resul">
                         <div class="result-ok"></div>
                         <div class="result-minus"></div>
-                        <div class="resul-null">-0%</div>
+                        <div class="result-null">-0%</div>
                       </div>
                     </div>
                   </div>
@@ -450,7 +440,7 @@
                       <div class="resul">
                         <div class="result-ok"></div>
                         <div class="result-minus">-3%</div>
-                        <div class="resul-null"></div>
+                        <div class="result-null"></div>
                       </div>
                     </div>
                   </div>
@@ -462,7 +452,7 @@
                     <div class="resul">
                       <div class="result-ok">+10%</div>
                       <div class="result-minus"></div>
-                      <div class="resul-null"></div>
+                      <div class="result-null"></div>
                     </div>
                   </div>
                 </div>
@@ -593,6 +583,7 @@ import Period from "@/components/home/period";
 import Calendar from "@/components/home/calendar";
 import DurationWork from "@/components/home/DurationWork";
 import StockBalances from "@/components/home/StockBalances";
+import DataIndicator from '~/components/home/DataIndicator'
 
 export default {
   layout: "header_footer",
@@ -606,7 +597,12 @@ export default {
     this.$on('showModalBul', (name) => {
       this[name].modalBul = !this[name].modalBul;
     });
-    this.$on('noChange', (name) => {});
+    this.$on('noChange', (name) => {
+    });
+
+    this.$on('changeCalendar', (calendar) => {
+      this.calendar = calendar;
+    });
   },
 
   data() {
@@ -617,6 +613,18 @@ export default {
       PanelRelease: {
         modalBul: false,
         cardShow: true,
+        data: {
+          "suitable": 10,
+          "change_suitable": 10,
+          "substandard": 10,
+          "change_substandard": 10,
+          "defect": 10,
+          "change_defect": 10,
+          "flooded": 10,
+          "change_flooded": 10,
+          "sum": 1200,
+          "change_sum": 0
+        }
       },
       TotalСonsumption: {
         modalBul: false,
@@ -642,6 +650,9 @@ export default {
         modalBul: false,
         cardShow: true,
       },
+      calendar: {
+        time: new Date().getTime(),
+      },
     }
   },
 
@@ -650,6 +661,7 @@ export default {
     calendar: Calendar,
     durationWork: DurationWork,
     stockBalances: StockBalances,
+    indicator: DataIndicator,
 
   },
 
@@ -738,7 +750,7 @@ export default {
       this[name].cardShow = true;
     },
     hideModals() {
-      if( this.ShowModalPlus.modalBul ||
+      if (this.ShowModalPlus.modalBul ||
           this.PanelRelease.modalBul ||
           this.TotalСonsumption.modalBul ||
           this.EnergyConsumption.modalBul ||
@@ -843,29 +855,6 @@ export default {
       font-size: 24px;
       font-weight: 500;
       margin-right: 9px;
-    }
-  }
-
-  .resul {
-    .result-ok {
-      display: flex;
-      color: #7CD420;
-
-      .arrow {
-        width: 7px;
-        height: 12px;
-        background-image: url("~assets/img/arrow_green.png");
-        background-repeat: no-repeat;
-        background-position: bottom;
-        background-size: 100%;
-      }
-
-      .index_res {
-        margin-left: 2px;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 14px;
-      }
     }
   }
 
@@ -1336,7 +1325,7 @@ export default {
     color: #F3345D;
   }
 
-  .resul-null {
+  .result-null {
     font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, "Helvetica Neue", Arial, sans-serif;
     font-style: normal;

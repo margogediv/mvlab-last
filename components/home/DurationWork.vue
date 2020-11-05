@@ -85,7 +85,8 @@ import {mapActions} from "vuex";
 export default {
   name: "DurationWork",
   props: [
-      'card'
+      'card',
+      'calendar'
   ],
   data() {
     return {
@@ -103,14 +104,17 @@ export default {
       let smena = 0;
       if(this.periodActive[1] || this.periodActive[2])
         smena = 1;
-      else if(this.periodActive[3])
+      else if(this.periodActive[2])
         smena = 2;
-      else if(this.periodActive[4])
+      else if(this.periodActive[3])
         smena = 3;
 
       let now = new Date();
+      if(this.calendar)
+        now.setTime(this.calendar.time);
+
       return {
-        date: now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate(),
+        date: now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate(),
         smena: smena,
       }
     }

@@ -37,25 +37,20 @@ export default {
   data () {
     return {
       currentCalendar: null,
-      nowDateTime: new Date().getTime(),
+      nowDateTime: this.createDate(),
       isNext: false,
     }
   },
-
+  created() {
+    this.$parent.$emit('changeCalendar', this.nowDateTime);
+  },
   computed: {
     calendars() {
       let calendars = [];
-      let days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
       for (let i = 22; i >= 1; i--) {
-        let time = this.nowDateTime - i * 1000 * 3600 * 24;
+        let time = this.nowDateTime.time - i * 1000 * 3600 * 24;
         let day = new Date(time);
-        console.log(day);
-        calendars.push({
-          day: day.getDate(),
-          title: days[day.getDay()],
-          month: day.getMonth(),
-          isActive: (this.currentCalendar && this.currentCalendar.day === day.getDate()) ? this.currentCalendar.isActive : false,
-        })
+        calendars.push(this.createDate(day))
       }
       return calendars;
     },
@@ -64,22 +59,35 @@ export default {
     setCalendar (calendar) {
       calendar.isActive = true;
       this.currentCalendar = calendar;
+      this.$parent.$emit('changeCalendar', calendar);
     },
     setCalendarNow () {
-      this.nowDateTime = new Date().getTime();
+      this.nowDateTime = this.createDate();
       this.currentCalendar = null;
       this.isNext = false;
+      this.$parent.$emit('changeCalendar', this.nowDateTime);
     },
     nextCalendar () {
-      if(new Date(new Date().getTime() - 1000 * 24 *3600).getDate() === new Date(this.nowDateTime).getDate() && new Date(new Date().getTime() - 1000 * 24 *3600).getMonth() === new Date(this.nowDateTime).getMonth())
+      if(new Date(new Date().getTime() - 1000 * 24 *3600).getDate() === new Date(this.nowDateTime.time).getDate() && new Date(new Date().getTime() - 1000 * 24 *3600).getMonth() === new Date(this.nowDateTime.time).getMonth())
         this.isNext = false;
       else
-        this.nowDateTime = new Date(this.nowDateTime + 1000 * 3600 * 24).getTime();
+        this.nowDateTime = this.createDate(new Date(this.nowDateTime.time + 1000 * 3600 * 24));
     },
     prevCalendar (){
-      this.nowDateTime = new Date(this.nowDateTime - 1000 * 3600 * 24).getTime();
+      this.nowDateTime = this.createDate(new Date(this.nowDateTime.time - 1000 * 3600 * 24));
       this.isNext = true;
     },
+    createDate(day = new Date()) {
+      let days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
+      return {
+        day: day.getDate(),
+            title: days[day.getDay()],
+            month: day.getMonth(),
+            year: day.getFullYear(),
+            time: day.getTime(),
+            isActive: (this.currentCalendar && this.currentCalendar.day === day.getDate()) ? this.currentCalendar.isActive : false,
+      }
+    }
   },
 }
 </script>
