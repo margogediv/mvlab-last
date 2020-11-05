@@ -30,12 +30,12 @@ export default {
   actions: {
     async getCurrentDevMessages(store, payload) {
 
-      let data = await this.$axios.$get('/api/error_net/');
-      store.commit('updateCurrentDevMessages', data.currentDevMessages);
+      // let data = await this.$axios.$get('/api/error_net/');
+      // store.commit('updateCurrentDevMessages', data.currentDevMessages);
     },
     async getCurrentMessages(store, payload) {
-      let data = await this.$axios.$get('/api/current_messages/');
-      store.commit('updateCurrentMessages', data.currentMessages);
+      // let data = await this.$axios.$get('/api/current_messages/');
+      // store.commit('updateCurrentMessages', data.currentMessages);
     },
   },
 

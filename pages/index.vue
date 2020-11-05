@@ -50,7 +50,7 @@
     <calendar></calendar>
     <section class="charts">
       <div class="block-1">
-        <durationWork v-if="DurationWork.cardShow" :card="DurationWork" :key="new Date().getTime()"></durationWork>
+        <durationWork v-if="DurationWork.cardShow" :card="DurationWork"></durationWork>
         <stockBalances v-if="StockBalances.cardShow" :card="StockBalances"></stockBalances>
       </div>
       <div class="block-2">
@@ -605,12 +605,8 @@ export default {
     });
     this.$on('showModalBul', (name) => {
       this[name].modalBul = !this[name].modalBul;
-      console.log(name);
-      console.log(this[name].modalBul);
     });
-    this.$on('noChange', (name) => {
-      console.log('noChange');
-    });
+    this.$on('noChange', (name) => {});
   },
 
   data() {

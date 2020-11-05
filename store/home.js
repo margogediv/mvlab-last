@@ -29,16 +29,25 @@ export default {
         },
     },
     actions: {
-        async getLineDataFirst(store, date) {
+        async getLineDataFirst(store, option) {
+            console.log(option);
             let data = {
                 interval: [],
-                sum: 23,
+                sum: 0,
             };
+
             try {
-                // data = await this.$axios.$get(`/dashboard/duration/${date}/day/`);
+                // if (!option.smena)
+                //     data = await this.$axios.$get(`/dashboard/duration/${option.date}/day/`);
+                // else
+                //     data = await this.$axios.$get(`/dashboard/duration/${option.date}/shift/${option.smena}`);
             } catch (e) {
                 console.error("getLineDataFirst axios");
             }
+
+            //later remove
+            //start block
+            data.sum = 23;
             let start = "";
             let end = "";
             for (let i = 0; i < 10; i++) {
@@ -50,6 +59,7 @@ export default {
                     duration: Math.random() * 23,
                 });
             }
+            //end block
 
             store.commit('setLineDataFirst', data);
         }

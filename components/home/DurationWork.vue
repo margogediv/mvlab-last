@@ -20,7 +20,7 @@
               ><span class="show"></span>
               <span>Скрыть</span>
             </div>
-            <div class="btn-bul">
+            <div class="btn-bul" @click="update">
               <span class="new"></span>
               <span>Обновить</span>
             </div>
@@ -28,33 +28,33 @@
         </div>
         <div class="period">
           <button
-              v-on:click="setPeriod(1)"
+              v-on:click="setPeriod(0)"
               class="btn text"
-              :class="{active: periodActive[1]}"
+              :class="{active: periodActive[0]}"
           >сутки
           </button>
           <button
-              v-on:click="setPeriod(2)"
+              v-on:click="setPeriod(1)"
               class="btn text"
-              :class="{active: periodActive[2] || periodActive[3] || periodActive[4]}"
+              :class="{active: periodActive[1] || periodActive[2] || periodActive[3]}"
           >смена
+          </button>
+          <button
+              v-on:click="setPeriod(1)"
+              class="btn num"
+              :class="{active: periodActive[1]}"
+          >1
           </button>
           <button
               v-on:click="setPeriod(2)"
               class="btn num"
               :class="{active: periodActive[2]}"
-          >1
+          >2
           </button>
           <button
               v-on:click="setPeriod(3)"
               class="btn num"
               :class="{active: periodActive[3]}"
-          >2
-          </button>
-          <button
-              v-on:click="setPeriod(4)"
-              class="btn num"
-              :class="{active: periodActive[4]}"
           >3
           </button>
         </div>
@@ -89,27 +89,44 @@ export default {
   ],
   data() {
     return {
-      periodActive: [false, true, false, false, false],
+      periodActive: [true, false, false, false],
     }
   },
   created() {
-    let now = new Date();
-    this.getLineDataFirst(now);
+    this.update();
   },
   computed: {
     ...mapGetters("home", {
       lineDataFirst: "lineDataFirst",
     }),
+    option() {
+      let smena = 0;
+      if(this.periodActive[1] || this.periodActive[2])
+        smena = 1;
+      else if(this.periodActive[3])
+        smena = 2;
+      else if(this.periodActive[4])
+        smena = 3;
+
+      let now = new Date();
+      return {
+        date: now.getFullYear() + '-' + now.getMonth() + '-' + now.getDate(),
+        smena: smena,
+      }
+    }
   },
   methods: {
     ...mapActions("home", {
       getLineDataFirst: "getLineDataFirst",
     }),
     setPeriod (id) {
-      let arr = [false, false, false, false, false];
+      let arr = [false, false, false, false];
       arr[id] = true;
       this.periodActive = arr;
     },
+    update() {
+      this.getLineDataFirst(this.option);
+    }
   },
 
 }

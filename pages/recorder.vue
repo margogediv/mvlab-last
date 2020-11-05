@@ -13,6 +13,7 @@
           <div class="menu-svg resize"></div>
           <div class="menu-svg bulity"></div>
         </div>
+        <raddChard />
       </div>
       <div class="chart">
         <recorderChart />
@@ -25,7 +26,8 @@
 import { mapActions } from "vuex";
 
 import OnlineHeader from "@/components/recorder/onlineHeader";
-import RecorderChart from "@/components/recorder/chart";
+import RecorderChart from "@/components/recorder/recorderChart";
+import RAddChard from "@/components/recorder/RAddChard";
 
 var nowDate = new Date();
 
@@ -36,6 +38,7 @@ export default {
   components: {
     onlinePeriod: OnlineHeader,
     recorderChart: RecorderChart,
+    raddChard: RAddChard,
   },
 
   created() {
@@ -47,8 +50,6 @@ export default {
       setActiveTabHeader: "setActiveTabHeader"
     }),
   },
-
-
 };
 </script>
 
@@ -164,6 +165,13 @@ export default {
           background-image: url("~assets/svg/recorder/hovAddicationMenu.svg");
         }
       }
+    }
+
+    .addGraph {
+      width: 724px;
+      height: 400px;
+      background: #F7F8FA;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
     }
   }
 }
