@@ -395,11 +395,7 @@
               <div class="indicators">
                 <div class="module">
                   <div class="index">500</div>
-                  <div class="resul">
-                    <div class="result-ok">10%</div>
-                    <div class="result-minus"></div>
-                    <div class="result-null"></div>
-                  </div>
+                  <indicator :change="{{ ComparisonModule.data.change_suitable1 }}"></indicator>
                 </div>
                 <div class="data-list">
                   <div class="list">
@@ -614,16 +610,16 @@ export default {
         modalBul: false,
         cardShow: true,
         data: {
-          "suitable": 10,
-          "change_suitable": 10,
-          "substandard": 10,
-          "change_substandard": 10,
-          "defect": 10,
-          "change_defect": 10,
-          "flooded": 10,
-          "change_flooded": 10,
-          "sum": 1200,
-          "change_sum": 0
+          suitable: 10,
+          change_suitable: 10,
+          substandard: 10,
+          change_substandard: 10,
+          defect: 10,
+          change_defect: 10,
+          flooded: 10,
+          change_flooded: 10,
+          sum: 1200,
+          change_sum: 0
         }
       },
       TotalСonsumption: {
@@ -641,6 +637,31 @@ export default {
       ComparisonModule: {
         modalBul: false,
         cardShow: true,
+        date1: null,
+        date2: null,
+        id1: 0,
+        id2: 0,
+        data: {
+          suitable1: 0,
+          change_suitable1: 0,
+          suitable2: 0,
+
+          substandard1: 0,
+          change_substandard1: 0,
+          substandard2: 0,
+
+          defect1: 0,
+          change_defect1: 0,
+          defect2: 0,
+
+          flooded1: 0,
+          change_flooded1: 0,
+          flooded2: 0,
+
+          sum1: 0,
+          change_sum1: 0,
+          sum2: 0,
+        }
       },
       DurationWork: {
         modalBul: false,
