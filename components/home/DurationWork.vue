@@ -132,7 +132,6 @@ export default {
       this.getLineDataFirst(this.option);
     }
   },
-
 }
 </script>
 

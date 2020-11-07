@@ -494,7 +494,7 @@
         >
           <div class="chart-header">
             <div class="title">Расход энергоресурсов</div>
-            <period title="EnergyConsumption"></period>
+            <period title="EnergyConsumption" ></period>
             <div
                 class="bul"
                 @click="EnergyConsumption.modalBul=!EnergyConsumption.modalBul;"
@@ -516,13 +516,13 @@
               </div>
               <div class="btn-bul">
                 <span class="new"></span>
-                <span>Обновить</span>
+                <span @click="updateEnergyConsumption">Обновить</span>
               </div>
             </div>
             <div class="iteam-group">
               <div class="item">
                 <div class="data">
-                  <div class="quantity">1000000</div>
+                  <div class="quantity">{{energyConsumption.input1}}</div>
                   <div class="subtitle">Ввод1, кВт</div>
                 </div>
                 <div class="icon">
@@ -531,7 +531,7 @@
               </div>
               <div class="item">
                 <div class="data">
-                  <div class="quantity">11110000</div>
+                  <div class="quantity">{{ energyConsumption.input2 }}</div>
                   <div class="subtitle">Ввод2, кВт</div>
                 </div>
                 <div class="icon">
@@ -540,7 +540,7 @@
               </div>
               <div class="item">
                 <div class="data">
-                  <div class="quantity">111010101</div>
+                  <div class="quantity">{{ energyConsumption.gas }}</div>
                   <div class="subtitle">Газ, м3</div>
                 </div>
                 <div class="iconLast">
@@ -642,7 +642,7 @@ export default {
         cardShow: true,
         option: {
           id1: 0,
-          isType1: 0,
+          isType1: null,
         },
       },
       ComparisonModule: {
@@ -683,6 +683,7 @@ export default {
   computed: {
     ...mapGetters('home', {
       comparisonModuleData: 'comparisonModule',
+      energyConsumption: 'energyConsumption',
     }),
     chartOptionsPio() {
       return {
@@ -767,6 +768,7 @@ export default {
 
     ...mapActions("home", {
       getComparisonModule: "getComparisonModule",
+      getEnergyConsumption: "getEnergyConsumption",
     }),
     showCartItem(name) {
       this.ShowModalPlus.modalBul = false;
@@ -801,7 +803,11 @@ export default {
         return;
 
       this.getComparisonModule(this.ComparisonModule.option);
-    }
+    },
+    updateEnergyConsumption() {
+      this.EnergyConsumption.option.date = this.calendar.date;
+      this.getEnergyConsumption(this.EnergyConsumption.option);
+    },
   },
 }
 </script>

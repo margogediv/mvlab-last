@@ -25,6 +25,11 @@ export default {
             isQuery1: false,
             isQuery2: false,
         },
+        energyConsumption: {
+            input1: 0,
+            input2: 0,
+            gas: 0,
+        }
     }),
     getters: {
         lineDataFirst(state) {
@@ -44,6 +49,9 @@ export default {
         comparisonModule(state) {
             return state.comparisonModule;
         },
+        energyConsumption(state) {
+            return state.energyConsumption;
+        }
     },
     mutations: {
         setLineDataFirst(state, data) {
@@ -52,6 +60,9 @@ export default {
         setComparisonModule(state, data) {
             state.comparisonModule = data;
         },
+        setEnergyConsumption(state, data) {
+            state.energyConsumption = data;
+        }
     },
     actions: {
         async getLineDataFirst(store, option) {
@@ -153,7 +164,31 @@ export default {
             //end block
 
             store.commit('setComparisonModule', data);
-        }
+        },
+        async getEnergyConsumption(store, option) {
+            let data = null;
+            // try {
+            //     if (option.id1)
+            //         data = await this.$axios.$get(`/dashboard/energyconsumption/${option.date}/shift/${option.id1}/`);
+            //     else if (option.isType1 === 'day')
+            //         data = await this.$axios.$get(`/dashboard/energyconsumption/${option.date}/day/`);
+            //     else if (option.isType1 === 'month')
+            //         data = await this.$axios.$get(`/dashboard/energyconsumption/${option.date}/month/`);
+            //
+            // } catch (e) {
+            //     console.error("getEnergyConsumption axios");
+            // }
+
+            //latter remove
+            //start block
+            data = {
+                input1: getRandomInt(300) + 200,
+                input2: getRandomInt(100000) + 10000,
+                gas: getRandomInt(100000) + 100000,
+            };
+            //end block
+            store.commit('setEnergyConsumption', data);
+        },
     },
     strict: process.env.NODE_ENV !== 'production'
 };

@@ -80,8 +80,9 @@ export default {
     createDate(day = new Date()) {
       let days = ["Вс", "Пн", "Вт", "Ср", "Чт", "Пт", "Сб"];
       return {
-        day: day.getDate(),
+            day: day.getDate(),
             title: days[day.getDay()],
+            date: day.getFullYear() + '-' + (day.getMonth() + 1) + '-' + day.getDate(),
             month: day.getMonth(),
             year: day.getFullYear(),
             time: day.getTime(),
