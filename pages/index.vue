@@ -394,8 +394,8 @@
               <period title="ComparisonModuleStart"></period>
               <div class="indicators">
                 <div class="module">
-                  <div class="index">500</div>
-                  <indicator :change="{{ ComparisonModule.data.change_suitable1 }}"></indicator>
+                  <div class="index">{{ComparisonModule.data.sum1}}</div>
+                  <indicator :change="10"></indicator>
                 </div>
                 <div class="data-list">
                   <div class="list">
@@ -404,12 +404,8 @@
                       <div class="title">годно</div>
                     </div>
                     <div class="data">
-                      <div class="index">450</div>
-                      <div class="resul">
-                        <div class="result-ok">+5%</div>
-                        <div class="result-minus"></div>
-                        <div class="result-null"></div>
-                      </div>
+                      <div class="index">{{ ComparisonModule.data.suitable1 }}</div>
+                      <indicator :change="10"></indicator>
                     </div>
                   </div>
                   <div class="list">
@@ -463,7 +459,7 @@
               <period title="ComparisonModuleEnd"></period>
               <div class="indicators">
                 <div class="module">
-                  <div class="index">445</div>
+                  <div class="index">{{ComparisonModule.data.sum2}}</div>
                 </div>
                 <div class="data-list">
                   <div class="list">
@@ -645,19 +641,15 @@ export default {
           suitable1: 0,
           change_suitable1: 0,
           suitable2: 0,
-
           substandard1: 0,
           change_substandard1: 0,
           substandard2: 0,
-
           defect1: 0,
           change_defect1: 0,
           defect2: 0,
-
           flooded1: 0,
           change_flooded1: 0,
           flooded2: 0,
-
           sum1: 0,
           change_sum1: 0,
           sum2: 0,
