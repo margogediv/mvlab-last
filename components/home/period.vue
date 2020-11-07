@@ -40,33 +40,82 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
-
 export default {
-name: "period",
+  name: "period",
 
   data() {
     return {
       periodActive: [false, true, false, false, false],
     }
   },
-  props: ['title'],
+  props: ['title', 'end', 'isType1', 'isType2'],
+  created() {
+    this.setPeriod(1);
+  },
   methods: {
-    setPeriod (id) {
+    setPeriod(index) {
       let arr = [false, false, false, false, false];
-      arr[id] = true;
+      arr[index] = true;
       this.periodActive = arr;
+      let isType = 'shift';
+      let id = 0;
+      if (index === 0)
+        isType = 'month';
+      else if (index === 1)
+        isType = 'day';
+      else if (index === 2 || index === 2)
+        id = 1;
+      else if (index === 3)
+        id = 2;
+      else if (index === 4)
+        id = 3;
+
+      let option;
+      if (this.end)
+        option = {
+          id2: id,
+          isType2: isType,
+          title: this.title,
+          end: 1,
+        }
+      else
+        option = {
+          id1: id,
+          isType1: isType,
+          title: this.title,
+          end: 0,
+        }
+
+      this.$parent.$emit('setPeriod', option);
     }
   },
+  watch: {
+    isType1: function(newValue) {
+      if(newValue === 'month')
+        this.setPeriod(0);
+      else if(newValue === 'day')
+        this.setPeriod(1);
+      else
+        this.setPeriod(2);
+    },
+    isType2: function(newValue) {
+      if(newValue === 'month')
+        this.setPeriod(0);
+      else if(newValue === 'day')
+        this.setPeriod(1);
+      else
+        this.setPeriod(2);
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 
-  .period {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.period {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .btn {
     cursor: pointer;
@@ -88,9 +137,9 @@ name: "period",
     font-size: 12px;
     color: #42435F;
 
-  &:hover {
-     border: 1px solid #272848;
-   }
+    &:hover {
+      border: 1px solid #272848;
+    }
   }
 
   .text {

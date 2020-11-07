@@ -382,20 +382,20 @@
               </div>
               <div class="btn-bul">
                 <span class="new"></span>
-                <span>Обновить</span>
+                <span @click="updateComparisonModule">Обновить</span>
               </div>
             </div>
             <div class="content-box">
               <div class="calendar-period">
                 <div class="select-date">
-                  <input type="datetime-local"/>
+                  <input type="date" v-model="ComparisonModule.option.date1"/>
                 </div>
               </div>
-              <period title="ComparisonModuleStart"></period>
-              <div class="indicators">
+              <period title="ComparisonModule" :isType2="ComparisonModule.option.isType2"></period>
+              <div class="indicators" v-if="comparisonModuleData && comparisonModuleData.isQuery1">
                 <div class="module">
-                  <div class="index">{{ComparisonModule.data.sum1}}</div>
-                  <indicator :change="10"></indicator>
+                  <div class="index">{{ comparisonModuleData.sum1 }}</div>
+                  <indicator :change="comparisonModuleData.change_sum1"></indicator>
                 </div>
                 <div class="data-list">
                   <div class="list">
@@ -404,8 +404,8 @@
                       <div class="title">годно</div>
                     </div>
                     <div class="data">
-                      <div class="index">{{ ComparisonModule.data.suitable1 }}</div>
-                      <indicator :change="10"></indicator>
+                      <div class="index">{{ comparisonModuleData.suitable1 }}</div>
+                      <indicator :change="comparisonModuleData.change_suitable1"></indicator>
                     </div>
                   </div>
                   <div class="list">
@@ -414,12 +414,8 @@
                       <div class="title">некондиция</div>
                     </div>
                     <div class="data">
-                      <div class="index">25</div>
-                      <div class="resul">
-                        <div class="result-ok"></div>
-                        <div class="result-minus"></div>
-                        <div class="result-null">-0%</div>
-                      </div>
+                      <div class="index">{{ comparisonModuleData.substandard1 }}</div>
+                      <indicator :change="comparisonModuleData.change_substandard1"></indicator>
                     </div>
                   </div>
                   <div class="list">
@@ -428,24 +424,16 @@
                       <div class="title">брак</div>
                     </div>
                     <div class="data">
-                      <div class="index">25</div>
-                      <div class="resul">
-                        <div class="result-ok"></div>
-                        <div class="result-minus">-3%</div>
-                        <div class="result-null"></div>
-                      </div>
+                      <div class="index">{{ comparisonModuleData.defect1 }}</div>
+                      <indicator :change="comparisonModuleData.change_defect1"></indicator>
                     </div>
                   </div>
                 </div>
                 <div class="indicators-footer">
                   <div class="title">Залито метров</div>
                   <div class="data">
-                    <div class="index">100000</div>
-                    <div class="resul">
-                      <div class="result-ok">+10%</div>
-                      <div class="result-minus"></div>
-                      <div class="result-null"></div>
-                    </div>
+                    <div class="index">{{ comparisonModuleData.flooded1 }}</div>
+                    <indicator :change="comparisonModuleData.change_flooded1"></indicator>
                   </div>
                 </div>
               </div>
@@ -453,13 +441,13 @@
             <div class="content-box">
               <div class="calendar-period">
                 <div class="select-date">
-                  <input type="datetime-local"/>
+                  <input type="date" v-model="ComparisonModule.option.date2"/>
                 </div>
               </div>
-              <period title="ComparisonModuleEnd"></period>
-              <div class="indicators">
+              <period title="ComparisonModule" :isType1="ComparisonModule.option.isType1" end="1"></period>
+              <div class="indicators" v-if="comparisonModuleData && comparisonModuleData.isQuery2">
                 <div class="module">
-                  <div class="index">{{ComparisonModule.data.sum2}}</div>
+                  <div class="index">{{ comparisonModuleData.sum2 }}</div>
                 </div>
                 <div class="data-list">
                   <div class="list">
@@ -468,7 +456,7 @@
                       <div class="title">годно</div>
                     </div>
                     <div class="data">
-                      <div class="index">430</div>
+                      <div class="index">{{ comparisonModuleData.suitable2 }}</div>
                     </div>
                   </div>
                   <div class="list">
@@ -477,7 +465,7 @@
                       <div class="title">некондиция</div>
                     </div>
                     <div class="data">
-                      <div class="index">25</div>
+                      <div class="index">{{ comparisonModuleData.substandard2 }}</div>
                     </div>
                   </div>
                   <div class="list">
@@ -486,14 +474,14 @@
                       <div class="title">брак</div>
                     </div>
                     <div class="data">
-                      <div class="index">22</div>
+                      <div class="index">{{ comparisonModuleData.defect2 }}</div>
                     </div>
                   </div>
                 </div>
                 <div class="indicators-footer">
                   <div class="title">Залито метров</div>
                   <div class="data">
-                    <div class="index">95000</div>
+                    <div class="index">{{ comparisonModuleData.flooded2 }}</div>
                   </div>
                 </div>
               </div>
@@ -571,6 +559,7 @@
 <script>
 
 import {mapActions} from "vuex";
+import {mapGetters} from "vuex";
 import Period from "@/components/home/period";
 import Calendar from "@/components/home/calendar";
 import DurationWork from "@/components/home/DurationWork";
@@ -595,6 +584,16 @@ export default {
     this.$on('changeCalendar', (calendar) => {
       this.calendar = calendar;
     });
+
+    this.$on('setPeriod', (option) => {
+      if (option.end) {
+        this[option.title].option.id2 = option.id2;
+        this[option.title].option.isType2 = option.isType2;
+      } else {
+        this[option.title].option.id1 = option.id1;
+        this[option.title].option.isType1 = option.isType1;
+      }
+    });
   },
 
   data() {
@@ -605,6 +604,10 @@ export default {
       PanelRelease: {
         modalBul: false,
         cardShow: true,
+        option: {
+          id1: 0,
+          isType1: 0,
+        },
         data: {
           suitable: 10,
           change_suitable: 10,
@@ -621,39 +624,38 @@ export default {
       TotalСonsumption: {
         modalBul: false,
         cardShow: true,
+        option: {
+          id1: 0,
+          isType1: 0,
+        },
       },
       EnergyConsumption: {
         modalBul: false,
         cardShow: true,
+        option: {
+          id1: 0,
+          isType1: 0,
+        },
       },
       SpecificConsumption: {
         modalBul: false,
         cardShow: true,
+        option: {
+          id1: 0,
+          isType1: 0,
+        },
       },
       ComparisonModule: {
         modalBul: false,
         cardShow: true,
-        date1: null,
-        date2: null,
-        id1: 0,
-        id2: 0,
-        data: {
-          suitable1: 0,
-          change_suitable1: 0,
-          suitable2: 0,
-          substandard1: 0,
-          change_substandard1: 0,
-          substandard2: 0,
-          defect1: 0,
-          change_defect1: 0,
-          defect2: 0,
-          flooded1: 0,
-          change_flooded1: 0,
-          flooded2: 0,
-          sum1: 0,
-          change_sum1: 0,
-          sum2: 0,
-        }
+        option: {
+          id1: 0,
+          id2: 0,
+          isType1: 0,
+          isType2: 0,
+          date1: null,
+          date2: null,
+        },
       },
       DurationWork: {
         modalBul: false,
@@ -679,6 +681,9 @@ export default {
   },
 
   computed: {
+    ...mapGetters('home', {
+      comparisonModuleData: 'comparisonModule',
+    }),
     chartOptionsPio() {
       return {
         chart: {
@@ -754,9 +759,14 @@ export default {
   },
 
   methods: {
+    //check
     ...mapActions("users", {
       setActiveTabHeader: "setActiveTabHeader",
       setActiveTabSidebar: "setActiveTabSidebar",
+    }),
+
+    ...mapActions("home", {
+      getComparisonModule: "getComparisonModule",
     }),
     showCartItem(name) {
       this.ShowModalPlus.modalBul = false;
@@ -786,6 +796,12 @@ export default {
     noChange() {
       console.log('change');
     },
+    updateComparisonModule() {
+      if (!this.ComparisonModule.option.date1)
+        return;
+
+      this.getComparisonModule(this.ComparisonModule.option);
+    }
   },
 }
 </script>
