@@ -51,7 +51,7 @@
     <section class="charts">
       <div class="block-1">
         <durationWork v-if="DurationWork.cardShow" :card="DurationWork" :calendar="calendar"></durationWork>
-        <stockBalances v-if="StockBalances.cardShow" :card="StockBalances" :calendar="calendar"></stockBalances>
+        <stockBalances v-if="StockBalances.cardShow" :card="StockBalances" :date="calendar.date"></stockBalances>
       </div>
       <div class="block-2">
         <div
@@ -82,7 +82,7 @@
               </div>
               <div class="btn-bul">
                 <span class="new"></span>
-                <span>Обновить</span>
+                <span @click="updatePanelRelease">Обновить</span>
               </div>
             </div>
             <div class="diagram">
@@ -94,8 +94,8 @@
             <div class="content-box">
               <div class="indicators">
                 <div class="module">
-                  <div class="index">{{ PanelRelease.data.sum }}</div>
-                  <indicator :change="PanelRelease.data.change_sum"></indicator>
+                  <div class="index">{{ panelRelease.sum }}</div>
+                  <indicator :change="panelRelease.change_sum"></indicator>
                 </div>
                 <div class="data-list">
                   <div class="list">
@@ -104,12 +104,8 @@
                       <div class="title">годно</div>
                     </div>
                     <div class="data">
-                      <div class="index">450</div>
-                      <div class="resul">
-                        <div class="result-ok">+5%</div>
-                        <div class="result-minus"></div>
-                        <div class="result-null"></div>
-                      </div>
+                      <div class="index">{{ panelRelease.suitable }}</div>
+                      <indicator :change="panelRelease.change_suitable"></indicator>
                     </div>
                   </div>
                   <div class="list">
@@ -118,12 +114,8 @@
                       <div class="title">некондиция</div>
                     </div>
                     <div class="data">
-                      <div class="index">25</div>
-                      <div class="resul">
-                        <div class="result-ok"></div>
-                        <div class="result-minus"></div>
-                        <div class="result-null">-0%</div>
-                      </div>
+                      <div class="index">{{ panelRelease.substandard }}</div>
+                      <indicator :change="panelRelease.change_substandard"></indicator>
                     </div>
                   </div>
                   <div class="list">
@@ -132,27 +124,16 @@
                       <div class="title">брак</div>
                     </div>
                     <div class="data">
-                      <div class="index">25</div>
-                      <div class="resul">
-                        <div class="result-ok"></div>
-                        <div class="result-minus">-3%</div>
-                        <div class="result-null"></div>
-                      </div>
+                      <div class="index">{{ panelRelease.defect }}</div>
+                      <indicator :change="panelRelease.change_defect"></indicator>
                     </div>
                   </div>
                 </div>
                 <div class="indicators-footer">
                   <div class="title">Залито метров</div>
                   <div class="data">
-                    <div class="index">100000</div>
-                    <div class="resul">
-                      <div class="result-ok">
-                        <div class="arrow"></div>
-                        <div class="index-res">10%</div>
-                      </div>
-                      <div class="result-minus"></div>
-                      <div class="result-null"></div>
-                    </div>
+                    <div class="index">{{ panelRelease.flooded }}</div>
+                    <indicator :change="panelRelease.change_flooded"></indicator>
                   </div>
                 </div>
               </div>
@@ -187,13 +168,13 @@
               </div>
               <div class="btn-bul">
                 <span class="new"></span>
-                <span>Обновить</span>
+                <span @click="updateSpecificConsumption">Обновить</span>
               </div>
             </div>
             <div class="iteam-group">
               <div class="item">
                 <div class="data">
-                  <div class="quantity">5,5</div>
+                  <div class="quantity">{{ specificConsumption.iso }}</div>
                   <div class="subtitle">Изоцианат, л</div>
                 </div>
                 <div class="icon">
@@ -205,7 +186,7 @@
               </div>
               <div class="item">
                 <div class="data">
-                  <div class="quantity">3,2</div>
+                  <div class="quantity">{{ specificConsumption.pol }}</div>
                   <div class="subtitle">Полиол, л</div>
                 </div>
                 <div class="icon">
@@ -217,7 +198,7 @@
               </div>
               <div class="item">
                 <div class="data">
-                  <div class="quantity">1,3</div>
+                  <div class="quantity">{{ specificConsumption.pen }}</div>
                   <div class="subtitle">Пентан, л</div>
                 </div>
                 <div class="icon">
@@ -229,7 +210,7 @@
               </div>
               <div class="item">
                 <div class="data">
-                  <div class="quantity">0,8</div>
+                  <div class="quantity">{{ specificConsumption.kat1 }}</div>
                   <div class="subtitle">Катализатор1, л</div>
                 </div>
                 <div class="icon">
@@ -241,7 +222,7 @@
               </div>
               <div class="item">
                 <div class="data">
-                  <div class="quantity">3,5</div>
+                  <div class="quantity">{{ specificConsumption.kat2 }}</div>
                   <div class="subtitle">Катализатор2, л</div>
                 </div>
                 <div class="icon">
@@ -253,7 +234,7 @@
               </div>
               <div class="item">
                 <div class="data">
-                  <div class="quantity">2,1</div>
+                  <div class="quantity">{{ specificConsumption.kat3 }}</div>
                   <div class="subtitle">Катализатор3, л</div>
                 </div>
                 <div class="icon">
@@ -268,14 +249,14 @@
         </div>
         <div
             class="chart-data consumption"
-            v-if="TotalСonsumption.cardShow"
+            v-if="TotalConsumption.cardShow"
         >
           <div class="chart-header">
             <div class="title">Суммарный расход</div>
-            <period title="TotalСonsumption"></period>
+            <period title="TotalConsumption"></period>
             <div
                 class="bul"
-                @click="TotalСonsumption.modalBul=!TotalСonsumption.modalBul;"
+                @click="TotalConsumption.modalBul=!TotalConsumption.modalBul;"
                 @click.stop="noChange"
             >
               <span></span>
@@ -284,23 +265,23 @@
           <div class="chart-content">
             <div
                 class="menu-bul"
-                v-if="TotalСonsumption.modalBul"
+                v-if="TotalConsumption.modalBul"
             >
               <div
                   class="btn-bul"
-                  @click="TotalСonsumption.cardShow=!TotalСonsumption.cardShow; TotalСonsumption.modalBul=false"
+                  @click="TotalConsumption.cardShow=!TotalConsumption.cardShow; TotalConsumption.modalBul=false"
               ><span class="show"></span>
                 <span>Скрыть</span>
               </div>
               <div class="btn-bul">
                 <span class="new"></span>
-                <span>Обновить</span>
+                <span @click="updateTotalConsumption">Обновить</span>
               </div>
             </div>
             <div class="iteam-group">
               <div class="item">
                 <div class="data">
-                  <div class="quantity">400</div>
+                  <div class="quantity">{{ totalConsumption.iso }}</div>
                   <div class="subtitle">Изоцианат, л</div>
                 </div>
                 <div class="icon">
@@ -309,7 +290,7 @@
               </div>
               <div class="item">
                 <div class="data">
-                  <div class="quantity">250</div>
+                  <div class="quantity">{{ totalConsumption.pol }}</div>
                   <div class="subtitle">Полиол, л</div>
                 </div>
                 <div class="icon">
@@ -318,7 +299,7 @@
               </div>
               <div class="item">
                 <div class="data">
-                  <div class="quantity">100</div>
+                  <div class="quantity">{{ totalConsumption.pen }}</div>
                   <div class="subtitle">Пентан, л</div>
                 </div>
                 <div class="icon">
@@ -327,7 +308,7 @@
               </div>
               <div class="item">
                 <div class="data">
-                  <div class="quantity">24</div>
+                  <div class="quantity">{{ totalConsumption.kat1 }}</div>
                   <div class="subtitle">Катализатор1, л</div>
                 </div>
                 <div class="icon">
@@ -336,7 +317,7 @@
               </div>
               <div class="item">
                 <div class="data">
-                  <div class="quantity">10</div>
+                  <div class="quantity">{{ totalConsumption.kat2 }}</div>
                   <div class="subtitle">Катализатор2, л</div>
                 </div>
                 <div class="icon">
@@ -345,7 +326,7 @@
               </div>
               <div class="item">
                 <div class="data">
-                  <div class="quantity">5</div>
+                  <div class="quantity">{{ totalConsumption.kat3 }}</div>
                   <div class="subtitle">Катализатор3, л</div>
                 </div>
                 <div class="icon">
@@ -494,7 +475,7 @@
         >
           <div class="chart-header">
             <div class="title">Расход энергоресурсов</div>
-            <period title="EnergyConsumption" ></period>
+            <period title="EnergyConsumption"></period>
             <div
                 class="bul"
                 @click="EnergyConsumption.modalBul=!EnergyConsumption.modalBul;"
@@ -522,7 +503,7 @@
             <div class="iteam-group">
               <div class="item">
                 <div class="data">
-                  <div class="quantity">{{energyConsumption.input1}}</div>
+                  <div class="quantity">{{ energyConsumption.input1 }}</div>
                   <div class="subtitle">Ввод1, кВт</div>
                 </div>
                 <div class="icon">
@@ -594,6 +575,11 @@ export default {
         this[option.title].option.isType1 = option.isType1;
       }
     });
+
+    this.updatePanelRelease();
+    this.updateEnergyConsumption();
+    this.updateTotalConsumption();
+    this.updateSpecificConsumption();
   },
 
   data() {
@@ -608,20 +594,8 @@ export default {
           id1: 0,
           isType1: 0,
         },
-        data: {
-          suitable: 10,
-          change_suitable: 10,
-          substandard: 10,
-          change_substandard: 10,
-          defect: 10,
-          change_defect: 10,
-          flooded: 10,
-          change_flooded: 10,
-          sum: 1200,
-          change_sum: 0
-        }
       },
-      TotalСonsumption: {
+      TotalConsumption: {
         modalBul: false,
         cardShow: true,
         option: {
@@ -684,6 +658,9 @@ export default {
     ...mapGetters('home', {
       comparisonModuleData: 'comparisonModule',
       energyConsumption: 'energyConsumption',
+      totalConsumption: "totalConsumption",
+      specificConsumption: "specificConsumption",
+      panelRelease: "panelRelease",
     }),
     chartOptionsPio() {
       return {
@@ -750,9 +727,9 @@ export default {
           name: 'ghvhvg',
           innerSize: '70%',
           data: [
-            {name: 'Chrome', y: 61.41, color: '#4BBEA9'},
-            {name: 'Internet Explorer', y: 11.84, color: ' #FC7A7A'},
-            {name: 'Firefox', y: 10.85, color: '#2D9AD8'}
+            {name: 'Chrome', y: this.panelRelease.suitable, color: '#4BBEA9'},
+            {name: 'Internet Explorer', y: this.panelRelease.substandard, color: ' #FC7A7A'},
+            {name: 'Firefox', y: this.panelRelease.defect, color: '#2D9AD8'}
           ]
         }]
       }
@@ -769,6 +746,9 @@ export default {
     ...mapActions("home", {
       getComparisonModule: "getComparisonModule",
       getEnergyConsumption: "getEnergyConsumption",
+      getTotalConsumption: "getTotalConsumption",
+      getSpecificConsumption: "getSpecificConsumption",
+      getPanelRelease: "getPanelRelease",
     }),
     showCartItem(name) {
       this.ShowModalPlus.modalBul = false;
@@ -777,7 +757,7 @@ export default {
     hideModals() {
       if (this.ShowModalPlus.modalBul ||
           this.PanelRelease.modalBul ||
-          this.TotalСonsumption.modalBul ||
+          this.TotalConsumption.modalBul ||
           this.EnergyConsumption.modalBul ||
           this.SpecificConsumption.modalBul ||
           this.ComparisonModule.modalBul ||
@@ -788,7 +768,7 @@ export default {
         this.StockBalances.modalBul = false;
         this.ShowModalPlus.modalBul = false;
         this.PanelRelease.modalBul = false;
-        this.TotalСonsumption.modalBul = false;
+        this.TotalConsumption.modalBul = false;
         this.EnergyConsumption.modalBul = false;
         this.SpecificConsumption.modalBul = false;
         this.ComparisonModule.modalBul = false;
@@ -808,9 +788,27 @@ export default {
       this.EnergyConsumption.option.date = this.calendar.date;
       this.getEnergyConsumption(this.EnergyConsumption.option);
     },
+    updateTotalConsumption() {
+      this.TotalConsumption.option.date = this.calendar.date;
+      this.getTotalConsumption(this.TotalConsumption.option);
+    },
+    updateSpecificConsumption() {
+      this.SpecificConsumption.option.date = this.calendar.date;
+      this.getSpecificConsumption(this.SpecificConsumption.option);
+    },
+    updatePanelRelease() {
+      this.PanelRelease.option.date = this.calendar.date;
+      this.getPanelRelease(this.PanelRelease.option);
+    },
   },
 }
 </script>
+
+<style>
+.highcharts-scrollbar {
+  display: none !important;
+}
+</style>
 
 <style lang="scss" scoped>
 
@@ -968,6 +966,7 @@ export default {
 
         .diagram {
           width: 45%;
+          overflow: hidden;
         }
 
         .content-box {

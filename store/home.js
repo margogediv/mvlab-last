@@ -6,6 +6,21 @@ export default {
             interval: [],
             sum: 0,
         },
+        stockBalances: {
+            storehouse: [
+                {
+                    name: '',
+                    iso: [],
+                    pol: [],
+                    pen: [],
+                },
+            ],
+            in_total: {
+                iso: 0,
+                pol: 0,
+                pen: 0
+            },
+        },
         comparisonModule: {
             suitable1: 0,
             change_suitable1: 0,
@@ -29,6 +44,34 @@ export default {
             input1: 0,
             input2: 0,
             gas: 0,
+        },
+        totalConsumption: {
+            iso: 0,
+            pol: 0,
+            pen: 0,
+            kat1: 0,
+            kat2: 0,
+            kat3: 0,
+        },
+        specificConsumption: {
+            iso: 0,
+            pol: 0,
+            pen: 0,
+            kat1: 0,
+            kat2: 0,
+            kat3: 0,
+        },
+        panelRelease: {
+            suitable: 0,
+            change_suitable: 0,
+            substandard: 0,
+            change_substandard: 0,
+            defect: 0,
+            change_defect: 0,
+            flooded: 0,
+            change_flooded: 0,
+            sum: 0,
+            change_sum: 0,
         }
     }),
     getters: {
@@ -51,6 +94,18 @@ export default {
         },
         energyConsumption(state) {
             return state.energyConsumption;
+        },
+        totalConsumption(state) {
+            return state.totalConsumption;
+        },
+        specificConsumption(state) {
+            return state.specificConsumption;
+        },
+        stockBalances(state) {
+            return state.stockBalances;
+        },
+        panelRelease(state) {
+            return state.panelRelease;
         }
     },
     mutations: {
@@ -62,6 +117,18 @@ export default {
         },
         setEnergyConsumption(state, data) {
             state.energyConsumption = data;
+        },
+        setTotalConsumption(state, data) {
+            state.totalConsumption = data;
+        },
+        setSpecificConsumption(state, data) {
+            state.specificConsumption = data;
+        },
+        setStockBalances(state, data) {
+            state.stockBalances = data;
+        },
+        setPanelRelease(state, data) {
+            state.panelRelease = data;
         }
     },
     actions: {
@@ -83,7 +150,7 @@ export default {
 
             //later remove
             //start block
-            data.sum = 23;
+            data.sum = getRandomInt(90) + 10;
             let start = "";
             let end = "";
             for (let i = 0; i < 10; i++) {
@@ -158,8 +225,7 @@ export default {
                 data.change_sum1 = ((data.sum1 / data.sum2) * 100).toFixed();
                 data.isQuery1 = true;
                 data.isQuery2 = true;
-            }
-             else if (option.date1 && !option.date2)
+            } else if (option.date1 && !option.date2)
                 data.isQuery1 = true;
             //end block
 
@@ -189,6 +255,132 @@ export default {
             //end block
             store.commit('setEnergyConsumption', data);
         },
+        async getTotalConsumption(store, option) {
+            let data = null;
+            // try {
+            //     if (option.id1)
+            //         data = await this.$axios.$get(`/dashboard/sumexpense/${option.date}/shift/${option.id1}/`);
+            //     else if (option.isType1 === 'day')
+            //         data = await this.$axios.$get(`/dashboard/sumexpense/${option.date}/day/`);
+            //     else if (option.isType1 === 'month')
+            //         data = await this.$axios.$get(`/dashboard/sumexpense/${option.date}/month/`);
+            //
+            // } catch (e) {
+            //     console.error("getTotalСonsumption axios");
+            // }
+
+            //latter remove
+            //start block
+            data = {
+                iso: getRandomInt(300) + 200,
+                pol: getRandomInt(300) + 200,
+                pen: getRandomInt(300) + 200,
+                kat1: getRandomInt(50) + 50,
+                kat2: getRandomInt(50) + 50,
+                kat3: getRandomInt(50) + 50,
+            };
+            //end block
+            store.commit('setTotalConsumption', data);
+        },
+        async getSpecificConsumption(store, option) {
+            let data = null;
+            // try {
+            //     if (option.id1)
+            //         data = await this.$axios.$get(`/dashboard/specificconsumption/${option.date}/shift/${option.id1}/`);
+            //     else if (option.isType1 === 'day')
+            //         data = await this.$axios.$get(`/dashboard/specificconsumption/${option.date}/day/`);
+            //     else if (option.isType1 === 'month')
+            //         data = await this.$axios.$get(`/dashboard/specificconsumption/${option.date}/month/`);
+            //
+            // } catch (e) {
+            //     console.error("getSpecificConsumption axios");
+            // }
+
+            //latter remove
+            //start block
+            data = {
+                iso: (Math.random() * 10).toFixed(1),
+                pol: (Math.random() * 10).toFixed(1),
+                pen: (Math.random() * 10).toFixed(1),
+                kat1: (Math.random() * 10).toFixed(1),
+                kat2: (Math.random() * 10).toFixed(1),
+                kat3: (Math.random() * 10).toFixed(1),
+            };
+            //end block
+            store.commit('setSpecificConsumption', data);
+        },
+        async getStockBalances(store, option) {
+            let data = null;
+            // try {
+            //     data = await this.$axios.$get(`/dashboard/remainder/${option.date}/`);
+            // } catch (e) {
+            //     console.error("getStockBalances axios");
+            // }
+
+            //latter remove
+            //start block
+            data = {
+                storehouse: [
+                    {
+                        name: "Скалад 1",
+                        iso: [getRandomInt(100), getRandomInt(100)],
+                        pol: [getRandomInt(100), getRandomInt(100)],
+                        pen: [],
+                    },
+                    {
+                        name: "Скалад 2",
+                        iso: [getRandomInt(100), getRandomInt(100), getRandomInt(100)],
+                        pol: [],
+                        pen: [getRandomInt(100)],
+                    },
+                    {
+                        name: "Скалад 3",
+                        iso: [getRandomInt(100), getRandomInt(100), getRandomInt(100)],
+                        pol: [getRandomInt(100), getRandomInt(100)],
+                        pen: [],
+                    },
+                ],
+                "in_total": {
+                    "iso": getRandomInt(100),
+                    "pol": getRandomInt(100),
+                    "pen": getRandomInt(100),
+
+                }
+            };
+            //end block
+            store.commit('setStockBalances', data);
+        },
+        async getPanelRelease(store, option) {
+            let data = null;
+            // try {
+            //     if (option.id1)
+            //         data = await this.$axios.$get(`/dashboard/edition/${option.date}/shift/${option.id1}/`);
+            //     else if (option.isType1 === 'day')
+            //         data = await this.$axios.$get(`/dashboard/edition/${option.date}/day/`);
+            //     else if (option.isType1 === 'month')
+            //         data = await this.$axios.$get(`/dashboard/edition/${option.date}/month/`);
+            //
+            // } catch (e) {
+            //     console.error("getSpecificConsumption axios");
+            // }
+
+            //latter remove
+            //start block
+            data = {
+                suitable: getRandomInt(500),
+                change_suitable: getRandomInt(100),
+                substandard: getRandomInt(100),
+                change_substandard: getRandomInt(100),
+                defect: getRandomInt(100),
+                change_defect: getRandomInt(100),
+                flooded: getRandomInt(1000000),
+                change_flooded: getRandomInt(100),
+                sum: getRandomInt(500),
+                change_sum: getRandomInt(100),
+            }
+            //end block
+            store.commit('setPanelRelease', data);
+        }
     },
     strict: process.env.NODE_ENV !== 'production'
 };

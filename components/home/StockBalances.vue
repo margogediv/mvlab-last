@@ -16,24 +16,44 @@
         <div
             class="btn-bul"
             @click="$parent.$emit('hideCartItem','StockBalances')"
-          ><span class="show"></span>
+        ><span class="show"></span>
           <span>Скрыть</span>
         </div>
         <div class="btn-bul">
           <span class="new"></span>
-          <span>Обновить</span>
+          <span @click="update">Обновить</span>
         </div>
       </div>
     </div>
     <div class="chart-content">
-      <div class="box" v-for="el in lineDataSecond">
-        <div class="name-block">{{ el.box }}</div>
-        <div class="block-content" v-for="elem in el.data">
-          <div class="title-position">{{ elem.titlePosition }}</div>
+      <div class="box" v-for="el in stockBalances.storehouse">
+        <div class="name-block">{{ el.name }}</div>
+        <div class="block-content" v-if="el.iso.length">
+          <div class="title-position">Изоционат</div>
           <div class="group">
-            <div class="number-lit" v-for="i in elem.capacitys">{{ i.value }}л
+            <div class="number-lit" v-for="i in el.iso">{{ i }}л
               <div class="line-progress">
-                <div class="data-progress" :style="'width: ' + i.remainder + '%'"></div>
+                <div class="data-progress" :style="'width: ' + i + '%'"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block-content" v-if="el.pol.length">
+          <div class="title-position">Полиол</div>
+          <div class="group">
+            <div class="number-lit" v-for="i in el.pol">{{ i }}л
+              <div class="line-progress">
+                <div class="data-progress" :style="'width: ' + i + '%'"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="block-content" v-if="el.pen.length">
+          <div class="title-position">Пентан</div>
+          <div class="group">
+            <div class="number-lit" v-for="i in el.pen">{{ i }}л
+              <div class="line-progress">
+                <div class="data-progress" :style="'width: ' + i + '%'"></div>
               </div>
             </div>
           </div>
@@ -41,112 +61,48 @@
       </div>
     </div>
     <div class="chart-footer">
-      <div class="title">Итого - ISO: <b>100л</b>; POL: <b>100л</b>; PEN: <b>100л</b></div>
+      <div class="title">Итого - ISO: <b>{{ stockBalances.in_total.iso }}л</b>; POL: <b>{{ stockBalances.in_total.pol }}л</b>; PEN: <b>{{ stockBalances.in_total.pen }}л</b></div>
     </div>
   </div>
 </template>
 
 <script>
 
+import {mapActions} from "vuex";
+import {mapGetters} from "vuex";
+
 export default {
   name: "StockBalances",
   props: [
-    'card'
+    'card',
+    'date'
   ],
+  created() {
+    this.update();
+  },
   data() {
-    return {
-    }
+    return {}
   },
   methods: {
+    ...mapActions('home', {
+      getStockBalances: 'getStockBalances',
+    }),
+    update() {
+      this.getStockBalances(this.option);
+    },
     noChange() {
       console.log('change');
     },
   },
   computed: {
-    lineDataSecond() {
-      return [
-        {
-          box: "Скалад 1",
-          data: [
-            {
-              titlePosition: 'Изоционат',
-              capacitys: [
-                {
-                  value: 40,
-                  remainder: 30,
-                },
-                {
-                  value: 50,
-                  remainder: 60,
-                }
-              ],
-            },
-            {
-              titlePosition: 'Полиол',
-              capacitys: [
-                {
-                  value: 25,
-                  remainder: 30,
-                },
-                {
-                  value: 45,
-                  remainder: 60,
-                }
-              ],
-            }
-          ]
-        },
-        {
-          box: "Скалад 2",
-          data: [
-            {
-              titlePosition: 'Пентан',
-              capacitys: [
-                {
-                  value: 25,
-                  remainder: 30,
-                }
-              ],
-            },
-          ]
-        },
-        {
-          box: "Скалад 3",
-          data: [
-            {
-              titlePosition: 'Изоционат',
-              capacitys: [
-                {
-                  value: 100,
-                  remainder: 10,
-                },
-                {
-                  value: 25,
-                  remainder: 50,
-                },
-                {
-                  value: 25,
-                  remainder: 80,
-                }
-              ],
-            },
-            {
-              titlePosition: 'Полиол',
-              capacitys: [
-                {
-                  value: 45,
-                  remainder: 60,
-                },
-                {
-                  value: 25,
-                  remainder: 10,
-                },
-              ]
-            },
-          ]
-        },
-      ];
-    },
+    ...mapGetters('home', {
+      stockBalances: 'stockBalances',
+    }),
+    option() {
+      return {
+        date: this.date,
+      }
+    }
   },
 }
 </script>
@@ -158,6 +114,7 @@ export default {
   border: 2px solid #E9E9E9;
   border-radius: 9px;
 }
+
 .chart.second {
   height: 358px;
   margin-bottom: 24px;
@@ -171,6 +128,7 @@ export default {
     flex-direction: column;
     justify-content: flex-start;
     overflow: auto;
+
     .box {
       display: flex;
       flex-direction: column;
@@ -180,9 +138,11 @@ export default {
       line-height: 12px;
       color: #000000;
       border-bottom: 1px solid #E9E9E9;
+
       .name-block {
         margin-bottom: 6px;
       }
+
       .block-content {
         display: flex;
         flex-direction: column;
@@ -199,6 +159,7 @@ export default {
         .group {
           display: flex;
           flex-direction: column;
+
           .number-lit {
             display: flex;
             align-items: center;
@@ -228,6 +189,7 @@ export default {
     }
   }
 }
+
 .chart-header {
   display: flex;
   position: relative;
@@ -289,6 +251,7 @@ export default {
     }
   }
 }
+
 .chart-footer {
   width: 100%;
   display: flex;
