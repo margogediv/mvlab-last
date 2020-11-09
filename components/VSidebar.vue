@@ -54,6 +54,9 @@ export default {
           { name: "Report", link: "", img: "carbon_report", icon: "reportIcon" },
           { name: "Setting", link: "Projects", img: "carbon_data-structured", icon: "dataStructured" }
         ],
+        SETTING: [
+          { name: "Setting", link: "Projects", img: "carbon_data-structured", icon: "dataStructured" }
+        ],
       }
     };
   },

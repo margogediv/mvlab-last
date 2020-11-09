@@ -50,8 +50,8 @@
     <calendar></calendar>
     <section class="charts">
       <div class="block-1">
-        <durationWork v-if="DurationWork.cardShow" :card="DurationWork" :calendar="calendar"></durationWork>
-        <stockBalances v-if="StockBalances.cardShow" :card="StockBalances" :date="calendar.date"></stockBalances>
+        <durationWork v-if="DurationWork.cardShow" :card="DurationWork" :calendar="calendar" :isRefresh="DurationWork.isRefresh"></durationWork>
+        <stockBalances v-if="StockBalances.cardShow" :card="StockBalances" :date="calendar.date" :isRefresh="StockBalances.isRefresh"></stockBalances>
       </div>
       <div class="block-2">
         <div
@@ -573,6 +573,7 @@ export default {
       } else {
         this[option.title].option.id1 = option.id1;
         this[option.title].option.isType1 = option.isType1;
+        this['update' + option.title]();
       }
     });
 
@@ -634,10 +635,12 @@ export default {
       DurationWork: {
         modalBul: false,
         cardShow: true,
+        isRefresh: false,
       },
       StockBalances: {
         modalBul: false,
         cardShow: true,
+        isRefresh: false,
       },
       calendar: {
         time: new Date().getTime(),
@@ -652,6 +655,12 @@ export default {
     stockBalances: StockBalances,
     indicator: DataIndicator,
 
+  },
+
+  watch: {
+    calendar: function() {
+      this.updateAll();
+    }
   },
 
   computed: {
@@ -800,6 +809,12 @@ export default {
       this.PanelRelease.option.date = this.calendar.date;
       this.getPanelRelease(this.PanelRelease.option);
     },
+    updateAll() {
+      this.updatePanelRelease();
+      this.updateSpecificConsumption();
+      this.updateTotalConsumption();
+      this.updateEnergyConsumption();
+    }
   },
 }
 </script>

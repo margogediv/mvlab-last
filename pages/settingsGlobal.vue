@@ -2,24 +2,20 @@
   <div>
     <div class="top-panel">
       <div class="project-box">Объекты</div>
-<!--      <div class="search-wrapper">-->
-<!--        <input type="text" v-model="search" placeholder="Search title.." />-->
-<!--        <IconifyIcon icon="bxSearchAlt2" :style="{fontSize: '24px'}" class="input-icon" />-->
-<!--      </div>-->
+            <div class="search-wrapper">
+              <input type="text" v-model="search" placeholder="Search title.." />
+              <IconifyIcon icon="bxSearchAlt2" :style="{fontSize: '24px'}" class="input-icon" />
+            </div>
       <div class="btn-box">
-        <button class="btn-project btn-del">
+        <button class="btn-project btn-del" v-if="clientsObject">
           <span class="btn-title">Удалить</span>
           <span class="btn-svg"></span>
         </button>
-        <!-- <button class="btn-project btn-del" v-on:click="GET_DEMOOBJECT">GET проект</button>
-        <button class="btn-project btn-del" v-on:click="updatetempobj">UPDATE проект</button>
-        <button class="btn-project btn-del" v-on:click="addtempobj">ADD проект</button>
-        <button class="btn-project btn-del" v-on:click="deltempobj">DELETE проект</button> -->
-        <button class="btn-project btn-edit" v-on:click="changeshowCreated">
+        <button class="btn-project btn-edit" v-if="clientsObject" v-on:click="changeshowCreated">
           <span class="btn-title">Изменить</span>
           <span class="btn-svg"></span>
         </button>
-        <button class="btn-project btn-add" v-on:click="changeshowCreated">
+        <button class="btn-project btn-add" v-if="!clientsObject" v-on:click="changeshowCreated">
           <span class="btn-title">Добавить</span>
           <span class="btn-svg"></span>
         </button>
@@ -28,33 +24,33 @@
     <div class="table-objects">
       <table>
         <thead>
-          <tr class="table-head">
-            <th>Название объекта</th>
-            <th>Заказчик</th>
-            <th>Договор</th>
-            <th>Дата создания</th>
-            <th>Дата изменения</th>
-          </tr>
+        <tr class="table-head">
+          <th>Название объекта</th>
+          <th>Заказчик</th>
+          <th>Договор</th>
+          <th>Дата создания</th>
+          <th>Дата изменения</th>
+        </tr>
         </thead>
-<!--        <tbody>-->
-<!--          <tr v-for="(client, idx) in filteredList" :key="idx" class="table-body">-->
-<!--            <td>-->
-<!--              <input readonly class="input-td" type="text" v-bind:value="client.name" />-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              <input readonly class="input-td" type="text" v-bind:value="client.client" />-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              <input readonly class="input-td" type="text" v-bind:value="client.contract.name" />-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              <input readonly class="input-td" type="text" v-bind:value="client.contract.firstDate" />-->
-<!--            </td>-->
-<!--            <td>-->
-<!--              <input readonly class="input-td" type="text" v-bind:value="client.contract.lastDate" />-->
-<!--            </td>-->
-<!--          </tr>-->
-<!--        </tbody>-->
+                <tbody>
+                  <tr class="table-body" v-if="clientsObject">
+                    <td>
+                      <input readonly class="input-td" type="text" v-bind:value="clientsObject.name_object" />
+                    </td>
+                    <td>
+                      <input readonly class="input-td" type="text" v-bind:value="clientsObject.customer" />
+                    </td>
+                    <td>
+                      <input readonly class="input-td" type="text" v-bind:value="clientsObject.contact" />
+                    </td>
+                    <td>
+                      <input readonly class="input-td" type="text" v-bind:value="clientsObject.created_at" />
+                    </td>
+                    <td>
+                      <input readonly class="input-td" type="text" v-bind:value="clientsObject.updated_at" />
+                    </td>
+                  </tr>
+                </tbody>
       </table>
     </div>
     <VobjectCreated v-show="showCreated" v-on:changeShow="changeshowCreated">></VobjectCreated>
@@ -70,9 +66,8 @@ import { mapActions } from "vuex";
 export default {
   layout: "header_footer",
 
-
   created() {
-    this.setActiveTabHeader("OEE");
+    this.setActiveTabHeader("");
     this.setActiveTabSidebar("Setting");
   },
 
@@ -88,14 +83,14 @@ export default {
   },
 
   computed: {
-    ...mapGetters("Clients", {
-      clientsObject: "clientsObject",
-      demoObjectidx: "demoObjectidx",
+    ...mapGetters("settingsGlobal", {
+      clientsObject: 'clientsObject',
+      typeStructured: 'typeStructured',
     }),
     filteredList() {
-      return this.clientsObject.filter((object) => {
-        return object.name.toLowerCase().includes(this.search.toLowerCase());
-      });
+      // return this.clientsObject.filter((object) => {
+      //   return object.name_object.toLowerCase().includes(this.search.toLowerCase());
+      // });
     },
   },
   methods: {
@@ -103,33 +98,11 @@ export default {
       setActiveTabHeader: "setActiveTabHeader",
       setActiveTabSidebar: "setActiveTabSidebar",
     }),
-    ...mapActions("Clients", {
-      GET_DEMOOBJECT: "GET_DEMOOBJECT",
-      UPDATE_DEMOOBJECT: "UPDATE_DEMOOBJECT",
-      ADD_DEMOOBJECT:"ADD_DEMOOBJECT",
-      DELETE_DEMOOBJECT:"DELETE_DEMOOBJECT",
+    ...mapActions("settingsGlobal", {
+
     }),
     changeshowCreated() {
       this.showCreated = !this.showCreated;
-    },
-    addtempobj(){
-      // console.log(this.demoObjectLength);
-      let newname = prompt('новое значение', "test-test");
-
-      this.ADD_DEMOOBJECT({name:newname});
-    },
-    deltempobj(){
-      // console.log(this.demoObjectLength);
-      let idx = prompt('какой id?', 2);
-
-      this.DELETE_DEMOOBJECT(idx);
-    },
-    updatetempobj(){
-      // console.log(this.demoObjectLength);
-      let idx = prompt('какой id?', 2);
-      let newname = prompt('новое значение', "test-test");
-
-      this.UPDATE_DEMOOBJECT({id:+idx, name:newname});
     },
   },
 };

@@ -19,7 +19,7 @@
       </div>
 
       <div>
-        <nuxt-link to="/" tag="button" class="btn_icon btn-header">
+        <nuxt-link to="/settingsGlobal" tag="button" class="btn_icon btn-header">
           <!-- <img src="~/assets/svg/settings_24px.svg" alt /> -->
           <IconifyIcon icon="roundSettings" :style="{fontSize: '29px'}" />
         </nuxt-link>
