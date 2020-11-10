@@ -6,9 +6,12 @@
 
       <div class="steps">
         <div
-          class="first-step step active"
-          :class="{ active: arrActiveStep.firstStep, done: arrDoneStep.firstStep }"
-        >1</div>
+            class="first"
+            :class="{ active: arrActiveStep.firstStep, done: arrDoneStep.firstStep }"
+        >
+          <div class="first-step step active">1</div>
+          <div class="description-step first-description">Описание объекта</div>
+        </div>
         <div class="ellipsis">
           <div
             class="small-point"
@@ -24,47 +27,26 @@
           ></div>
         </div>
         <div
-          class="second-step step"
-          :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
-        >2</div>
-        <div class="ellipsis">
-          <div
-            class="small-point"
-            :class="{ active: arrActiveStep.thirdStep, done: arrDoneStep.thirdStep }"
-          ></div>
-          <div
-            class="small-point"
-            :class="{ active: arrActiveStep.thirdStep, done: arrDoneStep.thirdStep }"
-          ></div>
-          <div
-            class="small-point"
-            :class="{ active: arrActiveStep.thirdStep, done: arrDoneStep.thirdStep }"
-          ></div>
+            class="second"
+            :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
+        >
+          <div class="second-step step">2</div>
+          <div class="description-step second-description">Структура объекта</div>
         </div>
-        <div
-          class="third-step step"
-          :class="{ active: arrActiveStep.thirdStep, done: arrDoneStep.thirdStep }"
-        >3</div>
       </div>
-
-      <div class="description-steps">
-        <div class="description-step first-description">Описание объекта</div>
-        <div class="description-step second-description">Структура объекта</div>
-        <div class="description-step third-description">Заполнение структуры</div>
-      </div>
+<!--      <div class="description-steps"></div>-->
       <hr />
-
       <div class="first-step-objects" v-show="arrActiveStep.firstStep">
         <div class="first-step-object">
-          <input v-model.lazy="currentProject.projectName" placeholder="Название объекта" id="name" type="text"/>
+          <input v-model.lazy="currentProject.projectName" placeholder="Название объекта" autocomplete="off" id="name" type="text"/>
           <label for="name">Название объекта</label>
         </div>
         <div class="first-step-object">
-          <input v-model.lazy="currentProject.clientName" placeholder="Заказчик" id="client" type="text"/>
+          <input v-model.lazy="currentProject.clientName" placeholder="Заказчик" autocomplete="off" id="client" type="text"/>
           <label for="client">Заказчик</label>
         </div>
         <div class="first-step-object">
-          <input v-model.lazy="currentProject.clientContract" placeholder="Договор" id="contract" type="text"/>
+          <input v-model.lazy="currentProject.clientContract" placeholder="Договор" autocomplete="off" id="contract" type="text"/>
           <label for="contract">Договор</label>
         </div>
       </div>
@@ -110,32 +92,32 @@
         </div>
       </div>
 
-      <div class="third-step-objects" v-show="arrActiveStep.thirdStep">
-        <div class="sub-panel">
-          <div class="structure-items">
-            <div
-              class="structure-item"
-              v-for="(structureItem, idx) in currentStructureObject"
-              :key="idx"
-            >{{structureItem}}</div>
-            <div class="panel-btn-box">
-              <button class=" level btn_icon level-btn btn_icon-panel">
-                <IconifyIcon icon="bxSearchAlt2" :style="{color: '#4A627A', fontSize: '24px'}" :horizontal-flip="true" />
-              </button>
-              <button class=" level btn_icon level-btn btn_icon-panel">
-                <IconifyIcon icon="baselineRemove" :style="{color: '#FF6F64', fontSize: '24px'}" />
-              </button>
-              <button class=" level btn_icon level-btn btn_icon-panel">
-                <img src="~/assets/svg/ant-design_edit-outlined.svg" alt="edit" />
-                <!-- <IconifyIcon icon="editOutlined" :style="{color: '#c4b70c', fontSize: '24px'}" /> -->
-              </button>
-              <button class=" level btn_icon btn_icon-panel level-btn">
-                <IconifyIcon icon="addIcon" :style="{color: '#01C587', fontSize: '24px'}" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+<!--      <div class="third-step-objects" v-show="arrActiveStep.thirdStep">-->
+<!--        <div class="sub-panel">-->
+<!--          <div class="structure-items">-->
+<!--            <div-->
+<!--              class="structure-item"-->
+<!--              v-for="(structureItem, idx) in currentStructureObject"-->
+<!--              :key="idx"-->
+<!--            >{{structureItem}}</div>-->
+<!--            <div class="panel-btn-box">-->
+<!--              <button class=" level btn_icon level-btn btn_icon-panel">-->
+<!--                <IconifyIcon icon="bxSearchAlt2" :style="{color: '#4A627A', fontSize: '24px'}" :horizontal-flip="true" />-->
+<!--              </button>-->
+<!--              <button class=" level btn_icon level-btn btn_icon-panel">-->
+<!--                <IconifyIcon icon="baselineRemove" :style="{color: '#FF6F64', fontSize: '24px'}" />-->
+<!--              </button>-->
+<!--              <button class=" level btn_icon level-btn btn_icon-panel">-->
+<!--                <img src="~/assets/svg/ant-design_edit-outlined.svg" alt="edit" />-->
+<!--                &lt;!&ndash; <IconifyIcon icon="editOutlined" :style="{color: '#c4b70c', fontSize: '24px'}" /> &ndash;&gt;-->
+<!--              </button>-->
+<!--              <button class=" level btn_icon btn_icon-panel level-btn">-->
+<!--                <IconifyIcon icon="addIcon" :style="{color: '#01C587', fontSize: '24px'}" />-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
 
       <div class="tabfoot">
         <button class="tabfoot-left btn_icon">
@@ -154,32 +136,29 @@ import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 
 export default {
-  
+
   data() {
     return {
       arrActiveStep: {
         firstStep: true,
         secondStep: false,
-        thirdStep: false
       },
 
       arrDoneStep: {
         firstStep: false,
         secondStep: false,
-        thirdStep: false
       },
       currentProject: {},
       typeStructured: [
         { text: "Выбор типа узла", value: "", disabled: true },
-        { text: "Холдинг", value: "Холдинг", disabled: false },
+        { text: "Резерв1", value: "Резерв1", disabled: false },
+        { text: "Резерв2", value: "Резерв2", disabled: false },
+        { text: "Организация", value: "Организация", disabled: false },
+        { text: "Предприятие", value: "Предприятие", disabled: false },
         { text: "Завод", value: "Завод", disabled: false },
         { text: "Цех", value: "Цех", disabled: false },
         { text: "Узел", value: "Узел", disabled: false },
-        {
-          text: "Технологические группы",
-          value: "Технологические группы",
-          disabled: false
-        }
+        { text: "Датчик", value: "Датчик", disabled: false },
       ],
       selected: "",
       currentStructureObject: [""]
@@ -188,7 +167,7 @@ export default {
 
   computed: {
     nextbtn() {
-      let title = this.arrActiveStep.thirdStep
+      let title = this.arrActiveStep.secondStep
         ? "Создать объект"
         : "Следующий шаг";
 
@@ -196,7 +175,7 @@ export default {
     },
     prevbtn() {
       let title = this.arrActiveStep.firstStep
-        ? "Вернуться к объектам"
+        ? "Закрыть"
         : "Предыдущий шаг";
 
       return title;
@@ -212,48 +191,34 @@ export default {
       if (this.arrActiveStep.firstStep) {
         this.arrActiveStep.firstStep = false;
         this.arrActiveStep.secondStep = true;
-        this.arrActiveStep.thirdStep = false;
 
         this.arrDoneStep.firstStep = true;
         this.arrDoneStep.secondStep = false;
-        this.arrDoneStep.thirdStep = false;
-      } else if (this.arrActiveStep.secondStep) {
-        this.arrActiveStep.firstStep = false;
-        this.arrActiveStep.secondStep = false;
-        this.arrActiveStep.thirdStep = true;
-
-        this.arrDoneStep.firstStep = true;
-        this.arrDoneStep.secondStep = true;
-        this.arrDoneStep.thirdStep = false;
       } else {
         this.arrActiveStep.firstStep = true;
         this.arrActiveStep.secondStep = false;
-        this.arrActiveStep.thirdStep = false;
 
         this.arrDoneStep.firstStep = false;
-        this.arrDoneStep.secondStep = false;
-        this.arrDoneStep.thirdStep = false;
+        this.arrDoneStep.secondStep = true;
 
         this.$emit("changeShow");
       }
     },
     prevStep() {
-      if (this.arrActiveStep.thirdStep) {
+      if (this.arrActiveStep.secondStep) {
+        this.arrActiveStep.firstStep = true;
+        this.arrActiveStep.secondStep = false;
+
+        this.arrDoneStep.firstStep = false;
+        this.arrDoneStep.secondStep = true;
+
+      } else if (this.arrActiveStep.secondStep) {
         this.arrActiveStep.firstStep = false;
         this.arrActiveStep.secondStep = true;
-        this.arrActiveStep.thirdStep = false;
 
         this.arrDoneStep.firstStep = true;
         this.arrDoneStep.secondStep = false;
-        this.arrDoneStep.thirdStep = false;
-      } else if (this.arrActiveStep.secondStep) {
-        this.arrActiveStep.firstStep = true;
-        this.arrActiveStep.secondStep = false;
-        this.arrActiveStep.thirdStep = false;
 
-        this.arrDoneStep.firstStep = false;
-        this.arrDoneStep.secondStep = false;
-        this.arrDoneStep.thirdStep = false;
       } else {
         this.$emit("changeShow");
       }
@@ -272,56 +237,14 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 .sub-panel{
     margin-left: 66px;
 }
-.structure-items {
 
-  width: 813px;
-  display: flex;
-  flex-direction: row;
 
-  border-bottom: 1px solid #dde4ee;
-}
-.panel-btn-box {
-  margin-left: auto;
-  margin-right: 12px;
-  display: flex;
-  flex-direction: row;
-}
-.structure-item {
-  height: 24px;
-  min-width: 72px;
 
-  margin-left: 6px;
-
-  padding: 0 6px;
-
-  font-weight: 500;
-  font-size: 12px;
-  line-height: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-
-  color: #8496aa;
-
-  cursor: pointer;
-
-  position: relative;
-}
-.structure-item:hover:before {
-  content: "";
-  width: 100%;
-  border-bottom: 1px solid #2dc2fa;
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  
-}
 
 .active-item:before {
   content: "";
@@ -330,7 +253,7 @@ export default {
   position: absolute;
   bottom: -1px;
   left: 0;
-  
+
 }
 
 .structure-object {
@@ -370,27 +293,7 @@ export default {
 .level-remove {
   color: #ff6f64;
 }
-.level-btn {
-  cursor: pointer;
-  width: 24px;
-  height: 24px;
-  margin-left: 6px;
 
-  border-radius: 4px;
-}
-
-.btn_icon {
-  background: none;
-  border: none;
-
-  display: flex;
-  justify-content: baseline;
-
-  outline: none;
-}
-.btn_icon-panel {
-  align-items: center;
-}
 .tabfoot {
   margin-top: auto;
 
@@ -413,10 +316,11 @@ button{
 }
 
 .tabfoot-left {
-  background-color: hsl(211, 100%, 90%);
+  color: #9AAABA;
+  background: #F7F8FA;
 }
 .tabfoot-left:hover {
-  background-color: hsl(211, 100%, 87%);
+  background: #F7F8FA;
 }
 .tabfoot-right {
   background-color: hsl(134, 41%, 88%);
@@ -454,7 +358,8 @@ button{
 }
 .second-step-object {
   margin-top: 24px;
-  margin-left: 72px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .first-step-objects {
@@ -470,16 +375,16 @@ button{
   position: relative;
   margin-top: 24px;
   height: 24px;
-  width: 740px;
+  width: 444px;
   background: inherit;
 
-  border: 1px solid #9098af;
+  border: 1px solid #9098AF;
   border-radius: 4px;
 
   font-size: 12px;
   line-height: 15px;
 
-  color: #9098af;
+  color: #778A9C;
 
   outline: none;
 }
@@ -489,6 +394,7 @@ input {
   outline: none;
   border-radius: 4px;
   border: none;
+  background: #F7F8FA;
 
   padding: 0 5px;
 
@@ -497,13 +403,12 @@ input {
 
 input + label {
   position: absolute;
-  top: -24px;
-  left: 20px;
+  top: -20px;
+  left: 6px;
   transition: all 0.1s;
   opacity: 1;
-  background: white;
+  background: #F7F8FA;
 
-  padding: 0 5px;
   transform: translateY(calc(50% + 2px));
 }
 
@@ -517,7 +422,7 @@ input:focus + label {
   opacity: 1;
   transform: translateY(calc(50% + 2px));
   color: #00c484;
-  
+
 }
 
 input:focus:placeholder-shown {
@@ -528,26 +433,19 @@ hr {
   border: none; /* Убираем границу для браузера Firefox */
   width: 100%;
   height: 1px;
-  margin-top: 36px;
-  background-color: #778a9c;
+  margin-top: 10px;
+  background: #DDE4EE;
   color: #778a9c;
 }
-.first-description {
-  margin-left: auto;
-}
-.second-description {
-  margin-left: 162px;
-  margin-right: 140px;
-}
+
 .third-description {
   margin-right: auto;
 }
 .description-steps {
-  margin-top: 6px;
+  margin-top: 10px;
 
   height: 17px;
   display: flex;
-  flex-direction: row;
   align-items: center;
   text-align: center;
 
@@ -558,23 +456,24 @@ hr {
   color: #778a9c;
 }
 .small-point {
-  width: 8px;
-  height: 8px;
-  border-radius: 4px;
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
   background-color: #c3cbd7;
 }
 
 .ellipsis {
   display: flex;
-  width: 30px;
-  height: 8px;
+  width: 22px;
+  height: 6px;
+  margin-bottom: 20px;
   justify-content: space-between;
 }
 
 .step {
-  width: 56px;
-  height: 56px;
-  border-radius: 28px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 
   font-weight: 500;
   font-size: 24px;
@@ -584,35 +483,115 @@ hr {
   text-align: center;
   justify-content: center;
 
-  color: #c3cbd7;
-  border: 1px solid #c3cbd7;
+  color: #C3CBD7;
+  background: #F8F9FB;
+  border: 2px solid #E8E8F3;
 }
 
 .steps {
-  margin-top: 24px;
-  width: 660px;
-  height: 56px;
+  margin-top: 12px;
+  width: 286px;
+  height: 70px;
   display: flex;
-  flex-direction: row;
   align-items: center;
   text-align: center;
   justify-content: space-between;
+
+  .first {
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .first-step {
+      margin-bottom: 10px;
+    }
+
+    .first-description {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: #778A9C;
+    }
+
+    .active {
+
+      .step {
+        background: #2ec3fb;
+        border-color: #2ec3fb;
+        color: #ffffff;
+      }
+
+      .second-description {
+        color: #778A9C !important;
+      }
+    }
+
+    &.done {
+      .step {
+        background: #00c484;
+        border-color: #00c484;
+        color: #ffffff;
+      }
+    }
+  }
+
+  .second {
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .second-step {
+      margin-bottom: 10px;
+    }
+
+    .second-description {
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: #A8B2BD;
+    }
+  }
+}
+
+.active {
+
+  .step {
+    background: #2ec3fb;
+    border-color: #2ec3fb;
+    color: #ffffff;
+  }
+
+  .second-description {
+    color: #778A9C !important;
+  }
 }
 
 .title {
   width: 368px;
   height: 38px;
 
-  margin-top: 24px;
-
+  font-style: normal;
   font-weight: 500;
-  font-size: 24px;
-  line-height: 29px;
+  font-size: 16px;
+  line-height: 20px;
   display: flex;
   align-items: center;
   text-align: center;
+  justify-content: center;
 
-  color: #4a627a;
+  color: #4A627A;
 }
 .overlay {
   width: 100vw;
@@ -626,30 +605,20 @@ hr {
 
 .modal-created {
   position: absolute;
-  top: 200px;
-  left: 550px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-  width: 880px;
-  height: 550px;
+  width: 468px;
+  height: 392px;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
 
-  background: #f7f8fa;
+  background: #F7F8FA;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
 }
 
-.active {
-  background: #2ec3fb;
-  border-color: #2ec3fb;
-  color: #ffffff;
-}
-
-.done {
-  background: #00c484;
-  border-color: #00c484;
-  color: #ffffff;
-}
 </style>

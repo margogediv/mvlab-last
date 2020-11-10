@@ -53,6 +53,30 @@
                 </tbody>
       </table>
     </div>
+    <div class="box">
+      <div class="structure-items">
+        <div
+            class="structure-item"
+            v-for="(structureItem, idx) in currentStructureObject"
+            :key="idx"
+        >{{structureItem}}</div>
+        <div class="panel-btn-box">
+          <button class=" level btn_icon level-btn btn_icon-panel">
+            <IconifyIcon icon="bxSearchAlt2" :style="{color: '#4A627A', fontSize: '24px'}" :horizontal-flip="true" />
+          </button>
+          <button class=" level btn_icon level-btn btn_icon-panel">
+            <IconifyIcon icon="baselineRemove" :style="{color: '#FF6F64', fontSize: '24px'}" />
+          </button>
+          <button class=" level btn_icon level-btn btn_icon-panel">
+            <img src="~/assets/svg/ant-design_edit-outlined.svg" alt="edit" />
+            <!-- <IconifyIcon icon="editOutlined" :style="{color: '#c4b70c', fontSize: '24px'}" /> -->
+          </button>
+          <button class=" level btn_icon btn_icon-panel level-btn">
+            <IconifyIcon icon="addIcon" :style="{color: '#01C587', fontSize: '24px'}" />
+          </button>
+        </div>
+      </div>
+    </div>
     <VobjectCreated v-show="showCreated" v-on:changeShow="changeshowCreated">></VobjectCreated>
   </div>
 </template>
@@ -126,8 +150,6 @@ export default {
 
   background-color: #f9fafc;
 }
-
-
 
 .search-wrapper{
   position: relative;
@@ -376,5 +398,72 @@ th:nth-child(4) {
 
 th:nth-child(5) {
   width: 170px;
+}
+
+.box {
+  padding: 0 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+
+  .structure-items {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #dde4ee;
+
+    .structure-item {
+      height: 24px;
+      min-width: 72px;
+      margin-left: 6px;
+      padding: 0 6px;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #8496aa;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .structure-item:hover:before {
+      content: "";
+      width: 100%;
+      border-bottom: 1px solid #2dc2fa;
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+    }
+
+    .panel-btn-box {
+      margin-left: auto;
+      margin-right: 12px;
+      display: flex;
+      flex-direction: row;
+
+      .level-btn {
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+        margin-left: 6px;
+        border-radius: 4px;
+      }
+
+      .btn_icon {
+        background: none;
+        border: none;
+        display: flex;
+        justify-content: baseline;
+        outline: none;
+      }
+
+      .btn_icon-panel {
+        align-items: center;
+      }
+    }
+  }
 }
 </style>
