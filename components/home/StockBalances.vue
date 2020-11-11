@@ -122,7 +122,7 @@ export default {
 }
 
 .chart.second {
-  height: 358px;
+  height: 378px;
   margin-bottom: 24px;
   display: flex;
   flex-direction: column;
@@ -260,24 +260,20 @@ export default {
 
 .chart-footer {
   width: 100%;
+  height: 24px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   border-top: 1px solid #E9E9E9;
-  padding: 2px 24px 0;
+  padding: 6px 24px;
 
   .title {
-    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 10px;
-    color: #3F51B5;
-  }
-
-  .view {
-    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-weight: bold;
-    font-size: 10px;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    display: flex;
+    align-items: center;
+    text-align: center;
     color: #3F51B5;
   }
 }

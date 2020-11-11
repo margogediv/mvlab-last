@@ -1,139 +1,124 @@
 <template>
   <!-- <div class="overlay" v-on:click="$emit('changeShow')"> -->
   <div class="overlay">
-    <div class="modal-created">
-      <div class="title">Мастер создания объектов</div>
+      <div class="modal-created">
+        <div class="box-modal">
+          <div class="title">Мастер создания объектов</div>
 
-      <div class="steps">
-        <div
-            class="first"
-            :class="{ active: arrActiveStep.firstStep, done: arrDoneStep.firstStep }"
-        >
-          <div class="first-step step active">1</div>
-          <div class="description-step first-description">Описание объекта</div>
-        </div>
-        <div class="ellipsis">
-          <div
-            class="small-point"
-            :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
-          ></div>
-          <div
-            class="small-point"
-            :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
-          ></div>
-          <div
-            class="small-point"
-            :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
-          ></div>
-        </div>
-        <div
-            class="second"
-            :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
-        >
-          <div class="second-step step">2</div>
-          <div class="description-step second-description">Структура объекта</div>
-        </div>
-      </div>
-<!--      <div class="description-steps"></div>-->
-      <hr />
-      <div class="first-step-objects" v-show="arrActiveStep.firstStep">
-        <div class="first-step-object">
-          <input v-model.lazy="currentProject.projectName" placeholder="Название объекта" autocomplete="off" id="name" type="text"/>
-          <label for="name">Название объекта</label>
-        </div>
-        <div class="first-step-object">
-          <input v-model.lazy="currentProject.clientName" placeholder="Заказчик" autocomplete="off" id="client" type="text"/>
-          <label for="client">Заказчик</label>
-        </div>
-        <div class="first-step-object">
-          <input v-model.lazy="currentProject.clientContract" placeholder="Договор" autocomplete="off" id="contract" type="text"/>
-          <label for="contract">Договор</label>
-        </div>
-      </div>
-
-      <div class="second-step-objects" v-show="arrActiveStep.secondStep">
-        <div class="second-step-object">
-          <div
-            class="structure-object"
-            v-for="(structureItem, idx) in currentStructureObject"
-            :key="idx"
-          >
-            <div class="level-name level">Уровень {{idx}}</div>
-
-            <select
-              class="level-value level"
-              v-model="currentStructureObject[idx]"
-              :disabled="idx < currentStructureObject.length-1"
+          <div class="steps">
+            <div
+                class="first"
+                :class="{ active: arrActiveStep.firstStep, done: arrDoneStep.firstStep }"
             >
-              <option
-                v-for="type in typeStructured"
-                :value="type.value"
-                :disabled="type.disabled"
-                :key="type.value"
-              >{{ type.text }}</option>
-            </select>
-
-            <button
-              class="level-remove level btn_icon level-btn btn_icon-panel"
-              @click="removeLevel"
-              :disabled="idx < currentStructureObject.length-1 || idx==0"
+              <div class="first-step step active">1</div>
+              <div class="description-step first-description">Описание объекта</div>
+            </div>
+            <div class="ellipsis">
+              <div
+                  class="small-point"
+                  :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
+              ></div>
+              <div
+                  class="small-point"
+                  :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
+              ></div>
+              <div
+                  class="small-point"
+                  :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
+              ></div>
+            </div>
+            <div
+                class="second"
+                :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
             >
-              <IconifyIcon icon="baselineRemove" :style="{fontSize: '24px'}" />
+              <div class="second-step step">2</div>
+              <div class="description-step second-description">Структура объекта</div>
+            </div>
+          </div>
+          <!--      <div class="description-steps"></div>-->
+          <hr />
+          <div class="first-step-objects" v-show="arrActiveStep.firstStep">
+            <div class="first-step-object">
+              <input v-model.lazy="currentProject.projectName" placeholder="Название объекта" autocomplete="off" id="name" type="text"/>
+              <label for="name">Название объекта</label>
+            </div>
+            <div class="first-step-object">
+              <input v-model.lazy="currentProject.clientName" placeholder="Заказчик" autocomplete="off" id="client" type="text"/>
+              <label for="client">Заказчик</label>
+            </div>
+            <div class="first-step-object">
+              <input v-model.lazy="currentProject.clientContract" placeholder="Договор" autocomplete="off" id="contract" type="text"/>
+              <label for="contract">Договор</label>
+            </div>
+          </div>
+
+          <div class="second-step-objects" v-show="arrActiveStep.secondStep">
+            <div class="second-step-object">
+              <div
+                  class="structure-object"
+                  v-for="(structureItem, idx) in currentStructureObject"
+                  :key="idx"
+              >
+                <div class="level-name level">Уровень {{idx}}</div>
+
+                <select
+                    class="level-value level"
+                    v-model="currentStructureObject[idx]"
+                    :disabled="idx < currentStructureObject.length-1"
+                >
+                  <option
+                      v-for="type in typeStructured"
+                      :value="type.value"
+                      :disabled="type.disabled"
+                      :key="type.value"
+                  >{{ type.text }}</option>
+                </select>
+
+                <button
+                    class="level-remove level btn_icon level-btn btn_icon-panel"
+                    @click="removeLevel"
+                    :disabled="idx < currentStructureObject.length-1 || idx==0"
+                >
+                  <IconifyIcon icon="baselineRemove" :style="{fontSize: '24px'}" />
+                </button>
+
+                <button
+                    class="level-add level btn_icon level-btn btn_icon-panel"
+                    @click="addLevel"
+                    :disabled=" idx >= (typeStructured.length-2) || currentStructureObject[idx]=='' || currentStructureObject.length !== (idx+1)"
+                >
+                  <IconifyIcon icon="addIcon" :style="{fontSize: '24px'}" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="tabfoot">
+            <button class="tabfoot-left btn_icon">
+              <div class="tabfoot_title" v-on:click="prevStep">{{this.prevbtn}}</div>
             </button>
-
-            <button
-              class="level-add level btn_icon level-btn btn_icon-panel"
-              @click="addLevel"
-              :disabled=" idx >= (typeStructured.length-2) || currentStructureObject[idx]=='' || currentStructureObject.length !== (idx+1)"
-            >
-              <IconifyIcon icon="addIcon" :style="{fontSize: '24px'}" />
+            <button class="tabfoot-right btn_icon">
+              <div class="tabfoot_title" v-on:click="nextStep">{{this.nextbtn}}</div>
             </button>
           </div>
+
+          <div class="attention">
+            <attentionClose></attentionClose>
+          </div>
+
         </div>
-      </div>
-
-<!--      <div class="third-step-objects" v-show="arrActiveStep.thirdStep">-->
-<!--        <div class="sub-panel">-->
-<!--          <div class="structure-items">-->
-<!--            <div-->
-<!--              class="structure-item"-->
-<!--              v-for="(structureItem, idx) in currentStructureObject"-->
-<!--              :key="idx"-->
-<!--            >{{structureItem}}</div>-->
-<!--            <div class="panel-btn-box">-->
-<!--              <button class=" level btn_icon level-btn btn_icon-panel">-->
-<!--                <IconifyIcon icon="bxSearchAlt2" :style="{color: '#4A627A', fontSize: '24px'}" :horizontal-flip="true" />-->
-<!--              </button>-->
-<!--              <button class=" level btn_icon level-btn btn_icon-panel">-->
-<!--                <IconifyIcon icon="baselineRemove" :style="{color: '#FF6F64', fontSize: '24px'}" />-->
-<!--              </button>-->
-<!--              <button class=" level btn_icon level-btn btn_icon-panel">-->
-<!--                <img src="~/assets/svg/ant-design_edit-outlined.svg" alt="edit" />-->
-<!--                &lt;!&ndash; <IconifyIcon icon="editOutlined" :style="{color: '#c4b70c', fontSize: '24px'}" /> &ndash;&gt;-->
-<!--              </button>-->
-<!--              <button class=" level btn_icon btn_icon-panel level-btn">-->
-<!--                <IconifyIcon icon="addIcon" :style="{color: '#01C587', fontSize: '24px'}" />-->
-<!--              </button>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-
-      <div class="tabfoot">
-        <button class="tabfoot-left btn_icon">
-          <div class="tabfoot_title" v-on:click="prevStep">{{this.prevbtn}}</div>
-        </button>
-        <button class="tabfoot-right btn_icon">
-          <div class="tabfoot_title" v-on:click="nextStep">{{this.nextbtn}}</div>
+        <button class="btn_icon2">
+          <div class="btn-bg" v-on:click="$emit('changeShow')"></div>
         </button>
       </div>
-    </div>
   </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
+
+import AttentionClose from "@/components/settingsGlobal/AttentionClose";
 
 export default {
 
@@ -163,6 +148,10 @@ export default {
       selected: "",
       currentStructureObject: [""]
     };
+  },
+
+  components: {
+    attentionClose: AttentionClose,
   },
 
   computed: {
@@ -243,9 +232,6 @@ export default {
     margin-left: 66px;
 }
 
-
-
-
 .active-item:before {
   content: "";
   width: 100%;
@@ -253,14 +239,8 @@ export default {
   position: absolute;
   bottom: -1px;
   left: 0;
-
 }
 
-.structure-object {
-  display: flex;
-  flex-direction: row;
-  margin-top: 24px;
-}
 .level-name {
   font-weight: 600;
   font-size: 14px;
@@ -306,6 +286,14 @@ button{
   font-style: 24px;
 }
 
+.btn_icon {
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: baseline;
+  outline: none;
+}
+
 .tabfoot button {
   padding: 0;
   width: 50%;
@@ -323,11 +311,11 @@ button{
   background: #F7F8FA;
 }
 .tabfoot-right {
-  background-color: hsl(134, 41%, 88%);
+  background: #D4EDDA;
 }
-.tabfoot-right:hover {
-  background-color: hsl(134, 41%, 85%);
-}
+//.tabfoot-right:hover {
+//  background-color: hsl(134, 41%, 85%);
+//}
 
 .tabfoot_title {
   width: 100%;
@@ -360,6 +348,16 @@ button{
   margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
+
+  .structure-object {
+    display: flex;
+    flex-direction: row;
+    margin-top: 24px;
+  }
+
+  .structure-object:last-child {
+    margin-bottom: 24px;
+  }
 }
 
 .first-step-objects {
@@ -619,14 +617,54 @@ hr {
 
   background: #F7F8FA;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
-}
 
-.btn_icon {
-  background: none;
-  border: none;
-  display: flex;
-  justify-content: baseline;
-  outline: none;
-}
+  .btn_icon2 {
+    position: absolute;
+    top: 0;
+    left: -29px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    display: flex;
+    justify-content: baseline;
+    outline: none;
 
+    .btn-bg {
+      width: 24px;
+      height: 24px;
+      background-image: url("~assets/svg/clear_24px.svg");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+
+      &:hover {
+        background-image: url("~assets/svg/setting/hovClose.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+    }
+  }
+
+  .box-modal {
+    position: relative;
+
+    width: 468px;
+    height: 392px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .attention {
+      width: 300px;
+      height: 300px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
 </style>

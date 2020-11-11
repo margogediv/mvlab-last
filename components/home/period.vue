@@ -144,7 +144,6 @@ export default {
 
   .text {
     width: 52px;
-
   }
 
   .btn.text:nth-child(3) {
@@ -165,6 +164,21 @@ export default {
 
   button:last-child {
     margin-right: 0;
+  }
+}
+
+.comparison-module {
+  .chart-content {
+    .content-box {
+      .period {
+        btn.text {
+          margin-right: 6px;
+        }
+        button:last-child {
+          margin-right: 3px;
+        }
+      }
+    }
   }
 }
 

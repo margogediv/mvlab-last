@@ -68,12 +68,17 @@
             </div>
           </div>
           <div class="data-line">{{ item.duration }}</div>
+          <div class="title-line"  v-if="item.progress <= 50">
+            <div class="start">Начало - {{item.start}}</div>
+            <div class="end">Конец - {{item.end}}</div>
+          </div>
         </div>
       </div>
       <div class="chart-footer">
         <div class="title">Общее рабочее время за день</div>
         <div class="view">{{ lineDataFirst.sum }}</div>
       </div>
+
     </div>
 </template>
 
@@ -205,8 +210,8 @@ export default {
   border-radius: 9px;
 }
 .chart.first {
-  height: 324px;
-  margin-bottom: 24px;
+  height: 348px;
+  margin-bottom: 12px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -244,21 +249,20 @@ export default {
 
   .chart-content {
     height: 100%;
-    padding: 12px 6px;
+    padding: 6px 12px 6px 6px;
     justify-content: flex-start;
     overflow: auto;
 
     .line {
+      position: relative;
       display: flex;
       width: 100%;
       justify-content: space-between;
       margin-bottom: 12px;
 
       .box-line {
+        max-width: 222px;
         width: 100%;
-        font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Roboto, "Helvetica Neue", Arial, sans-serif;
-        font-style: normal;
         font-weight: normal;
         font-size: 10px;
         color: #000000;
@@ -287,6 +291,28 @@ export default {
         font-size: 12px;
         line-height: 15px;
         color: #000000;
+      }
+
+      .title-line {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100px;
+        height: 26px;
+        padding: 1px 6px;
+
+        font-weight: normal;
+        font-size: 10px;
+        color: #000000;
+        background: #FFFFFF;
+
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.15);
+        border-radius: 3px;
+
+        .start {
+          margin-bottom: 1px;
+        }
       }
     }
   }
@@ -353,24 +379,29 @@ export default {
 }
 .chart-footer {
   width: 100%;
+  height: 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-top: 1px solid #E9E9E9;
-  padding: 2px 24px 0;
+  padding: 4px 24px 4px 6px;
 
   .title {
-    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: 10px;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    display: flex;
+    align-items: center;
     color: #3F51B5;
   }
 
   .view {
-    font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
     font-weight: bold;
-    font-size: 10px;
+    font-size: 12px;
+    line-height: 15px;
+    display: flex;
+    align-items: center;
+    text-align: center;
     color: #3F51B5;
   }
 }

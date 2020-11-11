@@ -26,7 +26,7 @@
           </div>
           <div
               class="plus-form-item"
-              @click="showCartItem('TotalСonsumption')"
+              @click="showCartItem('TotalConsumption')"
           >Суммарный расход
           </div>
           <div
@@ -731,12 +731,12 @@ export default {
           visible: false,
         },
         series: [{
-          name: 'ghvhvg',
+          name: 'Количество',
           innerSize: '70%',
           data: [
-            {name: 'Chrome', y: this.panelRelease.suitable, color: '#4BBEA9'},
-            {name: 'Internet Explorer', y: this.panelRelease.substandard, color: ' #FC7A7A'},
-            {name: 'Firefox', y: this.panelRelease.defect, color: '#2D9AD8'}
+            {name: 'Годно', y: this.panelRelease.suitable, color: '#4BBEA9'},
+            {name: 'Брак', y: this.panelRelease.substandard, color: ' #FC7A7A'},
+            {name: 'Некондиция', y: this.panelRelease.defect, color: '#2D9AD8'}
           ]
         }]
       }
@@ -830,7 +830,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #E9E9E9;
-  padding: 2px 8px 0 12px;
+  padding: 2px 8px 2px 12px;
 
   .title {
     font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI",
@@ -1315,10 +1315,9 @@ export default {
           }
 
           .period {
-            button {
+            btn.text {
               margin-right: 6px;
             }
-
             button:last-child {
               margin-right: 3px;
             }
