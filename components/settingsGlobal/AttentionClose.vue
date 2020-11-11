@@ -1,15 +1,16 @@
 <template>
 <!--  <div class="attention-close" v-show="showTable">-->
   <div class="attention-close">
-    <div class="attention-header"></div>
+    <div class="attention-header">
+      <IconifyIcon icon="warningStandardLine"  height="50" :style="{ color: 'white' }"/>
+    </div>
     <div class="attention-body">
       <div class="title">Внимание!</div>
       <div class="subtitle">Вся не сохраненная информация будет удалена</div>
     </div>
     <div class="attention-footer">
-      <button class="btn-left">Отмена</button>
-<!--      <button class="btn-right" v-on:click="$emit('changeShow')">Ок</button>-->
-      <button class="btn-right">Ок</button>
+      <button class="btn-left" @click="$parent.$emit('closeAttentionClose')">Отмена</button>
+      <button class="btn-right" @click="$parent.$emit('closeVobjectCreated')">Ок</button>
     </div>
   </div>
 </template>

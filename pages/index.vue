@@ -1100,7 +1100,8 @@ export default {
       height: 144px;
       border: 2px solid #E9E9E9;
       border-radius: 9px;
-      margin-bottom: 36px;
+      //margin-bottom: 36px;
+      margin-right: 36px;
 
       .chart-content {
         padding: 0 12px;
@@ -1357,8 +1358,9 @@ export default {
   height: 246px;
   border: 2px solid #E9E9E9;
   border-radius: 9px;
-  margin-bottom: 37px;
-  margin-right: 48px;
+  //margin-bottom: 37px;
+  //margin-right: 48px;
+  margin-right: 36px;
 }
 
 .resul {

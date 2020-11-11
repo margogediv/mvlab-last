@@ -103,12 +103,12 @@
           </div>
 
           <div class="attention">
-            <attentionClose></attentionClose>
+            <attentionClose v-if="showAttentionClose"></attentionClose>
           </div>
 
         </div>
         <button class="btn_icon2">
-          <div class="btn-bg" v-on:click="$emit('changeShow')"></div>
+          <div class="btn-bg" @click="showAttentionClose = true"></div>
         </button>
       </div>
   </div>
@@ -146,8 +146,19 @@ export default {
         { text: "Датчик", value: "Датчик", disabled: false },
       ],
       selected: "",
-      currentStructureObject: [""]
+      currentStructureObject: [""],
+
+      showAttentionClose: false,
     };
+  },
+
+  created() {
+    this.$on('closeVobjectCreated', () => {
+      this.$parent.$emit('closeVobjectCreated');
+    });
+    this.$on('closeAttentionClose', () => {
+      this.showAttentionClose = false;
+    });
   },
 
   components: {
@@ -171,8 +182,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions("Clients", {
-      updateCurrentClient: "updateCurrentClient",
+    ...mapActions("settingsGlobal", {
       updateCurrentStructureObject: "updateCurrentStructureObject"
     }),
 
@@ -190,7 +200,7 @@ export default {
         this.arrDoneStep.firstStep = false;
         this.arrDoneStep.secondStep = true;
 
-        this.$emit("changeShow");
+        // this.$emit("changeShow");
       }
     },
     prevStep() {
@@ -209,14 +219,14 @@ export default {
         this.arrDoneStep.secondStep = false;
 
       } else {
-        this.$emit("changeShow");
+        this.showAttentionClose = true;
       }
     },
     addLevel() {
-      this.currentStructureObject.push("");
+      this.updateCurrentStructureObject.push("");
     },
     removeLevel() {
-      this.currentStructureObject.pop();
+      this.updateCurrentStructureObject.pop();
     },
 
     noChange() {

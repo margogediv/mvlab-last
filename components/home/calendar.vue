@@ -100,7 +100,7 @@ export default {
   display: flex;
   justify-content: center;
   position: relative;
-  padding: 24px 0;
+  padding: 24px 0 12px 0;
 
   .prev{
     border: none;

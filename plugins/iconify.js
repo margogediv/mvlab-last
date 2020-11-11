@@ -57,6 +57,9 @@ import baselineFiberDvr from '@iconify/icons-ic/baseline-fiber-dvr';
 import baselineToggleOff from '@iconify/icons-ic/baseline-toggle-off';
 // toggle
 
+//warning
+import warningStandardLine from '@iconify/icons-clarity/warning-standard-line';
+
 IconifyIcon.addIcon('bxUser', bxUser);
 IconifyIcon.addIcon('lockPasswordLine', lockPasswordLine);
 
@@ -92,6 +95,8 @@ IconifyIcon.addIcon('baselineEdit', baselineEdit);
 IconifyIcon.addIcon('baselineFiberDvr', baselineFiberDvr);
 
 IconifyIcon.addIcon('baselineToggleOff', baselineToggleOff);
+
+IconifyIcon.addIcon('warningStandardLine', warningStandardLine);
 
 
 Vue.use(IconifyIcon);

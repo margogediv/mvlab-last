@@ -77,7 +77,7 @@
         </div>
       </div>
     </div>
-    <VobjectCreated v-show="showCreated" v-on:changeShow="changeshowCreated">></VobjectCreated>
+    <VobjectCreated v-if="showCreated" v-on:changeShow="changeshowCreated">></VobjectCreated>
   </div>
 </template>
 
@@ -93,6 +93,10 @@ export default {
   created() {
     this.setActiveTabHeader("");
     this.setActiveTabSidebar("Setting");
+
+    this.$on('closeVobjectCreated', () => {
+      this.showCreated = false;
+    });
   },
 
   components: {

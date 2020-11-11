@@ -24,6 +24,7 @@ export default {
             "Узел",
             "Датчик",
         ],
+        currentStructureObject: null,
     }),
     getters: {
         clientsObject(state) {
@@ -31,6 +32,9 @@ export default {
         },
         typeStructured(state) {
             return state.typeStructured;
+        },
+        currentStructureObject(state) {
+            return state.currentStructureObject;
         },
     },
     mutations: {
@@ -40,10 +44,15 @@ export default {
         setЕypeStructured(state, data) {
             state.typeStructured = data;
         },
+        setCurrentStructureObject(state, currentData) {
+            state.currentStructureObject[currentData.key] = currentData[currentData.key];
+        },
+
     },
     actions: {
-
-
+        updateCurrentStructureObject(store, currentData) {
+            store.commit('setCurrentStructureObject', currentData);
+        },
     },
     strict: process.env.NODE_ENV !== 'production'
 };

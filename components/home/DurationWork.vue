@@ -434,6 +434,7 @@ export default {
   background: #F7F8FA;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
   border-radius: 4px 0px 4px 4px;
+  z-index: 50;
 
   .btn-bul {
     position: relative;

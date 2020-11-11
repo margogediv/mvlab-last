@@ -63,12 +63,7 @@ export default {
       contract: "",
       objectUnit: {}
     },
-    // currentStructureObject:{
-    //   level0:"",
-    // },
-    currentStructureObject: [
-      "",
-    ],
+    currentStructureObject: null,
 
     currentContract: {
       name: "",
