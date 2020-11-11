@@ -81,6 +81,7 @@
 
 import {mapGetters} from "vuex";
 import {mapActions} from "vuex";
+import calendar from "@/components/home/calendar";
 
 export default {
   name: "DurationWork",
@@ -95,6 +96,11 @@ export default {
   },
   created() {
     this.update();
+  },
+  watch: {
+    calendar: function() {
+      this.update();
+    }
   },
   computed: {
     ...mapGetters("home", {
@@ -127,6 +133,7 @@ export default {
       let arr = [false, false, false, false];
       arr[id] = true;
       this.periodActive = arr;
+      this.update();
     },
     update() {
       this.getLineDataFirst(this.option);

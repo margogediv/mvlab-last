@@ -50,8 +50,8 @@
     <calendar></calendar>
     <section class="charts">
       <div class="block-1">
-        <durationWork v-if="DurationWork.cardShow" :card="DurationWork" :calendar="calendar" :isRefresh="DurationWork.isRefresh"></durationWork>
-        <stockBalances v-if="StockBalances.cardShow" :card="StockBalances" :date="calendar.date" :isRefresh="StockBalances.isRefresh"></stockBalances>
+        <durationWork v-if="DurationWork.cardShow" :card="DurationWork" :calendar="calendar"></durationWork>
+        <stockBalances v-if="StockBalances.cardShow" :card="StockBalances" :calendar="calendar.date"></stockBalances>
       </div>
       <div class="block-2">
         <div
@@ -635,12 +635,10 @@ export default {
       DurationWork: {
         modalBul: false,
         cardShow: true,
-        isRefresh: false,
       },
       StockBalances: {
         modalBul: false,
         cardShow: true,
-        isRefresh: false,
       },
       calendar: {
         time: new Date().getTime(),

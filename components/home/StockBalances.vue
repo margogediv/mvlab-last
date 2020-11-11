@@ -70,18 +70,24 @@
 
 import {mapActions} from "vuex";
 import {mapGetters} from "vuex";
+import calendar from "@/components/home/calendar";
 
 export default {
   name: "StockBalances",
   props: [
     'card',
-    'date'
+    'calendar'
   ],
   created() {
     this.update();
   },
   data() {
     return {}
+  },
+  watch: {
+    calendar: function() {
+      this.update();
+    }
   },
   methods: {
     ...mapActions('home', {
@@ -100,7 +106,7 @@ export default {
     }),
     option() {
       return {
-        date: this.date,
+        date: this.calendar,
       }
     }
   },
