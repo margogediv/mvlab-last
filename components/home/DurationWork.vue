@@ -60,7 +60,7 @@
         </div>
       </div>
       <div class="chart-content">
-        <div class="line" v-for="item in lineDataFirst.interval">
+        <div class="line" v-for="(item, id) in lineDataFirst.interval">
           <div class="box-line">
             <div class="bg" :style="'width: ' + item.progress + '%'">
               <div class="start" v-if="item.progress >= 50">{{ item.start }}</div>
@@ -68,7 +68,7 @@
             </div>
           </div>
           <div class="data-line">{{ item.duration }}</div>
-          <div class="title-line"  v-if="item.progress <= 50">
+          <div class="title-line" :class="{down: id===0}"  v-if="item.progress < 50">
             <div class="start">Начало - {{item.start}}</div>
             <div class="end">Конец - {{item.end}}</div>
           </div>
@@ -249,7 +249,7 @@ export default {
 
   .chart-content {
     height: 100%;
-    padding: 6px 12px 6px 6px;
+    padding: 6px 8px 6px 6px;
     justify-content: flex-start;
     overflow: auto;
 
@@ -268,6 +268,7 @@ export default {
         color: #000000;
 
         .bg {
+          max-width: 100%;
           padding: 0 10px;
           display: flex;
           justify-content: space-between;
@@ -293,10 +294,18 @@ export default {
         color: #000000;
       }
 
+      &:hover {
+        .title-line {
+          display: block;
+        }
+      }
+
       .title-line {
+        display: none;
         position: absolute;
-        top: 0;
+        top: -3px;
         left: 0;
+        transform: translateY(-100%);
 
         width: 100px;
         height: 26px;
@@ -312,6 +321,12 @@ export default {
 
         .start {
           margin-bottom: 1px;
+        }
+
+        &.down {
+          top: -3px;
+          left: 25px;
+          transform: none;
         }
       }
     }

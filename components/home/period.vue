@@ -171,7 +171,7 @@ export default {
   .chart-content {
     .content-box {
       .period {
-        btn.text {
+        .btn.text {
           margin-right: 6px;
         }
         button:last-child {

@@ -369,11 +369,11 @@
             <div class="content-box">
               <div class="calendar-period">
                 <div class="select-date">
-                  <input type="date" v-model="ComparisonModule.option.date1"/>
+                  <input type="date" v-model="ComparisonModuleDate1"/>
                 </div>
               </div>
               <period title="ComparisonModule" :isType2="ComparisonModule.option.isType2"></period>
-              <div class="indicators" v-if="comparisonModuleData && comparisonModuleData.isQuery1">
+              <div class="indicators" v-if="comparisonModuleData && comparisonModuleData.isQuery">
                 <div class="module">
                   <div class="index">{{ comparisonModuleData.sum1 }}</div>
                   <indicator :change="comparisonModuleData.change_sum1"></indicator>
@@ -422,11 +422,11 @@
             <div class="content-box">
               <div class="calendar-period">
                 <div class="select-date">
-                  <input type="date" v-model="ComparisonModule.option.date2"/>
+                  <input type="date" v-model="ComparisonModuleDate2"/>
                 </div>
               </div>
               <period title="ComparisonModule" :isType1="ComparisonModule.option.isType1" end="1"></period>
-              <div class="indicators" v-if="comparisonModuleData && comparisonModuleData.isQuery2">
+              <div class="indicators" v-if="comparisonModuleData && comparisonModuleData.isQuery">
                 <div class="module">
                   <div class="index">{{ comparisonModuleData.sum2 }}</div>
                 </div>
@@ -570,6 +570,7 @@ export default {
       if (option.end) {
         this[option.title].option.id2 = option.id2;
         this[option.title].option.isType2 = option.isType2;
+        this.updateComparisonModule();
       } else {
         this[option.title].option.id1 = option.id1;
         this[option.title].option.isType1 = option.isType1;
@@ -620,6 +621,8 @@ export default {
           isType1: null,
         },
       },
+      ComparisonModuleDate1: null,
+      ComparisonModuleDate2: null,
       ComparisonModule: {
         modalBul: false,
         cardShow: true,
@@ -658,6 +661,14 @@ export default {
   watch: {
     calendar: function() {
       this.updateAll();
+    },
+    ComparisonModuleDate1: function (newValue) {
+      this.ComparisonModule.option.date1 = newValue;
+      this.updateComparisonModule();
+    },
+    ComparisonModuleDate2: function (newValue) {
+      this.ComparisonModule.option.date2 = newValue;
+      this.updateComparisonModule();
     }
   },
 
@@ -786,7 +797,7 @@ export default {
       console.log('change');
     },
     updateComparisonModule() {
-      if (!this.ComparisonModule.option.date1)
+      if (!(this.ComparisonModule.option.date1 && this.ComparisonModule.option.date2))
         return;
 
       this.getComparisonModule(this.ComparisonModule.option);

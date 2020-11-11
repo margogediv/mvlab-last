@@ -37,8 +37,7 @@ export default {
             sum1: 0,
             change_sum1: 0,
             sum2: 0,
-            isQuery1: false,
-            isQuery2: false,
+            isQuery: false,
         },
         energyConsumption: {
             input1: 0,
@@ -169,26 +168,14 @@ export default {
         async getComparisonModule(store, option) {
             let data = null;
             // try {
-            //     if (option.date1 && option.date2) {
-            //         if (option.id1 && option.id2)
-            //             data = await this.$axios.$get(`/dashboard/comparison/shift/${option.date1}/${option.id1}/${option.date2}/${option.id2}`);
-            //         else if (option.isType1 === 'day')
-            //             data = await this.$axios.$get(`/dashboard/comparison/day/${option.date1}/${option.date2}`);
-            //         else if (option.isType1 === 'month')
-            //             data = await this.$axios.$get(`/dashboard/comparison/month/${option.date1}/${option.date2}`);
+            //     if (option.id1 && option.id2)
+            //         data = await this.$axios.$get(`/dashboard/comparison/shift/${option.date1}/${option.id1}/${option.date2}/${option.id2}`);
+            //     else if (option.isType1 === 'day')
+            //         data = await this.$axios.$get(`/dashboard/comparison/day/${option.date1}/${option.date2}`);
+            //     else if (option.isType1 === 'month')
+            //         data = await this.$axios.$get(`/dashboard/comparison/month/${option.date1}/${option.date2}`);
             //
-            //         data.isQuery1 = true;
-            //         data.isQuery2 = true;
-            //     } else if (option.date1 && !option.date2) {
-            //         if (option.id1)
-            //             data = await this.$axios.$get(`/dashboard/comparison/shift/${option.date1}/${option.id1}`);
-            //         else if (option.isType1 === 'day')
-            //             data = await this.$axios.$get(`/dashboard/comparison/day/${option.date1}`);
-            //         else if (option.isType1 === 'month')
-            //             data = await this.$axios.$get(`/dashboard/comparison/month/${option.date1}`);
-            //
-            //         data.isQuery1 = true;
-            //     }
+            //     data.isQuery = true;
             // } catch (e) {
             //     console.error("getComparisonModule axios");
             // }
@@ -217,16 +204,13 @@ export default {
                 sum2: getRandomInt(900) + 100,
             };
 
-            if (option.date1 && option.date2) {
-                data.change_suitable1 = ((data.suitable1 / data.suitable2) * 100).toFixed();
-                data.change_substandard1 = ((data.substandard1 / data.substandard2) * 100).toFixed();
-                data.change_defect1 = ((data.defect1 / data.defect2) * 100).toFixed();
-                data.change_flooded1 = ((data.flooded1 / data.flooded2) * 100).toFixed();
-                data.change_sum1 = ((data.sum1 / data.sum2) * 100).toFixed();
-                data.isQuery1 = true;
-                data.isQuery2 = true;
-            } else if (option.date1 && !option.date2)
-                data.isQuery1 = true;
+            data.change_suitable1 = ((data.suitable1 / data.suitable2) * 100).toFixed();
+            data.change_substandard1 = ((data.substandard1 / data.substandard2) * 100).toFixed();
+            data.change_defect1 = ((data.defect1 / data.defect2) * 100).toFixed();
+            data.change_flooded1 = ((data.flooded1 / data.flooded2) * 100).toFixed();
+            data.change_sum1 = ((data.sum1 / data.sum2) * 100).toFixed();
+            data.isQuery = true;
+
             //end block
 
             store.commit('setComparisonModule', data);
