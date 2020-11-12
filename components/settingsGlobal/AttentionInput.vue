@@ -6,18 +6,17 @@
     </div>
     <div class="attention-body">
       <div class="title">Внимание!</div>
-      <div class="subtitle">Вся не сохраненная информация будет удалена</div>
+      <div class="subtitle">Для создания объекта должны быть заполнены все строки</div>
     </div>
     <div class="attention-footer">
-      <button class="btn-left" @click="$parent.$emit('closeAttentionClose')">Отмена</button>
-      <button class="btn-right" @click="$parent.$emit('closeVobjectCreated')">Ок</button>
+      <button class="btn-close" @click="$parent.$emit('closeAttentionInput')">Закрыть</button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "AttentionClose",
+  name: "AttentionInput",
  }
 </script>
 
@@ -43,7 +42,7 @@ export default {
     justify-content: center;
     align-items: center;
     border-radius: 18px 18px 0px 0px;
-    background-color: #FF6F64;
+    background-color: #FFDC75;
   }
 
   .attention-body {
@@ -71,11 +70,11 @@ export default {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     padding: 0 24px 12px 24px;
 
-    .btn-left {
-      width: 120px;
+    .btn-close {
+      width: 202px;
       height: 36px;
 
       padding: 6px 16px;
@@ -84,45 +83,18 @@ export default {
       font-size: 18px;
       text-transform: uppercase;
 
-      color: #9AAABA;
+      color: #FFDC75;
       outline: none;
       cursor: pointer;
 
       background: #FFFFFF;
-      border: 1px solid #9AAABA;
+      border: 1px solid #FFDC75;
       border-radius: 6px;
 
       &:hover {
         color: #FFFFFF;
-        background: #9AAABA;
-        border: 1px solid #9AAABA;
-        border-radius: 6px;
-        transition: 0.2s;
-      }
-    }
-
-    .btn-right {
-      width: 120px;
-      height: 36px;
-
-      padding: 6px 16px;
-
-      font-weight: 500;
-      font-size: 18px;
-      text-transform: uppercase;
-
-      color: #FF6F64;
-      outline: none;
-      cursor: pointer;
-
-      background: #FFFFFF;
-      border: 1px solid #FF6F64;
-      border-radius: 6px;
-
-      &:hover {
-        color: #FFFFFF;
-        background: #FF6F64;
-        border: 1px solid #FF6F64;
+        background: #FFDC75;
+        border: 1px solid #FFDC75;
         border-radius: 6px;
         transition: 0.2s;
       }

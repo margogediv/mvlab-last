@@ -102,7 +102,7 @@ export default {
   position: relative;
   padding: 24px 0 12px 0;
 
-  .prev{
+  .prev {
     border: none;
     outline: none;
     cursor: pointer;
@@ -111,7 +111,8 @@ export default {
     left: 57px;
     width: 40px;
     height: 40px;
-    background-image: url("~assets/img/arrow_prew.png");
+    background-color: transparent;
+    background-image: url("~assets/img/arrow_prew.svg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;

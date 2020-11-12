@@ -52,6 +52,8 @@
             </div>
           </div>
 
+          <attentionInput v-if="showAttentionInput"></attentionInput>
+
           <div class="second-step-objects" v-show="arrActiveStep.secondStep">
             <div class="second-step-object">
               <div
@@ -102,9 +104,7 @@
             </button>
           </div>
 
-          <div class="attention">
-            <attentionClose v-if="showAttentionClose"></attentionClose>
-          </div>
+          <attentionClose v-if="showAttentionClose"></attentionClose>
 
         </div>
         <button class="btn_icon2">
@@ -119,6 +119,7 @@ import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
 
 import AttentionClose from "@/components/settingsGlobal/AttentionClose";
+import AttentionInput from "@/components/settingsGlobal/AttentionInput";
 
 export default {
 
@@ -133,7 +134,11 @@ export default {
         firstStep: false,
         secondStep: false,
       },
-      currentProject: {},
+      currentProject: {
+        projectName: null,
+        clientName: null,
+        clientContract: null,
+      },
       typeStructured: [
         { text: "Выбор типа узла", value: "", disabled: true },
         { text: "Резерв1", value: "Резерв1", disabled: false },
@@ -149,6 +154,7 @@ export default {
       currentStructureObject: [""],
 
       showAttentionClose: false,
+      showAttentionInput: false,
     };
   },
 
@@ -159,10 +165,14 @@ export default {
     this.$on('closeAttentionClose', () => {
       this.showAttentionClose = false;
     });
+    this.$on('closeAttentionInput', () => {
+      this.showAttentionInput = false;
+    });
   },
 
   components: {
     attentionClose: AttentionClose,
+    attentionInput: AttentionInput,
   },
 
   computed: {
@@ -263,6 +273,8 @@ export default {
   height: 24px;
 }
 .level-value {
+  outline: none;
+
   width: 246px;
   height: 24px;
 
@@ -395,47 +407,49 @@ button{
   color: #778A9C;
 
   outline: none;
+  cursor: pointer;
+
+  input {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border-radius: 4px;
+    border: none;
+    background: #F7F8FA;
+    padding: 0 5px;
+    //cursor: initial;
+    transition: 0.1s;
+  }
+
+  input + label {
+    position: absolute;
+    top: -20px;
+    left: 6px;
+    transition: all 0.1s;
+    opacity: 1;
+    background: #F7F8FA;
+
+    transform: translateY(calc(50% + 2px));
+  }
+
+  input:placeholder-shown + label {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+
+  input:focus + label {
+    opacity: 1;
+    transform: translateY(calc(50% + 2px));
+    color: #00c484;
+
+  }
+
+  input:focus:placeholder-shown {
+    -webkit-text-fill-color: transparent;
+  }
 }
-input {
-  width: 100%;
-  height: 100%;
-  outline: none;
-  border-radius: 4px;
-  border: none;
-  background: #F7F8FA;
 
-  padding: 0 5px;
-
-  transition: 0.1s;
-}
-
-input + label {
-  position: absolute;
-  top: -20px;
-  left: 6px;
-  transition: all 0.1s;
-  opacity: 1;
-  background: #F7F8FA;
-
-  transform: translateY(calc(50% + 2px));
-}
-
-input:placeholder-shown + label {
-  opacity: 0;
-  transform: translateY(100%);
-}
-
-
-input:focus + label {
-  opacity: 1;
-  transform: translateY(calc(50% + 2px));
-  color: #00c484;
-
-}
-
-input:focus:placeholder-shown {
-  -webkit-text-fill-color: transparent;
-}
 
 hr {
   border: none; /* Убираем границу для браузера Firefox */
