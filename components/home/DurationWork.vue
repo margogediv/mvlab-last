@@ -268,6 +268,7 @@ export default {
         color: #000000;
 
         .bg {
+          cursor: pointer;
           max-width: 100%;
           padding: 0 10px;
           display: flex;
@@ -350,7 +351,7 @@ export default {
 
   .bul {
     cursor: pointer;
-    width: 15px;
+    width: 17px;
     height: 20px;
     display: flex;
     justify-content: center;
@@ -437,6 +438,7 @@ export default {
   z-index: 50;
 
   .btn-bul {
+    cursor: pointer;
     position: relative;
     width: 100%;
     height: 40px;

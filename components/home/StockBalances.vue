@@ -294,6 +294,7 @@ export default {
   border-radius: 4px 0px 4px 4px;
 
   .btn-bul {
+    cursor: pointer;
     position: relative;
     width: 100%;
     height: 40px;
