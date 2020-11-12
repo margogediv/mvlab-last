@@ -24,7 +24,7 @@ export default {
             "Узел",
             "Датчик",
         ],
-        currentStructureObject: null,
+        currentStructureObject: [""],
     }),
     getters: {
         clientsObject(state) {
@@ -51,6 +51,7 @@ export default {
     },
     actions: {
         updateCurrentStructureObject(store, currentData) {
+            debugger
             store.commit('setCurrentStructureObject', currentData);
         },
     },

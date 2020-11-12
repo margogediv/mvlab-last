@@ -77,12 +77,16 @@
         </div>
       </div>
     </div>
-    <VobjectCreated v-if="showCreated" v-on:changeShow="changeshowCreated">></VobjectCreated>
+    <VobjectCreated v-if="showCreated" v-on:changeShow="changeshowCreated"></VobjectCreated>
+    <addFactory v-if="showAddFactory"></addFactory>
+    <addWorkshop v-if="showaddWorkshop"></addWorkshop>
   </div>
 </template>
 
 <script>
 import VobjectCreated from "@/components/VobjectCreated";
+import AddFactory from "@/components/settingsGlobal/AddFactory";
+import AddWorkshop from "@/components/settingsGlobal/AddWorkshop";
 
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
@@ -101,12 +105,17 @@ export default {
 
   components: {
     VobjectCreated,
+    addFactory: AddFactory,
+    addWorkshop: AddWorkshop,
   },
 
   data() {
     return {
       search: "",
       showCreated: false,
+      showAddFactory: false,
+      showaddWorkshop: false,
+      currentStructureObject: null,
     };
   },
 

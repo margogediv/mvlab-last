@@ -1,125 +1,132 @@
 <template>
-  <!-- <div class="overlay" v-on:click="$emit('changeShow')"> -->
   <div class="overlay">
-      <div class="modal-created">
-        <div class="box-modal">
-          <div class="title">Мастер создания объектов</div>
+    <div class="modal-created">
+      <div class="box-modal">
+        <div class="title">Мастер создания объектов</div>
 
-          <div class="steps">
+        <div class="steps">
+          <div
+              class="first"
+              :class="{ active: arrActiveStep.firstStep, done: arrDoneStep.firstStep }"
+          >
+            <div class="first-step step active">1</div>
+            <div class="description-step first-description">Описание объекта</div>
+          </div>
+          <div class="ellipsis">
             <div
-                class="first"
-                :class="{ active: arrActiveStep.firstStep, done: arrDoneStep.firstStep }"
-            >
-              <div class="first-step step active">1</div>
-              <div class="description-step first-description">Описание объекта</div>
-            </div>
-            <div class="ellipsis">
-              <div
-                  class="small-point"
-                  :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
-              ></div>
-              <div
-                  class="small-point"
-                  :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
-              ></div>
-              <div
-                  class="small-point"
-                  :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
-              ></div>
-            </div>
-            <div
-                class="second"
+                class="small-point"
                 :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
-            >
-              <div class="second-step step">2</div>
-              <div class="description-step second-description">Структура объекта</div>
-            </div>
+            ></div>
+            <div
+                class="small-point"
+                :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
+            ></div>
+            <div
+                class="small-point"
+                :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
+            ></div>
           </div>
-          <!--      <div class="description-steps"></div>-->
-          <hr />
-          <div class="first-step-objects" v-show="arrActiveStep.firstStep">
-            <div class="first-step-object">
-              <input v-model.lazy="currentProject.projectName" placeholder="Название объекта" autocomplete="off" id="name" type="text"/>
-              <label for="name">Название объекта</label>
-            </div>
-            <div class="first-step-object">
-              <input v-model.lazy="currentProject.clientName" placeholder="Заказчик" autocomplete="off" id="client" type="text"/>
-              <label for="client">Заказчик</label>
-            </div>
-            <div class="first-step-object">
-              <input v-model.lazy="currentProject.clientContract" placeholder="Договор" autocomplete="off" id="contract" type="text"/>
-              <label for="contract">Договор</label>
-            </div>
+          <div
+              class="second"
+              :class="{ active: arrActiveStep.secondStep, done: arrDoneStep.secondStep }"
+          >
+            <div class="second-step step">2</div>
+            <div class="description-step second-description">Структура объекта</div>
           </div>
-
-          <attentionInput v-if="showAttentionInput"></attentionInput>
-
-          <div class="second-step-objects" v-show="arrActiveStep.secondStep">
-            <div class="second-step-object">
-              <div
-                  class="structure-object"
-                  v-for="(structureItem, idx) in currentStructureObject"
-                  :key="idx"
-              >
-                <div class="level-name level">Уровень {{idx}}</div>
-
-                <select
-                    class="level-value level"
-                    v-model="currentStructureObject[idx]"
-                    :disabled="idx < currentStructureObject.length-1"
-                >
-                  <option
-                      v-for="type in typeStructured"
-                      :value="type.value"
-                      :disabled="type.disabled"
-                      :key="type.value"
-                  >{{ type.text }}</option>
-                </select>
-
-                <button
-                    class="level-remove level btn_icon level-btn btn_icon-panel"
-                    @click="removeLevel"
-                    :disabled="idx < currentStructureObject.length-1 || idx==0"
-                >
-                  <IconifyIcon icon="baselineRemove" :style="{fontSize: '24px'}" />
-                </button>
-
-                <button
-                    class="level-add level btn_icon level-btn btn_icon-panel"
-                    @click="addLevel"
-                    :disabled=" idx >= (typeStructured.length-2) || currentStructureObject[idx]=='' || currentStructureObject.length !== (idx+1)"
-                >
-                  <IconifyIcon icon="addIcon" :style="{fontSize: '24px'}" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          <div class="tabfoot">
-            <button class="tabfoot-left btn_icon">
-              <div class="tabfoot_title" v-on:click="prevStep">{{this.prevbtn}}</div>
-            </button>
-            <button class="tabfoot-right btn_icon">
-              <div class="tabfoot_title" v-on:click="nextStep">{{this.nextbtn}}</div>
-            </button>
-          </div>
-
-          <attentionClose v-if="showAttentionClose"></attentionClose>
-
         </div>
-        <button class="btn_icon2">
-          <div class="btn-bg" @click="showAttentionClose = true"></div>
-        </button>
+        <!--      <div class="description-steps"></div>-->
+        <hr/>
+        <div class="first-step-objects" v-show="arrActiveStep.firstStep">
+          <div class="first-step-object">
+            <input v-model.lazy="currentProject.projectName" placeholder="Название объекта" autocomplete="off" id="name"
+                   type="text"/>
+            <label for="name">Название объекта</label>
+          </div>
+          <div class="first-step-object">
+            <input v-model.lazy="currentProject.clientName" placeholder="Заказчик" autocomplete="off" id="client"
+                   type="text"/>
+            <label for="client">Заказчик</label>
+          </div>
+          <div class="first-step-object">
+            <input v-model.lazy="currentProject.clientContract" placeholder="Договор" autocomplete="off" id="contract"
+                   type="text"/>
+            <label for="contract">Договор</label>
+          </div>
+        </div>
+
+        <attentionInput v-if="showAttentionInput"></attentionInput>
+
+        <div class="second-step-objects" v-show="arrActiveStep.secondStep">
+          <div class="second-step-object">
+            <div
+                class="structure-object"
+                v-for="(structureItem, idx) in currentStructureObject"
+                :key="idx"
+            >
+              <div class="level-name level">Уровень {{ idx }}</div>
+
+              <select
+                  class="level-value level"
+                  v-model="currentStructureObject[idx]"
+                  :disabled="idx < currentStructureObject.length-1"
+              >
+                <option
+                    v-for="type in typeStructured"
+                    :value="type.id"
+                    :disabled="type.disabled"
+                    :class="{hide : type.disabled}"
+                    :key="type.id"
+                >{{ type.text }}
+                </option>
+              </select>
+
+              <button
+                  class="level-remove level btn_icon level-btn btn_icon-panel"
+                  @click="removeLevel"
+                  :disabled="!(idx >= currentStructureObject.length - 1 && idx !== 0)"
+                  :class="{ hide_minus: !(idx >= currentStructureObject.length - 1 && idx !== 0) }"
+              >
+                <IconifyIcon icon="baselineRemove" :style="{fontSize: '24px'}"/>
+              </button>
+
+              <button
+                  class="level-add level btn_icon level-btn btn_icon-panel"
+                  @click="addLevel"
+                  :disabled="!currentStructureObject[idx]"
+                  v-if="idx >= currentStructureObject.length - 1 && currentStructureObject[currentStructureObject.length -1] !== 8"
+              >
+                <IconifyIcon icon="addIcon" :style="{fontSize: '24px'}"/>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabfoot">
+          <button class="tabfoot-left btn_icon">
+            <div class="tabfoot_title" v-on:click="prevStep">{{ this.prevbtn }}</div>
+          </button>
+          <button class="tabfoot-right btn_icon">
+            <div class="tabfoot_title" v-on:click="nextStep">{{ this.nextbtn }}</div>
+          </button>
+        </div>
+
+        <attentionClose v-if="showAttentionClose"></attentionClose>
+
       </div>
+      <button class="btn_icon2">
+        <div class="btn-bg" @click="showAttentionClose = true"></div>
+      </button>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { mapActions } from "vuex";
+import {mapGetters} from "vuex";
+import {mapActions} from "vuex";
 
 import AttentionClose from "@/components/settingsGlobal/AttentionClose";
 import AttentionInput from "@/components/settingsGlobal/AttentionInput";
+
 
 export default {
 
@@ -140,18 +147,18 @@ export default {
         clientContract: null,
       },
       typeStructured: [
-        { text: "Выбор типа узла", value: "", disabled: true },
-        { text: "Резерв1", value: "Резерв1", disabled: false },
-        { text: "Резерв2", value: "Резерв2", disabled: false },
-        { text: "Организация", value: "Организация", disabled: false },
-        { text: "Предприятие", value: "Предприятие", disabled: false },
-        { text: "Завод", value: "Завод", disabled: false },
-        { text: "Цех", value: "Цех", disabled: false },
-        { text: "Узел", value: "Узел", disabled: false },
-        { text: "Датчик", value: "Датчик", disabled: false },
+        {id: 0, text: "Выбор типа узла", value: "", disabled: true},
+        {id: 1, text: "Резерв1", value: "Резерв1", disabled: false},
+        {id: 2, text: "Резерв2", value: "Резерв2", disabled: false},
+        {id: 3, text: "Организация", value: "Организация", disabled: false},
+        {id: 4, text: "Предприятие", value: "Предприятие", disabled: false},
+        {id: 5, text: "Завод", value: "Завод", disabled: false},
+        {id: 6, text: "Цех", value: "Цех", disabled: false},
+        {id: 7, text: "Узел", value: "Узел", disabled: false},
+        {id: 8, text: "Датчик", value: "Датчик", disabled: false},
       ],
       selected: "",
-      currentStructureObject: [""],
+      currentStructureObject: [0],
 
       showAttentionClose: false,
       showAttentionInput: false,
@@ -175,42 +182,59 @@ export default {
     attentionInput: AttentionInput,
   },
 
+  watch: {
+    currentStructureObject: function (newValue) {
+      let index = newValue[newValue.length -1];
+      for (let i = 0; i <= this.typeStructured.length - 1; i++)
+        if(i < index)
+          this.typeStructured[i].disabled = true;
+        else
+          this.typeStructured[i].disabled = false;
+    }
+  },
+
   computed: {
     nextbtn() {
       let title = this.arrActiveStep.secondStep
-        ? "Создать объект"
-        : "Следующий шаг";
+          ? "Создать объект"
+          : "Следующий шаг";
 
       return title;
     },
     prevbtn() {
       let title = this.arrActiveStep.firstStep
-        ? "Закрыть"
-        : "Предыдущий шаг";
+          ? "Закрыть"
+          : "Предыдущий шаг";
 
       return title;
-    }
+    },
   },
   methods: {
     ...mapActions("settingsGlobal", {
-      updateCurrentStructureObject: "updateCurrentStructureObject"
+      // updateCurrentStructureObject: "updateCurrentStructureObject"
     }),
 
     nextStep() {
       if (this.arrActiveStep.firstStep) {
-        this.arrActiveStep.firstStep = false;
-        this.arrActiveStep.secondStep = true;
+        if (this.currentProject.projectName && this.currentProject.clientName && this.currentProject.clientContract) {
+          this.arrActiveStep.firstStep = false;
+          this.arrActiveStep.secondStep = true;
 
-        this.arrDoneStep.firstStep = true;
-        this.arrDoneStep.secondStep = false;
+          this.arrDoneStep.firstStep = true;
+          this.arrDoneStep.secondStep = false;
+        } else {
+          this.showAttentionInput = true;
+        }
       } else {
-        this.arrActiveStep.firstStep = true;
-        this.arrActiveStep.secondStep = false;
+        if (1) {
+          this.arrActiveStep.firstStep = true;
+          this.arrActiveStep.secondStep = false;
 
-        this.arrDoneStep.firstStep = false;
-        this.arrDoneStep.secondStep = true;
-
-        // this.$emit("changeShow");
+          this.arrDoneStep.firstStep = false;
+          this.arrDoneStep.secondStep = true;
+        } else {
+          this.showAttentionInput = true;
+        }
       }
     },
     prevStep() {
@@ -233,23 +257,23 @@ export default {
       }
     },
     addLevel() {
-      this.updateCurrentStructureObject.push("");
+      this.currentStructureObject.push(0);
     },
     removeLevel() {
-      this.updateCurrentStructureObject.pop();
+      this.currentStructureObject.pop();
     },
 
-    noChange() {
-      1 + 1;
-    }
+    // noChange() {
+    //   1 + 1;
+    // }
   }
 };
 </script>
 
 <style lang="scss" scoped>
 
-.sub-panel{
-    margin-left: 66px;
+.sub-panel {
+  margin-left: 66px;
 }
 
 .active-item:before {
@@ -272,6 +296,7 @@ export default {
   width: 100px;
   height: 24px;
 }
+
 .level-value {
   outline: none;
 
@@ -289,9 +314,11 @@ export default {
 
   color: #778a9c;
 }
+
 .level-add {
   color: #01c587;
 }
+
 .level-remove {
   color: #ff6f64;
 }
@@ -303,7 +330,8 @@ export default {
   display: flex;
   flex-direction: row;
 }
-button{
+
+button {
   padding: 0;
   font-style: 24px;
 }
@@ -321,6 +349,7 @@ button{
   width: 50%;
   height: 36px;
 }
+
 .tabfoot button:hover {
   box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.25);
 }
@@ -329,12 +358,15 @@ button{
   color: #9AAABA;
   background: #F7F8FA;
 }
+
 .tabfoot-left:hover {
   background: #F7F8FA;
 }
+
 .tabfoot-right {
   background: #D4EDDA;
 }
+
 //.tabfoot-right:hover {
 //  background-color: hsl(134, 41%, 85%);
 //}
@@ -357,6 +389,7 @@ button{
   text-align: center;
   justify-content: center;
 }
+
 .second-step-objects {
   width: 100%;
   background: inherit;
@@ -366,6 +399,7 @@ button{
   text-align: center;
   justify-content: center;
 }
+
 .second-step-object {
   margin-top: 24px;
   margin-left: auto;
@@ -391,6 +425,7 @@ button{
   text-align: center;
   justify-content: center;
 }
+
 .first-step-object {
   position: relative;
   margin-top: 24px;
@@ -463,6 +498,7 @@ hr {
 .third-description {
   margin-right: auto;
 }
+
 .description-steps {
   margin-top: 10px;
 
@@ -477,6 +513,7 @@ hr {
 
   color: #778a9c;
 }
+
 .small-point {
   width: 6px;
   height: 6px;
@@ -615,6 +652,7 @@ hr {
 
   color: #4A627A;
 }
+
 .overlay {
   width: 100vw;
   height: 100vh;
@@ -690,5 +728,14 @@ hr {
       transform: translate(-50%, -50%);
     }
   }
+}
+
+option.hide {
+  //color: rgb(170, 170, 170);
+  color: red;
+}
+
+.hide_minus {
+  opacity: 0;
 }
 </style>
