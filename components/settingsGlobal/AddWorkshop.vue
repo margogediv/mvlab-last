@@ -128,6 +128,7 @@
           <button class="btn-center" @click="$parent.$emit('closeVobjectCreated')">Применить</button>
         </div>
       </div>
+      </div>
       <button class="btn_icon2">
         <div class="btn-bg" @click="showAddFactory = true"></div>
       </button>

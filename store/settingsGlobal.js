@@ -4,15 +4,15 @@ export default {
 
     state: () => ({
 
-        clientsObject: null,
+        // clientsObject: null,
 
-        // clientsObject: {
-        //     name_object: 'TestName1',
-        //     customer: 'test',
-        //     contact: "test2",
-        //     created_at: '12/12/12',
-        //     updated_at: '11/11/11',
-        // },
+        clientsObject: {
+            name_object: 'TestName1',
+            customer: 'test',
+            contact: "test2",
+            created_at: '12/12/12',
+            updated_at: '11/11/11',
+        },
 
         typeStructured: [
             "Резерв1",

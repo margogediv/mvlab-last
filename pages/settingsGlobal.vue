@@ -7,18 +7,34 @@
               <IconifyIcon icon="bxSearchAlt2" :style="{fontSize: '24px'}" class="input-icon" />
             </div>
       <div class="btn-box">
-        <button class="btn-project btn-del" v-if="clientsObject">
+
+        <button
+            class="btn-project btn-del"
+            v-if="clientsObject"
+            @click="changeshowDelObject"
+         >
           <span class="btn-title">Удалить</span>
           <span class="btn-svg"></span>
         </button>
-        <button class="btn-project btn-edit" v-if="clientsObject" v-on:click="changeshowCreated">
+
+        <button
+            class="btn-project btn-edit"
+            v-if="clientsObject"
+            @click="changeshowCreated"
+         >
           <span class="btn-title">Изменить</span>
           <span class="btn-svg"></span>
         </button>
-        <button class="btn-project btn-add" v-if="!clientsObject" v-on:click="changeshowCreated">
+
+        <button
+            class="btn-project btn-add"
+            v-if="!clientsObject"
+            v-on:click="changeshowCreated"
+         >
           <span class="btn-title">Добавить</span>
           <span class="btn-svg"></span>
         </button>
+
       </div>
     </div>
     <div class="table-objects">
@@ -77,6 +93,7 @@
         </div>
       </div>
     </div>
+    <delObject v-if="showDelObject"></delObject>
     <VobjectCreated v-if="showCreated" v-on:changeShow="changeshowCreated"></VobjectCreated>
     <addFactory v-if="showAddFactory"></addFactory>
     <addWorkshop v-if="showaddWorkshop"></addWorkshop>
@@ -87,6 +104,7 @@
 import VobjectCreated from "@/components/VobjectCreated";
 import AddFactory from "@/components/settingsGlobal/AddFactory";
 import AddWorkshop from "@/components/settingsGlobal/AddWorkshop";
+import DelObject from "@/components/settingsGlobal/DelObject";
 
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
@@ -101,10 +119,15 @@ export default {
     this.$on('closeVobjectCreated', () => {
       this.showCreated = false;
     });
+
+    this.$on('changeshowDelObject', () => {
+      this.showDelObject = false;
+    });
   },
 
   components: {
     VobjectCreated,
+    delObject: DelObject,
     addFactory: AddFactory,
     addWorkshop: AddWorkshop,
   },
@@ -112,9 +135,10 @@ export default {
   data() {
     return {
       search: "",
+      showDelObject: false,
       showCreated: false,
       showAddFactory: false,
-      showaddWorkshop: true,
+      showaddWorkshop: false,
       currentStructureObject: null,
     };
   },
@@ -140,6 +164,10 @@ export default {
     }),
     changeshowCreated() {
       this.showCreated = !this.showCreated;
+    },
+
+    changeshowDelObject() {
+      this.showDelObject = !this.showDelObject;
     },
   },
 };
