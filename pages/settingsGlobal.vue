@@ -114,7 +114,7 @@ export default {
       search: "",
       showCreated: false,
       showAddFactory: false,
-      showaddWorkshop: false,
+      showaddWorkshop: true,
       currentStructureObject: null,
     };
   },
