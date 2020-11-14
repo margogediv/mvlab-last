@@ -1,58 +1,86 @@
-
 export default {
     namespaced: true,
 
     state: () => ({
+        clientsObject: null,
 
-        // clientsObject: null,
-
-        clientsObject: {
-            name_object: 'TestName1',
-            customer: 'test',
-            contact: "test2",
-            created_at: '12/12/12',
-            updated_at: '11/11/11',
-        },
-
-        typeStructured: [
-            "Резерв1",
-            "Резерв2",
-            "Организация",
-            "Предприятние",
-            "Завод",
-            "Цех",
-            "Узел",
-            "Датчик",
-        ],
-        currentStructureObject: [""],
+        typeStructured: [],
     }),
     getters: {
         clientsObject(state) {
-            return state.clientsObject;
+            if(!(state.clientsObject && state.typeStructured.length))
+                return state.clientsObject;
+
+            let newObj = JSON.parse(JSON.stringify(state.clientsObject));
+            let newArr = [];
+            newObj.currentStructureObject.forEach((id) => {
+                try {
+                    newArr.push(state.typeStructured.filter((item) => item.id === id)[0].value);
+                } catch (e) {
+                    debugger
+                }
+            });
+
+            newArr.push('Переменные');
+
+            newObj.currentStructureObject = newArr;
+            return newObj;
         },
         typeStructured(state) {
-            return state.typeStructured;
-        },
-        currentStructureObject(state) {
-            return state.currentStructureObject;
+            let array = [];
+            array.push({
+                id: 0,
+                text: "Выбор типа узла",
+                value: "",
+                disabled: true,
+            });
+
+            state.typeStructured.forEach((item) => {
+                array.push({
+                    id: item.id,
+                    text: item.value,
+                    value: item.value,
+                    disabled: false,
+                });
+            });
+
+            return array;
         },
     },
     mutations: {
         setClientsObject(state, data) {
             state.clientsObject = data;
         },
-        setЕypeStructured(state, data) {
+        setTypeStructured(state, data) {
             state.typeStructured = data;
-        },
-        setCurrentStructureObject(state, currentData) {
-            state.currentStructureObject[currentData.key] = currentData[currentData.key];
         },
 
     },
     actions: {
-        updateCurrentStructureObject(store, currentData) {
-            debugger
-            store.commit('setCurrentStructureObject', currentData);
+        updateClientsObject(store, option) {
+            let data = {
+                    name_object: option.currentProject.projectName,
+                    customer: option.currentProject.clientName,
+                    contact: option.currentProject.clientContract,
+                    currentStructureObject: option.currentStructureObject,
+                    created_at: '14-11-20',
+                    updated_at: '14-11-20',
+                }
+
+            store.commit('setClientsObject', data);
+        },
+        getTypeStructured(store) {
+            let data = [
+                {id: 1, value: "Резерв1"},
+                {id: 2, value: "Резерв2"},
+                {id: 3, value: "Организация"},
+                {id: 4, value: "Предприятие"},
+                {id: 5, value: "Завод"},
+                {id: 6, value: "Цех"},
+                {id: 7, value: "Узел"},
+                {id: 8, value: "Датчик"},
+            ];
+            store.commit('setTypeStructured', data);
         },
     },
     strict: process.env.NODE_ENV !== 'production'

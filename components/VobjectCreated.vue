@@ -57,7 +57,7 @@
         <attentionInput v-if="showAttentionInput"></attentionInput>
 
         <div class="second-step-objects" v-show="arrActiveStep.secondStep">
-          <div class="second-step-object">
+          <div id="levelList" class="second-step-object">
             <div
                 class="structure-object"
                 v-for="(structureItem, idx) in currentStructureObject"
@@ -146,17 +146,6 @@ export default {
         clientName: null,
         clientContract: null,
       },
-      typeStructured: [
-        {id: 0, text: "Выбор типа узла", value: "", disabled: true},
-        {id: 1, text: "Резерв1", value: "Резерв1", disabled: false},
-        {id: 2, text: "Резерв2", value: "Резерв2", disabled: false},
-        {id: 3, text: "Организация", value: "Организация", disabled: false},
-        {id: 4, text: "Предприятие", value: "Предприятие", disabled: false},
-        {id: 5, text: "Завод", value: "Завод", disabled: false},
-        {id: 6, text: "Цех", value: "Цех", disabled: false},
-        {id: 7, text: "Узел", value: "Узел", disabled: false},
-        {id: 8, text: "Датчик", value: "Датчик", disabled: false},
-      ],
       selected: "",
       currentStructureObject: [0],
 
@@ -184,16 +173,23 @@ export default {
 
   watch: {
     currentStructureObject: function (newValue) {
-      let index = newValue[newValue.length -1];
-      for (let i = 0; i <= this.typeStructured.length - 1; i++)
-        if(i < index)
+      if(newValue.length < 2)
+        return false;
+
+      let index = newValue[newValue.length - 2];
+      for (let i = 1; i <= this.typeStructured.length - 1; i++) {
+        if(i <= index)
           this.typeStructured[i].disabled = true;
         else
           this.typeStructured[i].disabled = false;
+      }
     }
   },
 
   computed: {
+    ...mapGetters("settingsGlobal", {
+      typeStructured: 'typeStructured',
+    }),
     nextbtn() {
       let title = this.arrActiveStep.secondStep
           ? "Создать объект"
@@ -211,7 +207,7 @@ export default {
   },
   methods: {
     ...mapActions("settingsGlobal", {
-      // updateCurrentStructureObject: "updateCurrentStructureObject"
+      updateClientsObject: "updateClientsObject"
     }),
 
     nextStep() {
@@ -226,12 +222,12 @@ export default {
           this.showAttentionInput = true;
         }
       } else {
-        if (1) {
-          this.arrActiveStep.firstStep = true;
-          this.arrActiveStep.secondStep = false;
-
-          this.arrDoneStep.firstStep = false;
-          this.arrDoneStep.secondStep = true;
+        if (this.currentStructureObject.indexOf(8) > -1) {
+          this.updateClientsObject({
+            currentProject: this.currentProject,
+            currentStructureObject: this.currentStructureObject,
+          });
+          this.$parent.$emit('closeVobjectCreated');
         } else {
           this.showAttentionInput = true;
         }
@@ -262,10 +258,6 @@ export default {
     removeLevel() {
       this.currentStructureObject.pop();
     },
-
-    // noChange() {
-    //   1 + 1;
-    // }
   }
 };
 </script>
@@ -313,6 +305,7 @@ export default {
   align-items: center;
 
   color: #778a9c;
+  background-color: inherit;
 }
 
 .level-add {
@@ -397,13 +390,15 @@ button {
   flex-direction: column;
   align-items: flex-start;
   text-align: center;
-  justify-content: center;
+  justify-content: flex-start;
+  min-height: 225px;
 }
 
 .second-step-object {
   margin-top: 24px;
   margin-left: auto;
   margin-right: auto;
+  min-height: 100%;
 
   .structure-object {
     display: flex;
@@ -670,7 +665,8 @@ hr {
   transform: translate(-50%, -50%);
 
   width: 468px;
-  height: 392px;
+  min-height: 392px;
+  height: auto;
 
   display: flex;
   flex-direction: column;
@@ -712,7 +708,8 @@ hr {
     position: relative;
 
     width: 468px;
-    height: 392px;
+    min-height: 392px;
+    height: auto;
 
     display: flex;
     flex-direction: column;
@@ -731,8 +728,7 @@ hr {
 }
 
 option.hide {
-  //color: rgb(170, 170, 170);
-  color: red;
+  color: rgb(170, 170, 170);
 }
 
 .hide_minus {

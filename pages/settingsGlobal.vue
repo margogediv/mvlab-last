@@ -71,11 +71,13 @@
     </div>
     <div class="box">
       <div class="structure-items">
-        <div
-            class="structure-item"
-            v-for="(structureItem, idx) in currentStructureObject"
-            :key="idx"
-        >{{structureItem}}</div>
+        <template v-if="clientsObject && clientsObject.hasOwnProperty('currentStructureObject')">
+          <div
+              class="structure-item"
+              v-for="(item, idx) in clientsObject.currentStructureObject"
+              :key="idx"
+          >{{item}}</div>
+        </template>
         <div class="panel-btn-box">
           <button class=" level btn_icon level-btn btn_icon-panel">
             <IconifyIcon icon="bxSearchAlt2" :style="{color: '#4A627A', fontSize: '24px'}" :horizontal-flip="true" />
@@ -116,6 +118,8 @@ export default {
     this.setActiveTabHeader("");
     this.setActiveTabSidebar("Setting");
 
+    this.getTypeStructured();
+
     this.$on('closeVobjectCreated', () => {
       this.showCreated = false;
     });
@@ -139,7 +143,6 @@ export default {
       showCreated: false,
       showAddFactory: false,
       showaddWorkshop: false,
-      currentStructureObject: null,
     };
   },
 
@@ -160,7 +163,7 @@ export default {
       setActiveTabSidebar: "setActiveTabSidebar",
     }),
     ...mapActions("settingsGlobal", {
-
+      getTypeStructured: 'getTypeStructured'
     }),
     changeshowCreated() {
       this.showCreated = !this.showCreated;
