@@ -3,7 +3,7 @@
     <div class="modal-created">
       <div class="del-body">
         <div class="del-name">Удаление объекта</div>
-        <div class="name-object">Объект 4</div>
+        <div class="name-object">{{clientObject.name_object}}</div>
       </div>
       <div class="del-btn">
         <div
@@ -11,7 +11,7 @@
             @click="$parent.$emit('changeshowDelObject')"
          >Отмена
         </div>
-        <div class="btn right">Удалить</div>
+        <div class="btn right" @click="callDelClientsObject">Удалить</div>
       </div>
       <button class="btn_icon2">
         <div
@@ -25,8 +25,23 @@
 </template>
 
 <script>
+
+  import { mapActions } from "vuex";
+
 export default {
   name: "DelObject",
+  props: ['clientObject'],
+
+  methods: {
+    ...mapActions("settingsGlobal", {
+      delClientsObject: "delClientsObject"
+    }),
+
+    callDelClientsObject() {
+      this.delClientsObject();
+      this.$parent.$emit('changeshowDelObject');
+    },
+  },
 }
 </script>
 

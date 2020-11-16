@@ -92,8 +92,8 @@
               <button
                   class="level-add level btn_icon level-btn btn_icon-panel"
                   @click="addLevel"
-                  :disabled="!currentStructureObject[idx]"
-                  v-if="idx >= currentStructureObject.length - 1 && currentStructureObject[currentStructureObject.length -1] !== 8"
+                  :disabled="!(currentStructureObject[idx] && idx >= currentStructureObject.length - 1 && currentStructureObject[currentStructureObject.length -1] !== 8)"
+                  :class="{ hide_plus: !(idx >= currentStructureObject.length - 1 && currentStructureObject[currentStructureObject.length -1] !== 8) }"
               >
                 <IconifyIcon icon="addIcon" :style="{fontSize: '24px'}"/>
               </button>
@@ -155,6 +155,7 @@ export default {
   },
 
   created() {
+    this.getTypeStructured();
     this.$on('closeVobjectCreated', () => {
       this.$parent.$emit('closeVobjectCreated');
     });
@@ -164,6 +165,19 @@ export default {
     this.$on('closeAttentionInput', () => {
       this.showAttentionInput = false;
     });
+
+    if(this.clientsObject) {
+      this.currentProject.projectName = this.clientsObject.name_object;
+      this.currentProject.clientContract = this.clientsObject.contact;
+      this.currentProject.clientName = this.clientsObject.customer;
+      let clientsObject = JSON.parse(JSON.stringify(this.clientsObject.currentStructureObject));
+      clientsObject.pop();
+      let newArr = [];
+      clientsObject.forEach((item) => {
+        newArr.push(item.id);
+      })
+      this.currentStructureObject = newArr;
+    }
   },
 
   components: {
@@ -189,6 +203,7 @@ export default {
   computed: {
     ...mapGetters("settingsGlobal", {
       typeStructured: 'typeStructured',
+      clientsObject: 'clientsObject',
     }),
     nextbtn() {
       let title = this.arrActiveStep.secondStep
@@ -207,7 +222,8 @@ export default {
   },
   methods: {
     ...mapActions("settingsGlobal", {
-      updateClientsObject: "updateClientsObject"
+      updateClientsObject: "updateClientsObject",
+      getTypeStructured: "getTypeStructured",
     }),
 
     nextStep() {
@@ -732,6 +748,9 @@ option.hide {
 }
 
 .hide_minus {
+  opacity: 0;
+}
+.hide_plus {
   opacity: 0;
 }
 </style>

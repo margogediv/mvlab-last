@@ -67,7 +67,7 @@ export default {
         'nuxt-webfontloader'
     ],
     axios: {
-        baseURL: 'http://185.6.25.155',
+        baseURL: 'http://localhost/ ',
         // proxy: true,
         proxy: false,
     },
@@ -104,9 +104,9 @@ export default {
         plugins: ['~/plugins/auth.js']
     },
     proxy: {
-        '/user/': 'http://77.220.212.211:8000',
-        '/api/Users/': 'http://77.220.212.211:8000',
-        '/api/': 'http://185.6.25.155',
+        // '/user/': 'http://77.220.212.211:8000',
+        // '/api/Users/': 'http://77.220.212.211:8000',
+        // '/api/': 'http://185.6.25.155',
     },
 
     webfontloader: {

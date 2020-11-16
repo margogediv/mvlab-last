@@ -8,24 +8,32 @@ export default {
     }),
     getters: {
         clientsObject(state) {
-            if(!(state.clientsObject && state.typeStructured.length))
+            let clientsObject = state.clientsObject;
+            if (!clientsObject)
+                clientsObject = JSON.parse(localStorage.getItem('clientsObject'));
+
+            if (!(clientsObject && state.typeStructured.length))
                 return state.clientsObject;
 
-            let newObj = JSON.parse(JSON.stringify(state.clientsObject));
+            let newObj = JSON.parse(JSON.stringify(clientsObject));
             let newArr = [];
-            newObj.currentStructureObject.forEach((id) => {
+            clientsObject.currentStructureObject.forEach((id) => {
                 try {
-                    newArr.push(state.typeStructured.filter((item) => item.id === id)[0].value);
+                    newArr.push(state.typeStructured.filter((item) => item.id === id)[0]);
                 } catch (e) {
                     debugger
                 }
             });
 
-            newArr.push('Переменные');
+            newArr.push({
+                id: state.typeStructured.length + 1,
+                value: 'Переменные'
+            });
 
             newObj.currentStructureObject = newArr;
             return newObj;
         },
+
         typeStructured(state) {
             let array = [];
             array.push({
@@ -54,20 +62,24 @@ export default {
         setTypeStructured(state, data) {
             state.typeStructured = data;
         },
-
     },
     actions: {
         updateClientsObject(store, option) {
             let data = {
-                    name_object: option.currentProject.projectName,
-                    customer: option.currentProject.clientName,
-                    contact: option.currentProject.clientContract,
-                    currentStructureObject: option.currentStructureObject,
-                    created_at: '14-11-20',
-                    updated_at: '14-11-20',
-                }
+                name_object: option.currentProject.projectName,
+                customer: option.currentProject.clientName,
+                contact: option.currentProject.clientContract,
+                currentStructureObject: option.currentStructureObject,
+                created_at: '14-11-20',
+                updated_at: '14-11-20',
+            }
 
+            localStorage.setItem('clientsObject', JSON.stringify(data));
             store.commit('setClientsObject', data);
+        },
+        delClientsObject(store) {
+            localStorage.setItem('clientsObject',null);
+            store.commit('setClientsObject', null);
         },
         getTypeStructured(store) {
             let data = [
@@ -82,6 +94,7 @@ export default {
             ];
             store.commit('setTypeStructured', data);
         },
+
     },
     strict: process.env.NODE_ENV !== 'production'
 };
