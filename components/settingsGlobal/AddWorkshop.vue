@@ -342,7 +342,7 @@ export default {
   .btn_icon2 {
     position: absolute;
     top: 0;
-    left: -29px;
+    left: -34px;
     cursor: pointer;
     background: none;
     border: none;

@@ -1,16 +1,21 @@
 <template>
   <div class="overlay">
     <div class="modal-created">
-      <div class="attention-close">
-        <div class="attention-header">
-          <div class="title-header">Добавление завода</div>
+      <div class="knot">
+        <div class="knot-header">
+          <div class="title-header">Добавление узла</div>
         </div>
-        <div class="attention-body">
+        <div class="knot-body">
+          <input type="text" placeholder="Название узла">
           <input type="text" placeholder="Название завода">
-          <input type="text" placeholder="Местоположение">
+          <input type="text" placeholder="Название цеха">
         </div>
-        <div class="attention-footer">
-          <button class="btn-center" @click="$parent.$emit('closeVobjectCreated')">Применить</button>
+        <div class="knot-footer">
+          <div
+              class="btn-center">
+            <!--            @click="$parent.$emit('changeshowDelObject')"-->
+            Применить
+          </div>
         </div>
       </div>
       <button class="btn_icon2">
@@ -22,20 +27,30 @@
 
 <script>
 export default {
-  name: "AddFactory",
+name: "AddKnot"
 }
 </script>
 
 <style lang="scss" scoped>
 
-.modal-created {
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  z-index: 19;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.062);
+}
 
+.modal-created {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 
-  width: 400px;
+  max-width: 400px;
+  width: 100%;
   height: auto;
 
   display: flex;
@@ -46,19 +61,17 @@ export default {
   background: #F7F8FA;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
 
-  .attention-close {
+  .knot {
     width: 100%;
-
-    .attention-header {
+    .knot-header {
       width: 100%;
       height: 24px;
       padding-top: 3px;
-      margin-bottom: 26px;
+      margin-bottom: 24px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-
       .title-header {
         font-weight: 500;
         font-size: 16px;
@@ -70,7 +83,7 @@ export default {
       }
     }
 
-    .attention-body {
+    .knot-body {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -79,12 +92,11 @@ export default {
 
       font-size: 12px;
       line-height: 15px;
-
       input {
         width: 376px;
         height: 24px;
 
-        margin-bottom: 24px;
+        margin-bottom: 12px;
         padding: 3px 6px;
 
         display: flex;
@@ -105,7 +117,7 @@ export default {
       }
     }
 
-    .attention-footer {
+    .knot-footer {
       width: 100%;
       height: 36px;
       display: flex;
@@ -139,64 +151,33 @@ export default {
       }
     }
   }
+}
 
-  .btn_icon2 {
-    position: absolute;
-    top: 0;
-    left: -34px;
-    cursor: pointer;
-    background: none;
-    border: none;
-    display: flex;
-    justify-content: baseline;
-    outline: none;
+.btn_icon2 {
+  position: absolute;
+  top: 0;
+  left: -34px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: baseline;
+  outline: none;
 
-    .btn-bg {
-      width: 24px;
-      height: 24px;
-      background-image: url("~assets/svg/clear_24px.svg");
+  .btn-bg {
+    width: 24px;
+    height: 24px;
+    background-image: url("~assets/svg/clear_24px.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    &:hover {
+      background-image: url("~assets/svg/setting/hovClose.svg");
       background-position: center;
       background-repeat: no-repeat;
       background-size: contain;
-
-      &:hover {
-        background-image: url("~assets/svg/setting/hovClose.svg");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: contain;
-      }
     }
   }
-
-  .box-modal {
-    position: relative;
-
-    width: 468px;
-    height: 392px;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-
-    .attention {
-      width: 300px;
-      height: 300px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
-  }
-}
-
-.overlay {
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  z-index: 19;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.062);
 }
 </style>

@@ -80,17 +80,23 @@
         </template>
         <div class="panel-btn-box">
           <button class=" level btn_icon level-btn btn_icon-panel">
-            <IconifyIcon icon="bxSearchAlt2" :style="{color: '#4A627A', fontSize: '24px'}" :horizontal-flip="true" />
+            <span class="search"></span>
+<!--            <IconifyIcon icon="bxSearchAlt2" :style="{color: '#4A627A', fontSize: '24px'}" :horizontal-flip="true" />-->
           </button>
           <button class=" level btn_icon level-btn btn_icon-panel">
-            <IconifyIcon icon="baselineRemove" :style="{color: '#FF6F64', fontSize: '24px'}" />
+            <span class="minus"></span>
+<!--            <IconifyIcon icon="baselineRemove" :style="{color: '#FF6F64', fontSize: '24px'}" />-->
           </button>
           <button class=" level btn_icon level-btn btn_icon-panel">
-            <img src="~/assets/svg/ant-design_edit-outlined.svg" alt="edit" />
+            <span class="edit"></span>
             <!-- <IconifyIcon icon="editOutlined" :style="{color: '#c4b70c', fontSize: '24px'}" /> -->
           </button>
-          <button class=" level btn_icon btn_icon-panel level-btn">
-            <IconifyIcon icon="addIcon" :style="{color: '#01C587', fontSize: '24px'}" />
+          <button
+              class=" level btn_icon btn_icon-panel level-btn"
+              @click="showForm"
+          >
+            <span class="plus_green"></span>
+<!--            <IconifyIcon icon="addIcon" :style="{color: '#01C587', fontSize: '24px'}" />-->
           </button>
         </div>
       </div>
@@ -99,6 +105,9 @@
     <VobjectCreated v-if="showCreated" v-on:changeShow="changeshowCreated"></VobjectCreated>
     <addFactory v-if="showAddFactory"></addFactory>
     <addWorkshop v-if="showaddWorkshop"></addWorkshop>
+    <addKnot v-if="showAddKnot"></addKnot>
+    <addSensor v-if="showAddSensor"></addSensor>
+    <addVariables v-if="showAddVariables"></addVariables>
   </div>
 </template>
 
@@ -107,6 +116,9 @@ import VobjectCreated from "@/components/VobjectCreated";
 import AddFactory from "@/components/settingsGlobal/AddFactory";
 import AddWorkshop from "@/components/settingsGlobal/AddWorkshop";
 import DelObject from "@/components/settingsGlobal/DelObject";
+import AddKnot from "@/components/settingsGlobal/AddKnot";
+import AddSensor from "@/components/settingsGlobal/AddSensor";
+import AddVariables from "@/components/settingsGlobal/AddVariables";
 
 import { mapGetters } from "vuex";
 import { mapActions } from "vuex";
@@ -134,6 +146,9 @@ export default {
     delObject: DelObject,
     addFactory: AddFactory,
     addWorkshop: AddWorkshop,
+    addKnot: AddKnot,
+    addSensor: AddSensor,
+    addVariables: AddVariables,
   },
 
   data() {
@@ -143,6 +158,9 @@ export default {
       showCreated: false,
       showAddFactory: false,
       showaddWorkshop: false,
+      showAddKnot: false,
+      showAddSensor: false,
+      showAddVariables: true,
     };
   },
 
@@ -445,6 +463,7 @@ th:nth-child(5) {
 }
 
 .box {
+  margin-top: 24px;
   padding: 0 24px;
   width: 100%;
   display: flex;
@@ -506,6 +525,42 @@ th:nth-child(5) {
 
       .btn_icon-panel {
         align-items: center;
+      }
+
+      .plus_green {
+        width: 14px;
+        height: 14px;
+        background-image: url("~assets/svg/setting/box-panel/green_plus.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+      }
+
+      .edit {
+        width: 14px;
+        height: 14px;
+        background-image: url("~assets/svg/setting/box-panel/edit.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+      }
+
+      .minus {
+        width: 14px;
+        height: 14px;
+        background-image: url("~assets/svg/setting/box-panel/minus.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+      }
+
+      .search {
+        width: 14px;
+        height: 14px;
+        background-image: url("~assets/svg/setting/box-panel/search.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
       }
     }
   }
