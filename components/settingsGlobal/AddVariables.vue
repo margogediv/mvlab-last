@@ -7,8 +7,8 @@
         </div>
         <div class="variables-body">
           <div class="variables-body-box">
-            <input type="text" placeholder="Название датчика">
-            <input type="text" placeholder="Название завода">
+            <input type="text" placeholder="Название датчика" v-model="name">
+            <input type="text" placeholder="Название завода" v-model="name">
             <input type="text" placeholder="Название цеха">
             <input type="text" placeholder="Название узла">
           </div>
@@ -31,8 +31,32 @@
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
-name: "AddVariables"
+  name: "AddVariables",
+  data() {
+    return {
+      form: {
+        name: '',
+        map: '',
+      }
+    }
+  },
+  methods: {
+    ...mapActions('settingsGlobal', {
+      updateTypeStructuredTable: 'updateTypeStructuredTable',
+    }),
+    save() {
+      let data = {
+        id: 5,
+        data: this.form
+      }
+
+      this.updateTypeStructuredTable(data);
+      this.$parent.$emit('closeAddForm', 'addFactory')
+    }
+  }
 }
 </script>
 
@@ -68,6 +92,7 @@ name: "AddVariables"
 
   .sensor {
     width: 100%;
+
     .sensor-header {
       width: 100%;
       height: 24px;
@@ -77,6 +102,7 @@ name: "AddVariables"
       align-items: center;
       justify-content: center;
       text-align: center;
+
       .title-header {
         font-weight: 500;
         font-size: 16px;

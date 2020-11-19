@@ -6,23 +6,47 @@
           <div class="title-header">Добавление завода</div>
         </div>
         <div class="attention-body">
-          <input type="text" placeholder="Название завода">
-          <input type="text" placeholder="Местоположение">
+          <input type="text" placeholder="Название завода" v-model="form.name">
+          <input type="text" placeholder="Местоположение" v-model="form.map">
         </div>
         <div class="attention-footer">
-          <button class="btn-center" @click="$parent.$emit('closeVobjectCreated')">Применить</button>
+          <button class="btn-center" @click="save">Применить</button>
         </div>
       </div>
       <button class="btn_icon2">
-        <div class="btn-bg" @click="showAddFactory = true"></div>
+        <div class="btn-bg" @click="$parent.$emit('closeAddForm', 'addFactory')"></div>
       </button>
     </div>
   </div>
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
   name: "AddFactory",
+  data() {
+    return {
+      form: {
+        name: '',
+        map: '',
+      }
+    }
+  },
+  methods: {
+    ...mapActions('settingsGlobal', {
+      updateTypeStructuredTable: 'updateTypeStructuredTable',
+    }),
+    save() {
+      let data = {
+        id : 5,
+        data: this.form
+      }
+
+      this.updateTypeStructuredTable(data);
+      this.$parent.$emit('closeAddForm', 'addFactory')
+    }
+  }
 }
 </script>
 

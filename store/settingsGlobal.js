@@ -5,8 +5,87 @@ export default {
         clientsObject: null,
 
         typeStructured: [],
+        typeStructuredTable: [
+            {
+                id: 1,
+                data: {
+                    title: {
+                        name1: 'Название Резерв1',
+                    },
+                    rows: []
+                }
+            },
+            {
+                id: 2,
+                data: {
+                    title: {
+                        name1: 'Название Резерв1',
+                        name2: 'Название Резерв2',
+                    },
+                    rows: []
+                }
+            },
+            {
+                id: 3,
+                data: {
+                    title: {
+                        name1: 'Название Органищацмм',
+                    },
+                    rows: []
+                }
+            },
+            {
+                id: 4,
+                data: {
+                    title: {
+                        name1: 'Название Предприятие',
+                    },
+                    rows: []
+                }
+            },
+            {
+                id: 5,
+                data: {
+                    title: {
+                        name: 'Название Завод',
+                        map: 'Местоположение',
+                    },
+                    rows: []
+                }
+            },
+            {
+                id: 6,
+                data: {
+                    title: {
+                        name1: 'Название Цех',
+                    },
+                    rows: []
+                }
+            },
+            {
+                id: 7,
+                data: {
+                    title: {
+                        name1: 'Название Узел',
+                    },
+                    rows: []
+                }
+            },
+            {
+                id: 8,
+                data: {
+                    title: {
+                        name1: 'Название Датчик',
+                    },
+                    rows: []
+                }
+            },
+        ]
     }),
     getters: {
+        typeStructuredTable(state) {
+            return state.typeStructuredTable;
+        },
         clientsObject(state) {
             let clientsObject = state.clientsObject;
             if (!clientsObject)
@@ -62,6 +141,9 @@ export default {
         setTypeStructured(state, data) {
             state.typeStructured = data;
         },
+        setTypeStructuredTable(state, option) {
+            state.typeStructuredTable.filter((item => item.id === option.id))[0].data.rows.push(option.data);
+        }
     },
     actions: {
         updateClientsObject(store, option) {
@@ -94,6 +176,9 @@ export default {
             ];
             store.commit('setTypeStructured', data);
         },
+        updateTypeStructuredTable(store, option) {
+            store.commit('setTypeStructuredTable', option);
+        }
 
     },
     strict: process.env.NODE_ENV !== 'production'
