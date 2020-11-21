@@ -18,61 +18,137 @@
 
               <div class="time-smena_iteam">
                 <div class="box-time">
-                  <div class="btn time-data">08:00</div>
-                  <div class="btn time-data">16:00</div>
+                  <el-time-select
+                      placeholder="08:00"
+                      v-model="ranges[0].start"
+                      prefix-icon="false"
+                      :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        }">
+                  </el-time-select>
+                  <el-time-select
+                      placeholder="18:00"
+                      v-model="ranges[0].end"
+                      prefix-icon="false"
+                      :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        minTime: ranges[0].start
+                      }">
+                  </el-time-select>
                 </div>
                 <div class="box-active">
-                  <input id="cb1" class="custom-checkbox" type="checkbox">
+                  <input id="cb1" class="custom-checkbox" type="checkbox" v-model="ranges[0].is_active">
                   <label for="cb1" class="use">Использовать</label>
                   <div
                       class="break"
-                      @click="showTime = !showTime"
-                      :class="arrowRotate"
+                      @click="showBreakForm(0)"
+                      :class="{'turn-arrow': ranges[0].showBreaks}"
                   ></div>
                 </div>
               </div>
               <div class="time-smena_iteam">
                 <div class="box-time">
-                  <div class="btn time-data">16:00</div>
-                  <div class="btn time-data">00:00</div>
+                  <el-time-select
+                      placeholder="16:00"
+                      v-model="ranges[1].start"
+                      prefix-icon="false"
+                      :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        }">
+                  </el-time-select>
+                  <el-time-select
+                      placeholder="00:00"
+                      v-model="ranges[1].end"
+                      prefix-icon="false"
+                      :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        minTime: ranges[1].start
+                      }">
+                  </el-time-select>
                 </div>
                 <div class="box-active">
-                  <input id="cb2" class="custom-checkbox" type="checkbox">
+                  <input id="cb2" class="custom-checkbox" type="checkbox" v-model="ranges[1].is_active">
                   <label for="cb2" class="use">Использовать</label>
                   <div
                       class="break"
-                      @click="showTime = !showTime"
-                      :class="arrowRotate"
+                      @click="showBreakForm(1)"
+                      :class="{'turn-arrow': ranges[1].showBreaks}"
                   ></div>
                 </div>
               </div>
               <div class="time-smena_iteam">
                 <div class="box-time">
-                  <div class="btn time-data">00:00</div>
-                  <div class="btn time-data">08:00</div>
+                  <el-time-select
+                      placeholder="00:00"
+                      v-model="ranges[2].start"
+                      prefix-icon="false"
+                      :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        }">
+                  </el-time-select>
+                  <el-time-select
+                      placeholder="08:00"
+                      v-model="ranges[2].end"
+                      prefix-icon="false"
+                      :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        minTime: ranges[2].start
+                      }">
+                  </el-time-select>
                 </div>
                 <div class="box-active">
-                  <input id="cb3" class="custom-checkbox" type="checkbox">
+                  <input id="cb3" class="custom-checkbox" type="checkbox" v-model="ranges[2].is_active">
                   <label for="cb3" class="use">Использовать</label>
                   <div
                       class="break"
-                      @click="showTime = !showTime"
-                      :class="arrowRotate"
+                      @click="showBreakForm(2)"
+                      :class="{'turn-arrow': ranges[2].showBreaks}"
                   ></div>
                 </div>
               </div>
               <div class="time-smena_iteam">
                 <div class="box-time">
-                  <div class="btn time-data">08:00</div>
-                  <div class="btn time-data">08:00</div>
+                  <el-time-select
+                      placeholder="08:00"
+                      v-model="ranges[3].start"
+                      prefix-icon="false"
+                      :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        }">
+                  </el-time-select>
+                  <el-time-select
+                      placeholder="08:00"
+                      v-model="ranges[3].end"
+                      prefix-icon="false"
+                      :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        minTime: ranges[3].start
+                      }">
+                  </el-time-select>
                 </div>
                 <div class="box-active">
-                  <input id="cb4" class="custom-checkbox" type="checkbox">
+                  <input id="cb4" class="custom-checkbox" type="checkbox" v-model="ranges[3].is_active">
                   <label for="cb4" class="use">Использовать</label>
                   <div
                       class="break"
-                      @click="showTime = !showTime"
-                      :class="arrowRotate"
+                      @click="showBreakForm(3)"
+                      :class="{'turn-arrow': ranges[3].showBreaks}"
                   ></div>
                 </div>
               </div>
@@ -82,58 +158,137 @@
                 <div class="dreak-title">Перерывы</div>
                 <div class="time-smena_iteam section-time">
                   <div class="box-time">
-                    <div class="btn time-data">08:00</div>
-                    <div class="btn time-data">16:00</div>
+                    <el-time-select
+                        placeholder="08:00"
+                        v-model="ranges[currentIndexRange].breaks[0].start"
+                        prefix-icon="false"
+                        :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        }">
+                    </el-time-select>
+                    <el-time-select
+                        placeholder="18:00"
+                        v-model="ranges[currentIndexRange].breaks[0].end"
+                        prefix-icon="false"
+                        :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        minTime: ranges[currentIndexRange].breaks[0].start
+                      }">
+                    </el-time-select>
                   </div>
                   <div class="box-active">
-                    <input id="cb12" class="custom-checkbox" type="checkbox">
+                    <input id="cb12" class="custom-checkbox" type="checkbox"
+                           v-model="ranges[currentIndexRange].breaks[0].is_active">
                     <label for="cb12" class="use">Использовать</label>
+                  </div>
                 </div>
-              </div>
                 <div class="time-smena_iteam section-time">
                   <div class="box-time">
-                    <div class="btn time-data">08:00</div>
-                    <div class="btn time-data">16:00</div>
+                    <el-time-select
+                        placeholder="08:00"
+                        v-model="ranges[currentIndexRange].breaks[1].start"
+                        prefix-icon="false"
+                        :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        }">
+                    </el-time-select>
+                    <el-time-select
+                        placeholder="16:00"
+                        v-model="ranges[currentIndexRange].breaks[1].end"
+                        prefix-icon="false"
+                        :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        minTime: ranges[currentIndexRange].breaks[1].start
+                      }">
+                    </el-time-select>
                   </div>
                   <div class="box-active">
-                    <input id="cb22" class="custom-checkbox" type="checkbox">
+                    <input id="cb22" class="custom-checkbox" type="checkbox"
+                           v-model="ranges[currentIndexRange].breaks[1].is_active">
                     <label for="cb22" class="use">Использовать</label>
                   </div>
                 </div>
                 <div class="time-smena_iteam section-time">
                   <div class="box-time">
-                    <div class="btn time-data">08:00</div>
-                    <div class="btn time-data">16:00</div>
+                    <el-time-select
+                        placeholder="08:00"
+                        v-model="ranges[currentIndexRange].breaks[2].start"
+                        prefix-icon="false"
+                        :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        }">
+                    </el-time-select>
+                    <el-time-select
+                        placeholder="16:00"
+                        v-model="ranges[currentIndexRange].breaks[2].end"
+                        prefix-icon="false"
+                        :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        minTime: ranges[currentIndexRange].breaks[2].start
+                      }">
+                    </el-time-select>
                   </div>
                   <div class="box-active">
-                    <input id="cb32" class="custom-checkbox" type="checkbox">
+                    <input id="cb32" class="custom-checkbox" type="checkbox"
+                           v-model="ranges[currentIndexRange].breaks[2].is_active">
                     <label for="cb32" class="use">Использовать</label>
                   </div>
                 </div>
                 <div class="time-smena_iteam section-time">
                   <div class="box-time">
-                    <div class="btn time-data">08:00</div>
-                    <div class="btn time-data">16:00</div>
+                    <el-time-select
+                        placeholder="08:00"
+                        v-model="ranges[currentIndexRange].breaks[3].start"
+                        prefix-icon="false"
+                        :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        }">
+                    </el-time-select>
+                    <el-time-select
+                        placeholder="16:00"
+                        v-model="ranges[currentIndexRange].breaks[3].end"
+                        prefix-icon="false"
+                        :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:59',
+                        minTime: ranges[currentIndexRange].breaks[3].start
+                      }">
+                    </el-time-select>
                   </div>
                   <div class="box-active">
-                    <input id="cb42" class="custom-checkbox" type="checkbox">
+                    <input id="cb42" class="custom-checkbox" type="checkbox"
+                           v-model="ranges[currentIndexRange].breaks[3].is_active">
                     <label for="cb42" class="use">Использовать</label>
                   </div>
                 </div>
-            </div>
+              </div>
 
+            </div>
+          </div>
+          <div class="workshop-footer">
+            <button class="btn-center" @click="$parent.$emit('closeAddWorkshop')">Применить</button>
           </div>
         </div>
-        <div class="workshop-footer">
-          <button class="btn-center" @click="$parent.$emit('closeVobjectCreated')">Применить</button>
-        </div>
-      </div>
       </div>
       <button class="btn_icon2">
-        <div class="btn-bg" @click="showAddFactory = true"></div>
+        <div class="btn-bg" @click="$parent.$emit('closeAddWorkshop')"></div>
       </button>
     </div>
-  </div>
   </div>
 </template>
 
@@ -144,17 +299,134 @@ export default {
   data() {
     return {
       showTime: false,
+      currentIndexRange: 0,
+      ranges: [
+        {
+          start: null,
+          end: null,
+          is_active: null,
+          showBreaks: false,
+          breaks: [
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            },
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            },
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            },
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            }
+          ]
+        },
+        {
+          start: null,
+          end: null,
+          is_active: null,
+          showBreaks: false,
+          breaks: [
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            },
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            },
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            },
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            }
+          ]
+        },
+        {
+          start: null,
+          end: null,
+          is_active: null,
+          showBreaks: false,
+          breaks: [
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            },
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            },
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            },
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            }
+          ]
+        },
+        {
+          start: null,
+          end: null,
+          is_active: null,
+          showBreaks: false,
+          breaks: [
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            },
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            },
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            },
+            {
+              start: null,
+              end: null,
+              is_active: false,
+            }
+          ]
+        },
+      ],
     }
   },
 
-  computed: {
-    arrowRotate() {
-      let arrow = 'turn-arrow';
-      if (this.showTime === true) {
-        return arrow;
-      }
-      return true;
-    },
+  methods: {
+    showBreakForm(index) {
+      this.currentIndexRange = index;
+      for (let i = 0; i !== index && i < 4; i++)
+        this.ranges[i].showBreaks = false;
+
+      this.ranges[index].showBreaks = !this.ranges[index].showBreaks;
+      this.showTime = this.ranges[index].showBreaks;
+
+    }
   },
 }
 </script>
@@ -270,6 +542,7 @@ export default {
           width: 100%;
           display: flex;
           flex-direction: column;
+
           .time-smena_iteam {
             width: 100%;
             display: flex;
@@ -506,4 +779,21 @@ input[type="checkbox"]:checked + label:after {
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
 }
 
+</style>
+
+<style lang="scss">
+//datetime
+.el-input__inner {
+  width: 100px;
+  height: 24px;
+  font-size: 12px;
+}
+
+.el-popper {
+  margin-top: 6px !important;
+}
+
+.el-picker-panel.time-select.el-popper {
+  z-index: 10;
+}
 </style>

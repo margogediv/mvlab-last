@@ -52,6 +52,10 @@ export default {
             src: "~/plugins/iconify.js",
             ssr: true
         },
+        {
+            src: "~/plugins/element-ui",
+            ssr: true
+        },
 
     ],
     /*
@@ -64,8 +68,12 @@ export default {
     modules: [
         '@nuxtjs/axios',
         '@nuxtjs/auth',
-        'nuxt-webfontloader'
+        'nuxt-webfontloader',
     ],
+    // elementUI: {
+    //     components: ['TimeSelect'],
+    //     locale: 'ru',
+    // },
     axios: {
         baseURL: 'http://localhost/ ',
         // proxy: true,

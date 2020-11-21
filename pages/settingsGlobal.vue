@@ -156,6 +156,10 @@ export default {
 
     this.getTypeStructured();
 
+    this.$on('closeAddWorkshop', () => {
+      this.showAddForm.addWorkshop = false;
+    });
+
     this.$on('closeVobjectCreated', () => {
       this.showCreated = false;
     });
@@ -187,7 +191,7 @@ export default {
       currentTab: 1,
       showAddForm: {
         addFactory: false,
-        addWorkshop: true,
+        addWorkshop: false,
         addKnot: false,
         addSensor: false,
         addVariables: false,
