@@ -57,7 +57,10 @@ export default {
                 id: 6,
                 data: {
                     title: {
-                        name1: 'Название Цех',
+                        workShop: 'Название Цех',
+                        factory: 'Название Завода',
+                        smena: 'Смены',
+                        break: 'Перерывы',
                     },
                     rows: []
                 }

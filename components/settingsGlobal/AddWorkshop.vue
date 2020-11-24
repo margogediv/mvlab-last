@@ -7,8 +7,8 @@
         </div>
         <div class="workshop-body">
           <div class="first-block">
-            <input type="text" placeholder="Название цеха">
-            <input type="text" placeholder="Название завода">
+            <input type="text" v-model="workShop" placeholder="Название цеха">
+            <input type="text" v-model="factory" placeholder="Название завода">
           </div>
 
           <!--Смена-->
@@ -281,7 +281,7 @@
             </div>
           </div>
           <div class="workshop-footer">
-            <button class="btn-center" @click="$parent.$emit('closeAddWorkshop')">Применить</button>
+            <button class="btn-center" @click="save">Применить</button>
           </div>
         </div>
       </div>
@@ -300,6 +300,8 @@ export default {
     return {
       showTime: false,
       currentIndexRange: 0,
+      workShop: null,
+      factory: null,
       ranges: [
         {
           start: null,
@@ -426,6 +428,14 @@ export default {
       this.ranges[index].showBreaks = !this.ranges[index].showBreaks;
       this.showTime = this.ranges[index].showBreaks;
 
+    },
+    save() {
+      let data = {
+        workShop: 'Название Цех',
+        factory: 'Название Завода',
+        smena: 'Смены',
+        break: 'Перерывы',
+      }
     }
   },
 }
