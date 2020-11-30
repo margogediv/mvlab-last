@@ -142,7 +142,6 @@
 <script>
 import VobjectCreated from "@/components/VobjectCreated";
 import DelObject from "@/components/settingsGlobal/DelObject";
-import AddVariables from "@/components/settingsGlobal/AddVariables";
 
 import AddReserv1 from "@/components/settingsGlobal/AddReserv1";
 import AddReserv2 from "@/components/settingsGlobal/AddReserv2";
@@ -152,6 +151,7 @@ import AddFactory from "@/components/settingsGlobal/AddFactory";
 import AddWorkshop from "@/components/settingsGlobal/AddWorkshop";
 import AddKnot from "@/components/settingsGlobal/AddKnot";
 import AddSensor from "@/components/settingsGlobal/AddSensor";
+import AddVariables from "@/components/settingsGlobal/AddVariables";
 
 import {mapGetters} from "vuex";
 import {mapActions} from "vuex";
@@ -296,7 +296,6 @@ export default {
       this.showAddForm.addWorkshop = false;
       this.showAddForm.addKnot = false;
       this.showAddForm.addSensor = false;
-
       this.showAddForm.addVariables = false;
 
       this.showAddForm[this.currentTabName] = true;

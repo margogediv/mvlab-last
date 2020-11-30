@@ -7,24 +7,62 @@
         </div>
         <div class="variables-body">
           <div class="variables-body-box">
-            <input type="text" placeholder="Название датчика" v-model="name">
-            <input type="text" placeholder="Название завода" v-model="name">
-            <input type="text" placeholder="Название цеха">
-            <input type="text" placeholder="Название узла">
+            <input type="text" placeholder="Имя переменной" v-model="form.name">
+            <select type="text">
+              <option value="Название резерва1">Название резерва1</option>
+            </select>
+            <select type="text">
+              <option value="Название резерва2">Название резерва2</option>
+            </select>
+            <select type="text">
+              <option value="Название организации">Название организации</option>
+            </select>
+            <select type="text">
+              <option value="Название предприятия">Название предприятия</option>
+            </select>
+            <select type="text">
+              <option value="Название завода">Название завода</option>
+            </select>
+            <select type="text">
+              <option value="Название цеха">Название цеха</option>
+            </select>
+            <select type="text">
+              <option value="Название узла">Название узла</option>
+            </select>
+            <select type="text">
+              <option value="Название датчика">Название датчика</option>
+            </select>
           </div>
-          <input type="text" placeholder="Обозначение на схемах">
-
+          <div class="variables-body-box">
+            <select type="text">
+              <option value="Название соединения">Название соединения</option>
+            </select>
+            <select type="text">
+              <option value="Название переменной">Название переменной</option>
+            </select>
+            <select type="text">
+              <option value="Единицы измерения">Единицы измерения</option>
+              <option>бит</option>
+              <option>грамм</option>
+              <option>килограмм</option>
+              <option>тонн</option>
+              <option>миллиметр</option>
+              <option>метр</option>
+              <option>ампер</option>
+              <option>ом</option>
+              <option>цельсий</option>
+              <option>фаренгейт</option>
+            </select>
+          </div>
+          <div class="variables-body-box-row">
+          </div>
         </div>
-        <div class="sensor-footer">
-          <div
-              class="btn-center">
-            <!--            @click="$parent.$emit('changeshowDelObject')"-->
-            Применить
-          </div>
+        <div class="variables-footer">
+          <button class="btn-center" @click="save">Применить</button>
         </div>
       </div>
       <button class="btn_icon2">
-        <div class="btn-bg" @click="showAddFactory = true"></div>
+        <div class="btn-bg" @click="$parent.$emit('closeAddForm', 'addVariables')"></div>
       </button>
     </div>
   </div>
@@ -39,7 +77,6 @@ export default {
     return {
       form: {
         name: '',
-        map: '',
       }
     }
   },
@@ -49,12 +86,12 @@ export default {
     }),
     save() {
       let data = {
-        id: 5,
+        id: state.typeStructured.length + 1,
         data: this.form
       }
 
       this.updateTypeStructuredTable(data);
-      this.$parent.$emit('closeAddForm', 'addFactory')
+      this.$parent.$emit('closeAddForm', 'addVariables')
     }
   }
 }
@@ -90,10 +127,10 @@ export default {
   background: #F7F8FA;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
 
-  .sensor {
+  .variables {
     width: 100%;
 
-    .sensor-header {
+    .variables-header {
       width: 100%;
       height: 24px;
       padding-top: 3px;
@@ -114,7 +151,7 @@ export default {
       }
     }
 
-    .sensor-body {
+    .variables-body {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -124,7 +161,7 @@ export default {
       font-size: 12px;
       line-height: 15px;
 
-      .sensor-body-box {
+      .variables-body-box {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -134,7 +171,7 @@ export default {
         font-size: 12px;
         line-height: 15px;
 
-        input {
+        select, option {
           width: 376px;
           height: 24px;
 
@@ -147,6 +184,35 @@ export default {
           border: 1px solid #9098AF;
           box-sizing: border-box;
           border-radius: 4px;
+
+          font-weight: normal;
+          font-size: 12px;
+
+          color: #9098AF;
+          background: #F7F8FA;
+
+          outline: none;
+        }
+
+        input {
+          width: 376px;
+          height: 24px;
+
+          margin-bottom: 12px;
+          padding: 3px 9px;
+
+          display: flex;
+          align-items: center;
+
+          border: 1px solid #9098AF;
+          box-sizing: border-box;
+          border-radius: 4px;
+          background: #F7F8FA;
+
+          font-weight: normal;
+          font-size: 12px;
+
+          color: #9098AF;
 
           outline: none;
         }
@@ -171,6 +237,7 @@ export default {
         border: 1px solid #9098AF;
         box-sizing: border-box;
         border-radius: 4px;
+        background: #F7F8FA;
 
         outline: none;
       }
@@ -183,7 +250,7 @@ export default {
       }
     }
 
-    .sensor-footer {
+    .variables-footer {
       width: 100%;
       height: 36px;
       display: flex;
