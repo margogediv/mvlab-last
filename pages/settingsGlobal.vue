@@ -127,6 +127,10 @@
     <delObject v-if="showDelObject" :clientObject="clientsObject"></delObject>
     <VobjectCreated v-if="showCreated" v-on:changeShow="changeshowCreated"></VobjectCreated>
 
+    <addReserv1 v-if="showAddForm.addReserv1"></addReserv1>
+    <addReserv2 v-if="showAddForm.addReserv2"></addReserv2>
+    <addOrganization v-if="showAddForm.addOrganization"></addOrganization>
+    <addCompany v-if="showAddForm.addCompany"></addCompany>
     <addFactory v-if="showAddForm.addFactory"></addFactory>
     <addWorkshop v-if="showAddForm.addWorkshop"></addWorkshop>
     <addKnot v-if="showAddForm.addKnot"></addKnot>
@@ -137,12 +141,17 @@
 
 <script>
 import VobjectCreated from "@/components/VobjectCreated";
+import DelObject from "@/components/settingsGlobal/DelObject";
+import AddVariables from "@/components/settingsGlobal/AddVariables";
+
+import AddReserv1 from "@/components/settingsGlobal/AddReserv1";
+import AddReserv2 from "@/components/settingsGlobal/AddReserv2";
+import AddOrganization from "@/components/settingsGlobal/AddOrganization";
+import AddCompany from "@/components/settingsGlobal/AddCompany";
 import AddFactory from "@/components/settingsGlobal/AddFactory";
 import AddWorkshop from "@/components/settingsGlobal/AddWorkshop";
-import DelObject from "@/components/settingsGlobal/DelObject";
 import AddKnot from "@/components/settingsGlobal/AddKnot";
 import AddSensor from "@/components/settingsGlobal/AddSensor";
-import AddVariables from "@/components/settingsGlobal/AddVariables";
 
 import {mapGetters} from "vuex";
 import {mapActions} from "vuex";
@@ -178,9 +187,13 @@ export default {
     delObject: DelObject,
     addFactory: AddFactory,
     addWorkshop: AddWorkshop,
-    addKnot: AddKnot,
     addSensor: AddSensor,
     addVariables: AddVariables,
+    addReserv1: AddReserv1,
+    addReserv2: AddReserv2,
+    addOrganization: AddOrganization,
+    addCompany: AddCompany,
+    addKnot: AddKnot,
   },
 
   data() {
@@ -190,6 +203,10 @@ export default {
       showCreated: false,
       currentTab: 1,
       showAddForm: {
+        addReserv1: false,
+        addReserv2: false,
+        addOrganization: false,
+        addCompany: false,
         addFactory: false,
         addWorkshop: false,
         addKnot: false,
@@ -216,6 +233,18 @@ export default {
       })[0];
     },
     currentTabName() {
+      if(this.currentTab === 1)
+        return 'addReserv1';
+
+      if(this.currentTab === 2)
+        return 'addReserv2';
+
+      if(this.currentTab === 3)
+        return 'addOrganization';
+
+      if(this.currentTab === 4)
+        return 'addCompany';
+
       if(this.currentTab === 5)
         return 'addFactory';
 
@@ -259,6 +288,10 @@ export default {
       this.updateTypeStructuredTable(data);
     },
     showFormAdd() {
+      this.showAddForm.addReserv1 = false;
+      this.showAddForm.addReserv2 = false;
+      this.showAddForm.addOrganization = false;
+      this.showAddForm.addCompany = false;
       this.showAddForm.addFactory = false;
       this.showAddForm.addWorkshop = false;
       this.showAddForm.addKnot = false;

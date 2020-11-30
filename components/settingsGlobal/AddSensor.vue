@@ -8,31 +8,68 @@
         <div class="sensor-body">
           <div class="sensor-body-box">
             <input type="text" placeholder="Название датчика">
-            <input type="text" placeholder="Название завода">
-            <input type="text" placeholder="Название цеха">
-            <input type="text" placeholder="Название узла">
+            <select type="text">
+              <option value="Название резерва1">Название резерва1</option>
+            </select>
+            <select type="text">
+              <option value="Название резерва2">Название резерва2</option>
+            </select>
+            <select type="text">
+              <option value="Название организации">Название организации</option>
+            </select>
+            <select type="text">
+              <option value="Название предприятия">Название предприятия</option>
+            </select>
+            <select type="text">
+              <option value="Название предприятия">Название завода</option>
+            </select>
+            <select type="text">
+              <option value="Название предприятия">Название цеха</option>
+            </select>
+            <select type="text">
+              <option value="Название предприятия">Название узла</option>
+            </select>
           </div>
           <input type="text" placeholder="Обозначение на схемах">
 
         </div>
         <div class="sensor-footer">
-          <div
-              class="btn-center">
-            <!--            @click="$parent.$emit('changeshowDelObject')"-->
-            Применить
-          </div>
+          <button class="btn-center" @click="save">Применить</button>
         </div>
       </div>
       <button class="btn_icon2">
-        <div class="btn-bg" @click="showAddFactory = true"></div>
+        <div class="btn-bg" @click="$parent.$emit('closeAddForm', 'addSensor')"></div>
       </button>
     </div>
   </div>
 </template>
 
 <script>
+import {mapActions} from "vuex";
+
 export default {
-name: "AddSensor"
+  name: "AddSensor",
+  data() {
+    return {
+      form: {
+        name: '',
+      }
+    }
+  },
+  methods: {
+    ...mapActions('settingsGlobal', {
+      updateTypeStructuredTable: 'updateTypeStructuredTable',
+    }),
+    save() {
+      let data = {
+        id : 8,
+        data: this.form
+      }
+
+      this.updateTypeStructuredTable(data);
+      this.$parent.$emit('closeAddForm', 'addSensor')
+    }
+  }
 }
 </script>
 
@@ -103,12 +140,12 @@ name: "AddSensor"
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-bottom: 24px;
+        margin-bottom: 12px;
 
         font-size: 12px;
         line-height: 15px;
 
-        input {
+        select, option {
           width: 376px;
           height: 24px;
 
@@ -121,6 +158,33 @@ name: "AddSensor"
           border: 1px solid #9098AF;
           box-sizing: border-box;
           border-radius: 4px;
+
+          font-weight: normal;
+          font-size: 12px;
+
+          color: #9098AF;
+
+          outline: none;
+        }
+
+        input {
+          width: 376px;
+          height: 24px;
+
+          margin-bottom: 12px;
+          padding: 3px 9px;
+
+          display: flex;
+          align-items: center;
+
+          border: 1px solid #9098AF;
+          box-sizing: border-box;
+          border-radius: 4px;
+
+          font-weight: normal;
+          font-size: 12px;
+
+          color: #9098AF;
 
           outline: none;
         }

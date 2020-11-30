@@ -3,27 +3,12 @@
     <div class="modal-created">
       <div class="attention-close">
         <div class="attention-header">
-          <div class="title-header">Добавление узла</div>
+          <div class="title-header">Добавление резерв2</div>
         </div>
         <div class="attention-body">
-          <input type="text" placeholder="Название узла" v-model="form.name">
-          <select type="text">
+          <input type="text" placeholder="Название резерв2" v-model="form.name">
+          <select v-model="form.reserv1">
             <option value="Название резерва1">Название резерва1</option>
-          </select>
-          <select type="text">
-            <option value="Название резерва2">Название резерва2</option>
-          </select>
-          <select type="text">
-            <option value="Название организации">Название организации</option>
-          </select>
-          <select type="text">
-            <option value="Название предприятия">Название предприятия</option>
-          </select>
-          <select type="text">
-            <option value="Название предприятия">Название завода</option>
-          </select>
-          <select type="text">
-            <option value="Название предприятия">Название цеха</option>
           </select>
         </div>
         <div class="attention-footer">
@@ -31,7 +16,7 @@
         </div>
       </div>
       <button class="btn_icon2">
-        <div class="btn-bg" @click="$parent.$emit('closeAddForm', 'addKnot')"></div>
+        <div class="btn-bg" @click="$parent.$emit('closeAddForm', 'addReserv2')"></div>
       </button>
     </div>
   </div>
@@ -41,11 +26,12 @@
 import {mapActions} from "vuex";
 
 export default {
-  name: "AddKnot",
+  name: "AddReserv2",
   data() {
     return {
       form: {
         name: '',
+        reserv1: '',
       }
     }
   },
@@ -55,17 +41,16 @@ export default {
     }),
     save() {
       let data = {
-        id : 7,
+        id : 2,
         data: this.form
       }
 
       this.updateTypeStructuredTable(data);
-      this.$parent.$emit('closeAddForm', 'addKnot')
+      this.$parent.$emit('closeAddForm', 'addReserv2')
     }
   }
 }
 </script>
-
 <style lang="scss" scoped>
 
 .modal-created {

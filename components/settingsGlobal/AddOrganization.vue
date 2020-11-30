@@ -3,27 +3,15 @@
     <div class="modal-created">
       <div class="attention-close">
         <div class="attention-header">
-          <div class="title-header">Добавление узла</div>
+          <div class="title-header">Добавление организации</div>
         </div>
         <div class="attention-body">
-          <input type="text" placeholder="Название узла" v-model="form.name">
-          <select type="text">
+          <input type="text" placeholder="Название организации" v-model="form.name">
+          <select v-model="form.reserv1">
             <option value="Название резерва1">Название резерва1</option>
           </select>
-          <select type="text">
+          <select type="text" v-model="form.reserv2">
             <option value="Название резерва2">Название резерва2</option>
-          </select>
-          <select type="text">
-            <option value="Название организации">Название организации</option>
-          </select>
-          <select type="text">
-            <option value="Название предприятия">Название предприятия</option>
-          </select>
-          <select type="text">
-            <option value="Название предприятия">Название завода</option>
-          </select>
-          <select type="text">
-            <option value="Название предприятия">Название цеха</option>
           </select>
         </div>
         <div class="attention-footer">
@@ -31,7 +19,7 @@
         </div>
       </div>
       <button class="btn_icon2">
-        <div class="btn-bg" @click="$parent.$emit('closeAddForm', 'addKnot')"></div>
+        <div class="btn-bg" @click="$parent.$emit('closeAddForm', 'addOrganization')"></div>
       </button>
     </div>
   </div>
@@ -41,11 +29,13 @@
 import {mapActions} from "vuex";
 
 export default {
-  name: "AddKnot",
+  name: "AddOrganization",
   data() {
     return {
       form: {
         name: '',
+        reserv1: '',
+        reserv2: '',
       }
     }
   },
@@ -55,12 +45,12 @@ export default {
     }),
     save() {
       let data = {
-        id : 7,
+        id : 3,
         data: this.form
       }
 
       this.updateTypeStructuredTable(data);
-      this.$parent.$emit('closeAddForm', 'addKnot')
+      this.$parent.$emit('closeAddForm', 'addOrganization')
     }
   }
 }

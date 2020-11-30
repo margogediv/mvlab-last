@@ -8,7 +8,21 @@
         <div class="workshop-body">
           <div class="first-block">
             <input type="text" v-model="workShop" placeholder="Название цеха">
-            <input type="text" v-model="factory" placeholder="Название завода">
+            <select type="text">
+              <option value="Название резерва1">Название резерва1</option>
+            </select>
+            <select type="text">
+              <option value="Название резерва2">Название резерва2</option>
+            </select>
+            <select type="text">
+              <option value="Название организации">Название организации</option>
+            </select>
+            <select type="text">
+              <option value="Название предприятия">Название предприятия</option>
+            </select>
+            <select type="text">
+              <option value="Название предприятия">Название завода</option>
+            </select>
           </div>
 
           <!--Смена-->
@@ -505,7 +519,7 @@ export default {
         font-size: 12px;
         line-height: 15px;
 
-        input {
+        select, option {
           width: 376px;
           height: 24px;
 
@@ -519,6 +533,33 @@ export default {
           box-sizing: border-box;
           border-radius: 4px;
 
+          font-weight: normal;
+          font-size: 12px;
+
+          color: #9098AF;
+
+          outline: none;
+        }
+
+        input {
+          width: 376px;
+          height: 24px;
+
+          margin-bottom: 12px;
+          padding: 3px 9px;
+
+          display: flex;
+          align-items: center;
+
+          border: 1px solid #9098AF;
+          box-sizing: border-box;
+          border-radius: 4px;
+
+          font-weight: normal;
+          font-size: 12px;
+
+          color: #9098AF;
+
           outline: none;
         }
 
@@ -527,6 +568,40 @@ export default {
           font-size: 12px;
 
           color: #9098AF;
+        }
+
+        .box {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 12px;
+
+          font-size: 12px;
+          line-height: 15px;
+
+          .select {
+            position: relative;
+
+            option[disabled="disabled"] {
+              background: #e1dbdb;
+            }
+
+            &::before {
+              content: "";
+              display: block;
+              background-image: url('~assets/svg/setting/select_arrow.svg');
+              background-repeat: no-repeat;
+              background-size: 100%;
+              width: 10px;
+              height: 6px;
+              position: absolute;
+              top: 50%;
+              right: 20px;
+              transform: translateY(-50%);
+              z-index: 1;
+            }
+          }
         }
       }
 
