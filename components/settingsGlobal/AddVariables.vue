@@ -69,7 +69,7 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "AddVariables",
@@ -77,6 +77,7 @@ export default {
     return {
       form: {
         name: '',
+        factory: '',
       }
     }
   },
@@ -93,6 +94,11 @@ export default {
       this.updateTypeStructuredTable(data);
       this.$parent.$emit('closeAddForm', 'addVariables')
     }
+  },
+  computed: {
+    ...mapGetters('settingsGlobal', {
+      factories: 'factories',
+    }),
   }
 }
 </script>

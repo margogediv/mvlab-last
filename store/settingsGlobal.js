@@ -83,6 +83,15 @@ export default {
                     rows: []
                 }
             },
+            {
+                id: 9,
+                data: {
+                    title: {
+                        name: 'Имя переменной',
+                    },
+                    rows: []
+                }
+            },
         ]
     }),
     getters: {
@@ -108,7 +117,7 @@ export default {
             });
 
             newArr.push({
-                id: state.typeStructured.length + 1,
+                id: 9,
                 value: 'Переменные'
             });
 
@@ -136,6 +145,9 @@ export default {
 
             return array;
         },
+        factories(state) {
+            return state.typeStructuredTable.filter((item => item.id === 5))[0].data.rows;
+        }
     },
     mutations: {
         setClientsObject(state, data) {
