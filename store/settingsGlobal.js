@@ -1,3 +1,5 @@
+import de from "element-ui/src/locale/lang/de";
+
 export default {
     namespaced: true,
 
@@ -8,91 +10,194 @@ export default {
         typeStructuredTable: [
             {
                 id: 1,
-                data: {
-                    title: {
-                        name1: 'Название Резерв1',
-                    },
-                    rows: []
-                }
+                key: 'reserves1',
+                table: {
+                    name: 'Название Резерв1',
+                },
             },
             {
                 id: 2,
-                data: {
-                    title: {
-                        name1: 'Название Резерв1',
-                        name2: 'Название Резерв2',
-                    },
-                    rows: []
-                }
+                key: 'reserves2',
+                table: {
+                    name: 'Название Резерв2',
+                    reserv1: 'Название Резерв2',
+                },
             },
             {
                 id: 3,
-                data: {
-                    title: {
-                        name1: 'Название Органищацмм',
-                    },
-                    rows: []
-                }
+                key: 'organisations',
+                table: {
+                    name1: 'Название Органищацмм',
+                },
             },
             {
                 id: 4,
-                data: {
-                    title: {
-                        name1: 'Название Предприятие',
-                    },
-                    rows: []
-                }
+                key: 'companies',
+                table: {
+                    name: 'Название Предприятие',
+                },
             },
             {
                 id: 5,
-                data: {
-                    title: {
-                        name: 'Название Завод',
-                        map: 'Местоположение',
-                    },
-                    rows: []
-                }
+                key: 'factories',
+                table: {
+                    name: 'Название Завод',
+                    map: 'Местоположение',
+                },
             },
             {
                 id: 6,
-                data: {
-                    title: {
-                        workShop: 'Название Цех',
-                        factory: 'Название Завода',
-                        smena: 'Смены',
-                        break: 'Перерывы',
-                    },
-                    rows: []
-                }
+                key: 'workshops',
+                table: {
+                    name: 'Название Цех',
+                    factory: 'Название Завода',
+                    smena: 'Смены',
+                    break: 'Перерывы',
+                },
             },
             {
                 id: 7,
-                data: {
-                    title: {
-                        name1: 'Название Узел',
-                    },
-                    rows: []
-                }
+                key: 'knots',
+                table: {
+                    name: 'Название Узел',
+                },
             },
             {
                 id: 8,
-                data: {
-                    title: {
-                        name1: 'Название Датчик',
-                    },
-                    rows: []
-                }
+                key: 'sensors',
+                table: {
+                    name: 'Название Датчик',
+                },
             },
             {
                 id: 9,
-                data: {
-                    title: {
-                        name: 'Имя переменной',
-                    },
-                    rows: []
-                }
+                key: 'variables',
+                table: {
+                    name: 'Имя переменной',
+                },
             },
-        ]
+        ],
+        reserves1: [
+            {
+                id: 1,
+                name: 'Резерв1',
+            }
+        ],
+        reserves2: [
+            {
+                id: 1,
+                name: 'Резерв2',
+                reserv1_id: 1,
+            }
+        ],
+        organisations: [
+            {
+                id: 1,
+                name: 'Организация 1',
+                reserv1_id: 1,
+                reserv2_id: 1,
+            },
+            {
+                id: 2,
+                name: 'Организация 2',
+                reserv1_id: 1,
+                reserv2_id: 1,
+            }
+        ],
+        companies: [
+            {
+                id: 1,
+                name: 'Предприятие 1',
+                reserv1_id: 1,
+                reserv2_id: 1,
+                organisation_id: 1,
+            },
+            {
+                id: 2,
+                name: 'Предприятие 2',
+                reserv1_id: 1,
+                reserv2_id: 1,
+                organisation_id: 1,
+            }
+        ],
+        factories: [
+            {
+                id: 1,
+                name: 'Завод 1',
+                reserv1_id: 1,
+                reserv2_id: 1,
+                organisation_id: 1,
+                company_id: 1,
+            },
+            {
+                id: 2,
+                name: 'Завод 2',
+                reserv1_id: 1,
+                reserv2_id: 1,
+                organisation_id: 1,
+                company_id: 1,
+            }
+        ],
+        workshops: [],
+        knots: [
+            {
+                id: 1,
+                name: 'Узел 1',
+                reserv1_id: 1,
+                reserv2_id: 1,
+                organisation_id: 1,
+                company_id: 1,
+                factory_id: 1,
+                workShop_id: 1,
+            },
+            {
+                id: 2,
+                name: 'Узел 2',
+                reserv1_id: 1,
+                reserv2_id: 1,
+                organisation_id: 1,
+                company_id: 1,
+                factory_id: 1,
+                workShop_id: 1,
+            },
+        ],
+        sensors: [
+            {
+                id: 1,
+                name: 'Датчик 1',
+                reserv1_id: 1,
+                reserv2_id: 1,
+                organisation_id: 1,
+                company_id: 1,
+                factory_id: 1,
+                knot_id: 1,
+                workShop_id: 1,
+            },
+            {
+                id: 2,
+                name: 'Датчик 2',
+                reserv1_id: 1,
+                reserv2_id: 1,
+                organisation_id: 1,
+                company_id: 1,
+                factory_id: 1,
+                knot_id: 1,
+                workShop_id: 1,
+            }
+        ],
+        variables: [
+            {
+                id: 1,
+                name: 'Переменная',
+                reserv1_id: 1,
+                reserv2_id: 1,
+                organisation_id: 1,
+                company_id: 1,
+                factory_id: 1,
+                knot_id: 1,
+                workShop_id: 1,
+            }
+        ],
     }),
     getters: {
         typeStructuredTable(state) {
@@ -145,8 +250,43 @@ export default {
 
             return array;
         },
+        reserves1(state) {
+            return state.reserves1;
+        },
+        reserves2(state) {
+            return state.reserves2;
+        },
+        organisations(state) {
+            return state.organisations;
+        },
+        companies(state) {
+            return state.companies;
+        },
         factories(state) {
-            return state.typeStructuredTable.filter((item => item.id === 5))[0].data.rows;
+
+            return state.factories;
+        },
+        workshops(state) {
+            let workshops = state.workshops;
+            if (localStorage.getItem('workshops'))
+                workshops = JSON.parse(localStorage.getItem('workshops'));
+
+            let newObj = JSON.parse(JSON.stringify(workshops));
+            newObj.map((item) => {
+                item.factory = state.factories.filter(i => i.id === item.factory_id)[0].name;
+
+                return item;
+            });
+            return newObj;
+        },
+        knots(state) {
+            return state.knots;
+        },
+        sensors(state) {
+            return state.sensors;
+        },
+        variables(state) {
+            return state.variables;
         }
     },
     mutations: {
@@ -158,6 +298,9 @@ export default {
         },
         setTypeStructuredTable(state, option) {
             state.typeStructuredTable.filter((item => item.id === option.id))[0].data.rows.push(option.data);
+        },
+        setWorkshop(state, option) {
+            state.workshops.push(option);
         }
     },
     actions: {
@@ -193,6 +336,18 @@ export default {
         },
         updateTypeStructuredTable(store, option) {
             store.commit('setTypeStructuredTable', option);
+        },
+        updateWorkshop(store, option) {
+            option.id = new Date().getTime();
+            let workshops = [];
+            if(localStorage.getItem('workshops'))
+                workshops = JSON.parse(localStorage.getItem('workshops'));
+            else if(this.state.settingsGlobal.workshops)
+                workshops = this.state.settingsGlobal.workshops;
+            debugger
+            workshops.push(option);
+            localStorage.setItem('workshops', JSON.stringify(workshops));
+            store.commit('setWorkshop', option);
         }
 
     },

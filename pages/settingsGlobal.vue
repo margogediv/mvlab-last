@@ -109,15 +109,15 @@
       <table>
         <thead>
         <tr class="table-head">
-          <th v-for="(value, key) in filterTypeStructuredTable.data.title">
+          <th v-for="(value, key) in createTable.thead">
             {{ value }}
           </th>
         </tr>
         </thead>
         <tbody>
-        <tr class="table-body" v-for="row in filterTypeStructuredTable.data.rows">
+        <tr class="table-body" v-for="row in createTable.tbody">
           <td v-for="(value, key) in row">
-            {{ value }}
+            <input readonly class="input-td" type="text" v-bind:value="value"/>
           </td>
         </tr>
         </tbody>
@@ -180,6 +180,9 @@ export default {
     this.$on('closeAddForm', (name) => {
       this.showAddForm[name] = false;
     });
+
+    // this.currentTab = this.clientsObject.currentStructureObject[0].id;
+    this.currentTab = 6;
   },
 
   components: {
@@ -201,7 +204,7 @@ export default {
       search: "",
       showDelObject: false,
       showCreated: false,
-      currentTab: 1,
+      currentTab: 6,
       showAddForm: {
         addReserv1: false,
         addReserv2: false,
@@ -222,42 +225,52 @@ export default {
       typeStructured: 'typeStructured',
       typeStructuredTable: 'typeStructuredTable',
     }),
-    filteredList() {
-      // return this.clientsObject.filter((object) => {
-      //   return object.name_object.toLowerCase().includes(this.search.toLowerCase());
-      // });
-    },
-    filterTypeStructuredTable() {
-      return this.typeStructuredTable.filter((item) => {
+    createTable() {
+      let structured = this.typeStructuredTable.filter((item) => {
         return item.id === this.currentTab;
       })[0];
+
+      let tbody = [];
+      this.$store.getters['settingsGlobal/' + structured.key].forEach((item) => {
+        let row = {};
+
+        for (let key in structured.table)
+          row[key] = item[key];
+
+        tbody.push(row);
+      });
+
+      return {
+        thead: structured.table,
+        tbody: tbody,
+      };
     },
     currentTabName() {
-      if(this.currentTab === 1)
+      if (this.currentTab === 1)
         return 'addReserv1';
 
-      if(this.currentTab === 2)
+      if (this.currentTab === 2)
         return 'addReserv2';
 
-      if(this.currentTab === 3)
+      if (this.currentTab === 3)
         return 'addOrganization';
 
-      if(this.currentTab === 4)
+      if (this.currentTab === 4)
         return 'addCompany';
 
-      if(this.currentTab === 5)
+      if (this.currentTab === 5)
         return 'addFactory';
 
-      if(this.currentTab === 6)
+      if (this.currentTab === 6)
         return 'addWorkshop';
 
-      if(this.currentTab === 7)
+      if (this.currentTab === 7)
         return 'addKnot';
 
-      if(this.currentTab === 8)
+      if (this.currentTab === 8)
         return 'addSensor';
 
-      if(this.currentTab === 9)
+      if (this.currentTab === 9)
         return 'addVariables';
 
       return '';
@@ -495,6 +508,18 @@ export default {
   padding-left: 24px;
   padding-right: 24px;
   color: #4a627a;
+
+  table {
+    width: 100%;
+
+    thead {
+      width: 100%;
+    }
+
+    tbody {
+      width: 100%;
+    }
+  }
 }
 
 tr {
