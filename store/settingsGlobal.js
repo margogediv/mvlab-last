@@ -79,20 +79,7 @@ export default {
         ],
         reserves1: [],
         reserves2: [],
-        organisations: [
-            {
-                id: 1,
-                name: 'Организация 1',
-                reserv1_id: 1,
-                reserv2_id: 1,
-            },
-            {
-                id: 2,
-                name: 'Организация 2',
-                reserv1_id: 1,
-                reserv2_id: 1,
-            }
-        ],
+        organisations: [],
         companies: [
             {
                 id: 1,
@@ -256,8 +243,16 @@ export default {
                 return item;
             })
         },
-        organisations(state) {
-            return state.organisations;
+        organisations(state, getters) {
+            let organisations = JSON.parse(JSON.stringify(state.organisations));
+            if (localStorage.getItem('organisations'))
+                organisations = JSON.parse(localStorage.getItem('organisations'));
+
+            return organisations.map(item => {
+                item.reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id)[0].name;
+                item.reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id)[0].name;
+                return item;
+            })
         },
         companies(state) {
             return state.companies;
@@ -329,6 +324,16 @@ export default {
                 reserves2.push(option);
 
             state.reserves2 = reserves2;
+        },
+        setOrganisations(state, option) {
+            let organisations = JSON.parse(localStorage.getItem('organisations'));
+            if (option.id && organisations.filter(item => item.id === option.id).length)
+                for(let key in organisations.filter(item => item.id === option.id)[0])
+                    organisations.filter(item => item.id === option.id)[0][key] = option[key];
+            else
+                organisations.push(option);
+
+            state.organisations = organisations;
         },
         setWorkshop(state, option) {
             let workshops = JSON.parse(localStorage.getItem('workshops'));
@@ -410,6 +415,24 @@ export default {
 
             localStorage.setItem('reserves2', JSON.stringify(reserves2));
             store.commit('setReserve2', option);
+        },
+        updateOrganisations(store, option) {
+            let organisations = [];
+            if (localStorage.getItem('organisations'))
+                organisations = JSON.parse(localStorage.getItem('organisations'));
+            else if (this.state.settingsGlobal.organisations)
+                organisations = JSON.parse(JSON.stringify(this.state.settingsGlobal.organisations));
+
+            if (option.id) {
+                for(let key in organisations.filter(item => item.id === option.id)[0])
+                    organisations.filter(item => item.id === option.id)[0][key] = option[key];
+            } else {
+                option.id = new Date().getTime();
+                organisations.push(option);
+            }
+
+            localStorage.setItem('organisations', JSON.stringify(organisations));
+            store.commit('setOrganisations', option);
         },
         updateWorkshop(store, option) {
             let workshops = [];

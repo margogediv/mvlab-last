@@ -43,7 +43,7 @@ export default {
     return {
       form: {
         name: '',
-        reserve1: null,
+        reserve1: 0,
       }
     }
   },
