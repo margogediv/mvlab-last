@@ -77,12 +77,7 @@ export default {
                 },
             },
         ],
-        reserves1: [
-            {
-                id: 1,
-                name: 'Резерв1',
-            }
-        ],
+        reserves1: [],
         reserves2: [
             {
                 id: 1,
