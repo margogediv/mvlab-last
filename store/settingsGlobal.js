@@ -246,7 +246,11 @@ export default {
             return array;
         },
         reserves1(state) {
-            return state.reserves1;
+            let reserves1 = state.reserves1;
+            if (localStorage.getItem('reserves1'))
+                reserves1 = JSON.parse(localStorage.getItem('reserves1'));
+
+            return reserves1;
         },
         reserves2(state) {
             return state.reserves2;
@@ -306,7 +310,7 @@ export default {
             state.typeStructuredTable.filter((item => item.id === option.id))[0].data.rows.push(option.data);
         },
         setReserve1(state, option) {
-            let reserves1 = JSON.parse(JSON.stringify(state.reserves1));
+            let reserves1 = JSON.parse(localStorage.getItem('reserves1'));
             if (option.id && reserves1.filter(item => item.id === option.id).length)
                 for(let key in reserves1.filter(item => item.id === option.id)[0])
                     reserves1.filter(item => item.id === option.id)[0][key] = option[key];
@@ -316,7 +320,7 @@ export default {
             state.reserves1 = reserves1;
         },
         setWorkshop(state, option) {
-            let workshops = JSON.parse(JSON.stringify(state.workshops));
+            let workshops = JSON.parse(localStorage.getItem('workshops'));
             if (option.id && workshops.filter(item => item.id === option.id).length)
                 for(let key in workshops.filter(item => item.id === option.id)[0])
                     workshops.filter(item => item.id === option.id)[0][key] = option[key];
