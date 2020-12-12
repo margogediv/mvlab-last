@@ -90,7 +90,7 @@
             <span class="minus"></span>
             <!--            <IconifyIcon icon="baselineRemove" :style="{color: '#FF6F64', fontSize: '24px'}" />-->
           </button>
-          <button class=" level btn_icon level-btn btn_icon-panel">
+          <button class=" level btn_icon level-btn btn_icon-panel" @click="edit">
             <span class="edit"></span>
             <!-- <IconifyIcon icon="editOutlined" :style="{color: '#c4b70c', fontSize: '24px'}" /> -->
           </button>
@@ -115,9 +115,17 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="table-body" v-for="row in createTable.tbody">
-          <td v-for="(value, key) in row">
-            <input readonly class="input-td" type="text" v-bind:value="value"/>
+        <tr class="table-body"
+            v-for="(row, key) in createTable.tbody"
+            :class="{active : row.id === currentTabRow }"
+            @click="setRowActive(row.id)"
+            :data-id="row.id"
+        >
+          <td v-for="(value, key) in row"
+              v-if="Object.keys(createTable.thead).includes(key)">
+            <div style="overflow: auto;">
+              <input readonly class="input-td" type="text" v-bind:value="value"/>
+            </div>
           </td>
         </tr>
         </tbody>
@@ -127,15 +135,15 @@
     <delObject v-if="showDelObject" :clientObject="clientsObject"></delObject>
     <VobjectCreated v-if="showCreated" v-on:changeShow="changeshowCreated"></VobjectCreated>
 
-    <addReserv1 v-if="showAddForm.addReserv1"></addReserv1>
-    <addReserv2 v-if="showAddForm.addReserv2"></addReserv2>
-    <addOrganization v-if="showAddForm.addOrganization"></addOrganization>
-    <addCompany v-if="showAddForm.addCompany"></addCompany>
-    <addFactory v-if="showAddForm.addFactory"></addFactory>
-    <addWorkshop v-if="showAddForm.addWorkshop"></addWorkshop>
-    <addKnot v-if="showAddForm.addKnot"></addKnot>
-    <addSensor v-if="showAddForm.addSensor"></addSensor>
-    <addVariables v-if="showAddForm.addVariables"></addVariables>
+    <addReserv1 v-if="showAddForm.addReserv1" :id="editArr[1]"></addReserv1>
+    <addReserv2 v-if="showAddForm.addReserv2" :id="editArr[2]"></addReserv2>
+    <addOrganization v-if="showAddForm.addOrganization" :id="editArr[3]"></addOrganization>
+    <addCompany v-if="showAddForm.addCompany" :id="editArr[4]"></addCompany>
+    <addFactory v-if="showAddForm.addFactory" :id="editArr[5]"></addFactory>
+    <addWorkshop v-if="showAddForm.addWorkshop" :id="editArr[6]"></addWorkshop>
+    <addKnot v-if="showAddForm.addKnot" :id="editArr[7]"></addKnot>
+    <addSensor v-if="showAddForm.addSensor" :id="editArr[8]"></addSensor>
+    <addVariables v-if="showAddForm.addVariables" :id="editArr[9]"></addVariables>
   </div>
 </template>
 
@@ -205,6 +213,20 @@ export default {
       showDelObject: false,
       showCreated: false,
       currentTab: 6,
+      currentTabRow: null,
+      editArr: [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+      ],
       showAddForm: {
         addReserv1: false,
         addReserv2: false,
@@ -230,15 +252,16 @@ export default {
         return item.id === this.currentTab;
       })[0];
 
-      let tbody = [];
-      this.$store.getters['settingsGlobal/' + structured.key].forEach((item) => {
-        let row = {};
-
-        for (let key in structured.table)
-          row[key] = item[key];
-
-        tbody.push(row);
-      });
+      let tbody = this.$store.getters['settingsGlobal/' + structured.key];
+      // let tbody = [];
+      // this.$store.getters['settingsGlobal/' + structured.key].forEach((item) => {
+      //   let row = {};
+      //
+      //   for (let key in structured.table)
+      //     row[key] = item[key];
+      //
+      //   tbody.push(row);
+      // });
 
       return {
         thead: structured.table,
@@ -294,6 +317,7 @@ export default {
     },
     setTab(id) {
       this.currentTab = id;
+      this.currentTabRow = null;
     },
     changeTypeStructuredTable() {
       return 0;
@@ -301,6 +325,25 @@ export default {
       this.updateTypeStructuredTable(data);
     },
     showFormAdd() {
+      this.currentTabRow = null;
+      this.showAddForm.addReserv1 = false;
+      this.showAddForm.addReserv2 = false;
+      this.showAddForm.addOrganization = false;
+      this.showAddForm.addCompany = false;
+      this.showAddForm.addFactory = false;
+      this.showAddForm.addWorkshop = false;
+      this.showAddForm.addKnot = false;
+      this.showAddForm.addSensor = false;
+      this.showAddForm.addVariables = false;
+
+      this.showAddForm[this.currentTabName] = true;
+    },
+    setRowActive(id) {
+      this.currentTabRow = id;
+    },
+    edit() {
+      this.editArr[this.currentTab] = this.currentTabRow;
+
       this.showAddForm.addReserv1 = false;
       this.showAddForm.addReserv2 = false;
       this.showAddForm.addOrganization = false;
@@ -527,6 +570,13 @@ tr {
   font-weight: normal;
   font-size: 12px;
   line-height: 15px;
+
+  &.active {
+
+    input {
+      background: #b3c2ee;
+    }
+  }
 }
 
 th {
@@ -543,6 +593,7 @@ th {
 td {
   border: 1px solid #4a627a;
   padding: 0;
+  overflow: auto;
 }
 
 .input-td {

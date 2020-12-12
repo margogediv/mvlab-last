@@ -315,7 +315,7 @@
 import {mapActions, mapGetters} from "vuex";
 
 export default {
-  name: "AddFactory",
+  name: "AddWorkshop",
 
   data() {
     return {
@@ -444,6 +444,25 @@ export default {
     }
   },
 
+  props: [
+      'id'
+  ],
+
+  created() {
+    if(this.id) {
+      let workshop = this.workshops.filter(item => item.id === this.id);
+      this.id = workshop[0].id;
+      this.workshop = workshop[0].name;
+      this.reserve1 = workshop[0].reserv1_id;
+      this.reserve2 = workshop[0].reserv2_id;
+      this.organisation = workshop[0].organisation_id;
+      this.company = workshop[0].company_id;
+      this.factory = workshop[0].factory_id;
+      this.ranges = workshop[0].ranges;
+      console.log(workshop);
+    }
+  },
+
   methods: {
     ...mapActions('settingsGlobal', {
       updateWorkshop: 'updateWorkshop',
@@ -459,6 +478,7 @@ export default {
     },
     save() {
       let data = {
+            id: this.id,
             name: this.workshop,
             reserv1_id: this.reserve1,
             reserv2_id: this.reserve2,
@@ -478,6 +498,7 @@ export default {
       organisations: 'organisations',
       companies: 'companies',
       factories: 'factories',
+      workshops: 'workshops',
     }),
   },
 }

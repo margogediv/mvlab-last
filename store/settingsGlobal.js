@@ -27,7 +27,7 @@ export default {
                 id: 3,
                 key: 'organisations',
                 table: {
-                    name1: 'Название Органищацмм',
+                    name: 'Название Органищацмм',
                 },
             },
             {
@@ -272,11 +272,22 @@ export default {
                 workshops = JSON.parse(localStorage.getItem('workshops'));
 
             let newObj = JSON.parse(JSON.stringify(workshops));
+            let factories = JSON.parse(JSON.stringify(state.factories));
             newObj.map((item) => {
-                item.factory = state.factories.filter(i => i.id === item.factory_id)[0].name;
+                let breaks = [];
+                let smenas = [];
+                item.ranges.filter(item => item.is_active).forEach(el => {
+                    smenas.push((el.start + '-' + el.end).replace(':','.'));
+                    el.breaks.filter(e => e.is_active).forEach(b => breaks.push((b.start + '-' + b.end).replace(':','.')));
+                });
+
+                item.factory = factories.filter(i => i.id === item.factory_id)[0].name;
+                item.smena = smenas.join(';');
+                item.break = breaks.join(';');
 
                 return item;
             });
+
             return newObj;
         },
         knots(state) {
@@ -300,7 +311,14 @@ export default {
             state.typeStructuredTable.filter((item => item.id === option.id))[0].data.rows.push(option.data);
         },
         setWorkshop(state, option) {
-            state.workshops.push(option);
+            let workshops = JSON.parse(JSON.stringify(state.workshops));
+            if (option.id && workshops.filter(item => item.id === option.id).length)
+                for(let key in workshops.filter(item => item.id === option.id)[0])
+                    workshops.filter(item => item.id === option.id)[0][key] = option[key];
+            else
+                workshops.push(option);
+
+            state.workshops = workshops;
         }
     },
     actions: {
@@ -318,7 +336,7 @@ export default {
             store.commit('setClientsObject', data);
         },
         delClientsObject(store) {
-            localStorage.setItem('clientsObject',null);
+            localStorage.setItem('clientsObject', null);
             store.commit('setClientsObject', null);
         },
         getTypeStructured(store) {
@@ -338,18 +356,23 @@ export default {
             store.commit('setTypeStructuredTable', option);
         },
         updateWorkshop(store, option) {
-            option.id = new Date().getTime();
             let workshops = [];
-            if(localStorage.getItem('workshops'))
+            if (localStorage.getItem('workshops'))
                 workshops = JSON.parse(localStorage.getItem('workshops'));
-            else if(this.state.settingsGlobal.workshops)
+            else if (this.state.settingsGlobal.workshops)
                 workshops = this.state.settingsGlobal.workshops;
-            debugger
-            workshops.push(option);
+
+            if (option.id) {
+                for(let key in workshops.filter(item => item.id === option.id)[0])
+                    workshops.filter(item => item.id === option.id)[0][key] = option[key];
+            } else {
+                option.id = new Date().getTime();
+                workshops.push(option);
+            }
+
             localStorage.setItem('workshops', JSON.stringify(workshops));
             store.commit('setWorkshop', option);
         }
-
     },
     strict: process.env.NODE_ENV !== 'production'
 };
