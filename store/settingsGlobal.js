@@ -310,6 +310,16 @@ export default {
         setTypeStructuredTable(state, option) {
             state.typeStructuredTable.filter((item => item.id === option.id))[0].data.rows.push(option.data);
         },
+        setReserve1(state, option) {
+            let reserves1 = JSON.parse(JSON.stringify(state.reserves1));
+            if (option.id && reserves1.filter(item => item.id === option.id).length)
+                for(let key in reserves1.filter(item => item.id === option.id)[0])
+                    reserves1.filter(item => item.id === option.id)[0][key] = option[key];
+            else
+                reserves1.push(option);
+
+            state.reserves1 = reserves1;
+        },
         setWorkshop(state, option) {
             let workshops = JSON.parse(JSON.stringify(state.workshops));
             if (option.id && workshops.filter(item => item.id === option.id).length)
@@ -355,12 +365,30 @@ export default {
         updateTypeStructuredTable(store, option) {
             store.commit('setTypeStructuredTable', option);
         },
+        updateReserve1(store, option) {
+            let reserves1 = [];
+            if (localStorage.getItem('reserves1'))
+                reserves1 = JSON.parse(localStorage.getItem('reserves1'));
+            else if (this.state.settingsGlobal.reserves1)
+                reserves1 = JSON.parse(JSON.stringify(this.state.settingsGlobal.reserves1));
+
+            if (option.id) {
+                for(let key in reserves1.filter(item => item.id === option.id)[0])
+                    reserves1.filter(item => item.id === option.id)[0][key] = option[key];
+            } else {
+                option.id = new Date().getTime();
+                reserves1.push(option);
+            }
+
+            localStorage.setItem('reserves1', JSON.stringify(reserves1));
+            store.commit('setReserve1', option);
+        },
         updateWorkshop(store, option) {
             let workshops = [];
             if (localStorage.getItem('workshops'))
                 workshops = JSON.parse(localStorage.getItem('workshops'));
             else if (this.state.settingsGlobal.workshops)
-                workshops = this.state.settingsGlobal.workshops;
+                workshops = JSON.parse(JSON.stringify(this.state.settingsGlobal.workshops));
 
             if (option.id) {
                 for(let key in workshops.filter(item => item.id === option.id)[0])

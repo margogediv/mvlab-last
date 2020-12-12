@@ -459,7 +459,6 @@ export default {
       this.company = workshop[0].company_id;
       this.factory = workshop[0].factory_id;
       this.ranges = workshop[0].ranges;
-      console.log(workshop);
     }
   },
 

@@ -189,8 +189,7 @@ export default {
       this.showAddForm[name] = false;
     });
 
-    // this.currentTab = this.clientsObject.currentStructureObject[0].id;
-    this.currentTab = 6;
+    this.currentTab = this.clientsObject.currentStructureObject[0].id;
   },
 
   components: {
