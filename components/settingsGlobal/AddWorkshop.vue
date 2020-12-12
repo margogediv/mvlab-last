@@ -9,23 +9,23 @@
           <div class="first-block">
             <input type="text" v-model="workshop" placeholder="Название цеха">
             <select type="text" v-model="reserve1">
-              <option value="0">Название резерва1</option>
+              <option value="0" disabled>Название резерва1</option>
               <option :value="item.id" :key="item.id" v-for="item in reserves1">{{ item.name }}</option>
             </select>
             <select type="text" v-model="reserve2">
-              <option value="0">Название резерва2</option>
+              <option value="0" disabled>Название резерва2</option>
               <option :value="item.id" :key="item.id" v-for="item in reserves2">{{ item.name }}</option>
             </select>
             <select type="text" v-model="organisation">
-              <option value="0">Название организации</option>
+              <option value="0" disabled>Название организации</option>
               <option :value="item.id" :key="item.id" v-for="item in organisations">{{ item.name }}</option>
             </select>
             <select type="text" v-model="company">
-              <option value="0">Название предприятия</option>
+              <option value="0" disabled>Название предприятия</option>
               <option :value="item.id" :key="item.id" v-for="item in companies">{{ item.name }}</option>
             </select>
             <select type="text" v-model="factory">
-              <option value="0">Название завода</option>
+              <option value="0" disabled>Название завода</option>
               <option :value="item.id" :key="item.id" v-for="item in factories">{{ item.name }}</option>
             </select>
           </div>

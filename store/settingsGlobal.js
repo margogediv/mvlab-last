@@ -19,8 +19,8 @@ export default {
                 id: 2,
                 key: 'reserves2',
                 table: {
-                    name: 'Название Резерв2',
-                    reserv1: 'Название Резерв2',
+                    name: 'Название Резерв',
+                    reserve1: 'Название Резерв2',
                 },
             },
             {
@@ -78,13 +78,7 @@ export default {
             },
         ],
         reserves1: [],
-        reserves2: [
-            {
-                id: 1,
-                name: 'Резерв2',
-                reserv1_id: 1,
-            }
-        ],
+        reserves2: [],
         organisations: [
             {
                 id: 1,
@@ -252,8 +246,15 @@ export default {
 
             return reserves1;
         },
-        reserves2(state) {
-            return state.reserves2;
+        reserves2(state, getters) {
+            let reserves2 = JSON.parse(JSON.stringify(state.reserves2));
+            if (localStorage.getItem('reserves2'))
+                reserves2 = JSON.parse(localStorage.getItem('reserves2'));
+
+            return reserves2.map(item => {
+                item.reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id)[0].name;
+                return item;
+            })
         },
         organisations(state) {
             return state.organisations;
@@ -265,13 +266,13 @@ export default {
 
             return state.factories;
         },
-        workshops(state) {
+        workshops(state, getters) {
             let workshops = state.workshops;
             if (localStorage.getItem('workshops'))
                 workshops = JSON.parse(localStorage.getItem('workshops'));
 
             let newObj = JSON.parse(JSON.stringify(workshops));
-            let factories = JSON.parse(JSON.stringify(state.factories));
+            let factories = JSON.parse(JSON.stringify(getters.factories));
             newObj.map((item) => {
                 let breaks = [];
                 let smenas = [];
@@ -318,6 +319,16 @@ export default {
                 reserves1.push(option);
 
             state.reserves1 = reserves1;
+        },
+        setReserve2(state, option) {
+            let reserves2 = JSON.parse(localStorage.getItem('reserves2'));
+            if (option.id && reserves2.filter(item => item.id === option.id).length)
+                for(let key in reserves2.filter(item => item.id === option.id)[0])
+                    reserves2.filter(item => item.id === option.id)[0][key] = option[key];
+            else
+                reserves2.push(option);
+
+            state.reserves2 = reserves2;
         },
         setWorkshop(state, option) {
             let workshops = JSON.parse(localStorage.getItem('workshops'));
@@ -381,6 +392,24 @@ export default {
 
             localStorage.setItem('reserves1', JSON.stringify(reserves1));
             store.commit('setReserve1', option);
+        },
+        updateReserve2(store, option) {
+            let reserves2 = [];
+            if (localStorage.getItem('reserves2'))
+                reserves2 = JSON.parse(localStorage.getItem('reserves2'));
+            else if (this.state.settingsGlobal.reserves2)
+                reserves2 = JSON.parse(JSON.stringify(this.state.settingsGlobal.reserves2));
+
+            if (option.id) {
+                for(let key in reserves2.filter(item => item.id === option.id)[0])
+                    reserves2.filter(item => item.id === option.id)[0][key] = option[key];
+            } else {
+                option.id = new Date().getTime();
+                reserves2.push(option);
+            }
+
+            localStorage.setItem('reserves2', JSON.stringify(reserves2));
+            store.commit('setReserve2', option);
         },
         updateWorkshop(store, option) {
             let workshops = [];
