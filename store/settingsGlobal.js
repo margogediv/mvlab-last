@@ -63,6 +63,8 @@ export default {
                 key: 'knots',
                 table: {
                     name: 'Название Узел',
+                    workshop: 'Название цеха',
+                    factory: 'Название завода',
                 },
             },
             {
@@ -86,65 +88,9 @@ export default {
         companies: [],
         factories: [],
         workshops: [],
-        knots: [
-            {
-                id: 1,
-                name: 'Узел 1',
-                reserv1_id: 1,
-                reserv2_id: 1,
-                organisation_id: 1,
-                company_id: 1,
-                factory_id: 1,
-                workShop_id: 1,
-            },
-            {
-                id: 2,
-                name: 'Узел 2',
-                reserv1_id: 1,
-                reserv2_id: 1,
-                organisation_id: 1,
-                company_id: 1,
-                factory_id: 1,
-                workShop_id: 1,
-            },
-        ],
-        sensors: [
-            {
-                id: 1,
-                name: 'Датчик 1',
-                reserv1_id: 1,
-                reserv2_id: 1,
-                organisation_id: 1,
-                company_id: 1,
-                factory_id: 1,
-                knot_id: 1,
-                workShop_id: 1,
-            },
-            {
-                id: 2,
-                name: 'Датчик 2',
-                reserv1_id: 1,
-                reserv2_id: 1,
-                organisation_id: 1,
-                company_id: 1,
-                factory_id: 1,
-                knot_id: 1,
-                workShop_id: 1,
-            }
-        ],
-        variables: [
-            {
-                id: 1,
-                name: 'Переменная',
-                reserv1_id: 1,
-                reserv2_id: 1,
-                organisation_id: 1,
-                company_id: 1,
-                factory_id: 1,
-                knot_id: 1,
-                workShop_id: 1,
-            }
-        ],
+        knots: [],
+        sensors: [],
+        variables: [],
     }),
     getters: {
         typeStructuredTable(state) {
@@ -241,7 +187,7 @@ export default {
             let factories = JSON.parse(JSON.stringify(state.factories));
             if (localStorage.getItem('factories'))
                 factories = JSON.parse(localStorage.getItem('factories'));
-            debugger
+
             return factories.map(item => {
                 item.reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id)[0].name;
                 item.reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id)[0].name;
@@ -274,8 +220,20 @@ export default {
 
             return newObj;
         },
-        knots(state) {
-            return state.knots;
+        knots(state,getters) {
+            let knots = JSON.parse(JSON.stringify(state.knots));
+            if (localStorage.getItem('knots'))
+                knots = JSON.parse(localStorage.getItem('knots'));
+
+            return knots.map(item => {
+                let factories = getters.factories.filter(i => i.id === item.factory_id);
+                let workshops = getters.workshops.filter(i => i.id === item.workshop_id);
+
+                item.factory = factories.length ? factories[0].name : "";
+                item.workshop = workshops.length ? workshops[0].name : "";
+
+                return item;
+            })
         },
         sensors(state) {
             return state.sensors;
@@ -343,6 +301,16 @@ export default {
                 factories.push(option);
 
             state.factories = factories;
+        },
+        setKnots(state, option) {
+            let knots = JSON.parse(localStorage.getItem('knots'));
+            if (option.id && knots.filter(item => item.id === option.id).length)
+                for(let key in knots.filter(item => item.id === option.id)[0])
+                    knots.filter(item => item.id === option.id)[0][key] = option[key];
+            else
+                knots.push(option);
+
+            state.knots = knots;
         },
         setWorkshop(state, option) {
             let workshops = JSON.parse(localStorage.getItem('workshops'));
@@ -496,7 +464,25 @@ export default {
 
             localStorage.setItem('workshops', JSON.stringify(workshops));
             store.commit('setWorkshop', option);
-        }
+        },
+        updateKnots(store, option) {
+            let knots = [];
+            if (localStorage.getItem('knots'))
+                knots = JSON.parse(localStorage.getItem('knots'));
+            else if (this.state.settingsGlobal.knots)
+                knots = JSON.parse(JSON.stringify(this.state.settingsGlobal.knots));
+
+            if (option.id) {
+                for(let key in knots.filter(item => item.id === option.id)[0])
+                    knots.filter(item => item.id === option.id)[0][key] = option[key];
+            } else {
+                option.id = new Date().getTime();
+                knots.push(option);
+            }
+
+            localStorage.setItem('knots', JSON.stringify(knots));
+            store.commit('setKnots', option);
+        },
     },
     strict: process.env.NODE_ENV !== 'production'
 };

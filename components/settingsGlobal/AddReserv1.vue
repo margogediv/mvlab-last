@@ -51,6 +51,12 @@ export default {
         name: this.form.name
       }
 
+      for(let key in data)
+        if(!data[key] && key !== 'id') {
+          this.$parent.$emit('showAttentionInput');
+          return;
+        }
+
       this.updateReserve1(data);
       this.$parent.$emit('closeAddForm', 'addReserv1')
     }

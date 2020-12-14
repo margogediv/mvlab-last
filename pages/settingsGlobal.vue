@@ -144,6 +144,7 @@
     <addKnot v-if="showAddForm.addKnot" :id="editArr[7]"></addKnot>
     <addSensor v-if="showAddForm.addSensor" :id="editArr[8]"></addSensor>
     <addVariables v-if="showAddForm.addVariables" :id="editArr[9]"></addVariables>
+    <AttentionInput v-if="showAttentionInput"></AttentionInput>
   </div>
 </template>
 
@@ -160,6 +161,8 @@ import AddWorkshop from "@/components/settingsGlobal/AddWorkshop";
 import AddKnot from "@/components/settingsGlobal/AddKnot";
 import AddSensor from "@/components/settingsGlobal/AddSensor";
 import AddVariables from "@/components/settingsGlobal/AddVariables";
+
+import AttentionInput from "@/components/settingsGlobal/AttentionInput";
 
 import {mapGetters} from "vuex";
 import {mapActions} from "vuex";
@@ -189,6 +192,14 @@ export default {
       this.showAddForm[name] = false;
     });
 
+    this.$on('showAttentionInput', () => {
+      this.showAttentionInput = true;
+    });
+
+    this.$on('closeAttentionInput', () => {
+      this.showAttentionInput = false;
+    });
+
     this.currentTab = this.clientsObject.currentStructureObject[0].id;
   },
 
@@ -204,6 +215,7 @@ export default {
     addOrganization: AddOrganization,
     addCompany: AddCompany,
     addKnot: AddKnot,
+    AttentionInput: AttentionInput,
   },
 
   data() {
@@ -237,6 +249,7 @@ export default {
         addSensor: false,
         addVariables: false,
       },
+      showAttentionInput: false,
     };
   },
 

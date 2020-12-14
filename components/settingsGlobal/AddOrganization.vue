@@ -65,6 +65,12 @@ export default {
         reserv2_id: this.form.reserve2,
       }
 
+      for(let key in data)
+        if(!data[key] && key !== 'id') {
+          this.$parent.$emit('showAttentionInput');
+          return;
+        }
+
       this.updateOrganisations(data);
       this.$parent.$emit('closeAddForm', 'addOrganization')
     }

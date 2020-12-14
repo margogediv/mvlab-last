@@ -87,6 +87,12 @@ export default {
         map: this.form.map,
       }
 
+      for(let key in data)
+        if(!data[key] && key !== 'id') {
+          this.$parent.$emit('showAttentionInput');
+          return;
+        }
+
       this.updateFactories(data);
       this.$parent.$emit('closeAddForm', 'addFactory')
     }

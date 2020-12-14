@@ -72,6 +72,12 @@ export default {
         organisation_id: this.form.organisation,
       }
 
+      for(let key in data)
+        if(!data[key] && key !== 'id') {
+          this.$parent.$emit('showAttentionInput');
+          return;
+        }
+
       this.updateCompanies(data);
       this.$parent.$emit('closeAddForm', 'addCompany')
     }

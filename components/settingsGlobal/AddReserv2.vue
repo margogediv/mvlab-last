@@ -58,6 +58,12 @@ export default {
         reserv1_id: this.form.reserve1,
       }
 
+      for(let key in data)
+        if(!data[key] && key !== 'id') {
+          this.$parent.$emit('showAttentionInput');
+          return;
+        }
+
       this.updateReserve2(data);
       this.$parent.$emit('closeAddForm', 'addReserv2')
     },

@@ -486,6 +486,13 @@ export default {
             factory_id: this.factory,
             ranges: this.ranges,
       };
+
+      for(let key in data)
+        if(!data[key] && key !== 'id') {
+          this.$parent.$emit('showAttentionInput');
+          return;
+        }
+
       this.updateWorkshop(data);
       this.$parent.$emit('closeAddWorkshop');
     },
