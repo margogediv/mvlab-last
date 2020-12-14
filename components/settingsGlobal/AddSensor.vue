@@ -7,30 +7,37 @@
         </div>
         <div class="sensor-body">
           <div class="sensor-body-box">
-            <input type="text" placeholder="Название датчика">
-            <select type="text">
-              <option value="Название резерва1">Название резерва1</option>
+            <input type="text" v-model="form.name" placeholder="Название датчика">
+            <select type="text" v-model="form.reserve1">
+              <option value="0" disabled>Название резерва1</option>
+              <option :value="item.id" :key="item.id" v-for="item in reserves1">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название резерва2">Название резерва2</option>
+            <select type="text" v-model="form.reserve2">
+              <option value="0" disabled>Название резерва2</option>
+              <option :value="item.id" :key="item.id" v-for="item in reserves2">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название организации">Название организации</option>
+            <select type="text" v-model="form.organisation">
+              <option value="0" disabled>Название организации</option>
+              <option :value="item.id" :key="item.id" v-for="item in organisations">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название предприятия">Название предприятия</option>
+            <select type="text" v-model="form.company">
+              <option value="0" disabled>Название предприятия</option>
+              <option :value="item.id" :key="item.id" v-for="item in companies">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название предприятия">Название завода</option>
+            <select type="text" v-model="form.factory">
+              <option value="0" disabled>Название завода</option>
+              <option :value="item.id" :key="item.id" v-for="item in factories">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название предприятия">Название цеха</option>
+            <select type="text" v-model="form.workshop">
+              <option value="0" disabled>Название цеха</option>
+              <option :value="item.id" :key="item.id" v-for="item in workshops">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название предприятия">Название узла</option>
+            <select type="text" v-model="form.knot">
+              <option value="0" disabled>Название узла</option>
+              <option :value="item.id" :key="item.id" v-for="item in knots">{{ item.name }}</option>
             </select>
           </div>
-          <input type="text" placeholder="Обозначение на схемах">
+          <input type="text" placeholder="Обозначение на схемах" v-model="form.shema">
 
         </div>
         <div class="sensor-footer">
@@ -45,36 +52,83 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "AddSensor",
+  props: [
+    'id'
+  ],
+  created() {
+    if(this.id) {
+      let sensors = this.sensors.filter(item => item.id === this.id);
+      this.id = sensors[0].id;
+      this.form.name = sensors[0].name;
+      this.form.reserve1 = sensors[0].reserv1_id;
+      this.form.reserve2 = sensors[0].reserv2_id;
+      this.form.organisation = sensors[0].organisation_id;
+      this.form.company = sensors[0].company_id;
+      this.form.factory = sensors[0].factory_id;
+      this.form.workshop = sensors[0].workshop_id;
+      this.form.knot = sensors[0].knot_id;
+      this.form.shema = sensors[0].shema;
+    }
+  },
   data() {
     return {
       form: {
         name: '',
+        reserve1: 0,
+        reserve2: 0,
+        organisation: 0,
+        company: 0,
+        factory: 0,
+        workshop: 0,
+        knot: 0,
+        shema: "",
       }
     }
   },
   methods: {
     ...mapActions('settingsGlobal', {
-      updateTypeStructuredTable: 'updateTypeStructuredTable',
+      updateSensors: 'updateSensors',
     }),
     save() {
       let data = {
-        id : 8,
-        data: this.form
+        id: this.id,
+        name: this.form.name,
+        reserv1_id: this.form.reserve1,
+        reserv2_id: this.form.reserve2,
+        organisation_id: this.form.organisation,
+        company_id: this.form.company,
+        factory_id: this.form.factory,
+        workshop_id: this.form.workshop,
+        knot_id: this.form.knot,
+        shema: this.form.shema,
       }
 
       for(let key in data)
         if(!data[key] && key !== 'id') {
+          console.log(data[key], key);
           this.$parent.$emit('showAttentionInput');
           return;
         }
 
-      this.updateTypeStructuredTable(data);
+      this.updateSensors(data);
       this.$parent.$emit('closeAddForm', 'addSensor')
     }
+  },
+  computed: {
+    ...mapGetters('settingsGlobal', {
+      reserves1: 'reserves1',
+      reserves2: 'reserves2',
+      organisations: 'organisations',
+      companies: 'companies',
+      factories: 'factories',
+      workshops: 'workshops',
+      knots: 'knots',
+      sensors: 'sensors',
+    }),
   }
 }
 </script>

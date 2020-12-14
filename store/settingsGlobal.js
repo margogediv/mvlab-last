@@ -72,6 +72,10 @@ export default {
                 key: 'sensors',
                 table: {
                     name: 'Название Датчик',
+                    shema: 'Обозначение на схеме',
+                    knot: 'Название узла',
+                    workshop: 'Название цеха',
+                    factory: 'Название завода',
                 },
             },
             {
@@ -235,8 +239,20 @@ export default {
                 return item;
             })
         },
-        sensors(state) {
-            return state.sensors;
+        sensors(state, getters) {
+            let sensors = JSON.parse(JSON.stringify(state.sensors));
+            if (localStorage.getItem('sensors'))
+                sensors = JSON.parse(localStorage.getItem('sensors'));
+
+            return sensors.map(item => {
+                let factories = getters.factories.filter(i => i.id === item.factory_id);
+                let workshops = getters.workshops.filter(i => i.id === item.workshop_id);
+
+                item.factory = factories.length ? factories[0].name : "";
+                item.workshop = workshops.length ? workshops[0].name : "";
+
+                return item;
+            })
         },
         variables(state) {
             return state.variables;
@@ -321,7 +337,17 @@ export default {
                 workshops.push(option);
 
             state.workshops = workshops;
-        }
+        },
+        setSensors(state, option) {
+            let sensors = JSON.parse(localStorage.getItem('sensors'));
+            if (option.id && sensors.filter(item => item.id === option.id).length)
+                for(let key in sensors.filter(item => item.id === option.id)[0])
+                    sensors.filter(item => item.id === option.id)[0][key] = option[key];
+            else
+                sensors.push(option);
+
+            state.sensors = sensors;
+        },
     },
     actions: {
         updateClientsObject(store, option) {
@@ -482,6 +508,24 @@ export default {
 
             localStorage.setItem('knots', JSON.stringify(knots));
             store.commit('setKnots', option);
+        },
+        updateSensors(store, option) {
+            let sensors = [];
+            if (localStorage.getItem('sensors'))
+                sensors = JSON.parse(localStorage.getItem('sensors'));
+            else if (this.state.settingsGlobal.sensors)
+                sensors = JSON.parse(JSON.stringify(this.state.settingsGlobal.sensors));
+
+            if (option.id) {
+                for(let key in sensors.filter(item => item.id === option.id)[0])
+                    sensors.filter(item => item.id === option.id)[0][key] = option[key];
+            } else {
+                option.id = new Date().getTime();
+                sensors.push(option);
+            }
+
+            localStorage.setItem('sensors', JSON.stringify(sensors));
+            store.commit('setSensors', option);
         },
     },
     strict: process.env.NODE_ENV !== 'production'
