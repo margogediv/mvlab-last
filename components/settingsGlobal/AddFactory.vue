@@ -9,17 +9,21 @@
 
           <div class="box select">
             <input type="text" placeholder="Название завода" v-model="form.name">
-            <select type="text">
-              <option value="Название резерва1">Название резерва1</option>
+            <select type="text" v-model="form.reserve1">
+              <option value="0" disabled>Название резерва1</option>
+              <option :value="item.id" :key="item.id" v-for="item in reserves1">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название резерва2">Название резерва2</option>
+            <select type="text" v-model="form.reserve2">
+              <option value="0" disabled>Название резерва2</option>
+              <option :value="item.id" :key="item.id" v-for="item in reserves2">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название организации">Название организации</option>
+            <select type="text" v-model="form.organisation">
+              <option value="0" disabled>Название организации</option>
+              <option :value="item.id" :key="item.id" v-for="item in organisations">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название предприятия">Название предприятия</option>
+            <select type="text" v-model="form.company">
+              <option value="0" disabled>Название предприятия</option>
+              <option :value="item.id" :key="item.id" v-for="item in companies">{{ item.name }}</option>
             </select>
           </div>
 
@@ -37,35 +41,64 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "AddFactory",
+  props: [
+    'id'
+  ],
+  created() {
+    if(this.id) {
+      let factories = this.factories.filter(item => item.id === this.id);
+      this.id = factories[0].id;
+      this.form.name = factories[0].name;
+      this.form.reserve1 = factories[0].reserv1_id;
+      this.form.reserve2 = factories[0].reserv2_id;
+      this.form.organisation = factories[0].organisation_id;
+      this.form.company = factories[0].company_id;
+      this.form.map = factories[0].map;
+    }
+  },
   data() {
     return {
       form: {
         name: '',
-        reserv1: '',
-        reserv2: '',
-        organization: '',
-        company: '',
-        map: '',
+        reserve1: 0,
+        reserve2: 0,
+        organisation: 0,
+        company: 0,
+        map: "",
       }
     }
   },
   methods: {
     ...mapActions('settingsGlobal', {
-      updateTypeStructuredTable: 'updateTypeStructuredTable',
+      updateFactories: 'updateFactories',
     }),
     save() {
       let data = {
-        id : 5,
-        data: this.form
+        id: this.id,
+        name: this.form.name,
+        reserv1_id: this.form.reserve1,
+        reserv2_id: this.form.reserve2,
+        organisation_id: this.form.organisation,
+        company_id: this.form.company,
+        map: this.form.map,
       }
 
-      this.updateTypeStructuredTable(data);
+      this.updateFactories(data);
       this.$parent.$emit('closeAddForm', 'addFactory')
     }
+  },
+  computed: {
+    ...mapGetters('settingsGlobal', {
+      reserves1: 'reserves1',
+      reserves2: 'reserves2',
+      organisations: 'organisations',
+      companies: 'companies',
+      factories: 'factories',
+    }),
   }
 }
 </script>
