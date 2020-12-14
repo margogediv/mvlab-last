@@ -7,14 +7,17 @@
         </div>
         <div class="attention-body">
           <input type="text" placeholder="Название предприятия" v-model="form.name">
-          <select v-model="form.reserv1">
-            <option value="Название резерва1">Название резерва1</option>
+          <select type="text" v-model="form.reserve1">
+            <option value="0" disabled>Название резерва1</option>
+            <option :value="item.id" :key="item.id" v-for="item in reserves1">{{ item.name }}</option>
           </select>
-          <select v-model="form.reserv2">
-            <option value="Название резерва2">Название резерва2</option>
+          <select type="text" v-model="form.reserve2">
+            <option value="0" disabled>Название резерва2</option>
+            <option :value="item.id" :key="item.id" v-for="item in reserves2">{{ item.name }}</option>
           </select>
-          <select v-model="form.organization">
-            <option value="Название организации">Название организации</option>
+          <select type="text" v-model="form.organisation">
+            <option value="0" disabled>Название организации</option>
+            <option :value="item.id" :key="item.id" v-for="item in organisations">{{ item.name }}</option>
           </select>
         </div>
         <div class="attention-footer">
@@ -29,33 +32,57 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "AddCompany",
+  props: [
+    'id'
+  ],
+  created() {
+    if(this.id) {
+      let companies = this.companies.filter(item => item.id === this.id);
+      this.id = companies[0].id;
+      this.form.name = companies[0].name;
+      this.form.reserve1 = companies[0].reserv1_id;
+      this.form.reserve2 = companies[0].reserv2_id;
+      this.form.organisation = companies[0].organisation_id;
+    }
+  },
   data() {
     return {
       form: {
         name: '',
-        reserv1: '',
-        reserv2: '',
-        organization: '',
+        reserve1: 0,
+        reserve2: 0,
+        organisation: 0,
       }
     }
   },
   methods: {
     ...mapActions('settingsGlobal', {
-      updateTypeStructuredTable: 'updateTypeStructuredTable',
+      updateCompanies: 'updateCompanies',
     }),
     save() {
       let data = {
-        id : 4,
-        data: this.form
+        id: this.id,
+        name: this.form.name,
+        reserv1_id: this.form.reserve1,
+        reserv2_id: this.form.reserve2,
+        organisation_id: this.form.organisation,
       }
 
-      this.updateTypeStructuredTable(data);
+      this.updateCompanies(data);
       this.$parent.$emit('closeAddForm', 'addCompany')
     }
+  },
+  computed: {
+    ...mapGetters('settingsGlobal', {
+      reserves1: 'reserves1',
+      reserves2: 'reserves2',
+      organisations: 'organisations',
+      companies: 'companies',
+    }),
   }
 }
 </script>

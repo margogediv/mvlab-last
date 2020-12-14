@@ -35,6 +35,9 @@ export default {
                 key: 'companies',
                 table: {
                     name: 'Название Предприятие',
+                    reserve1: 'Название резерв1',
+                    reserve2: 'Название резерв2',
+                    organisation: 'Название организации',
                 },
             },
             {
@@ -80,22 +83,7 @@ export default {
         reserves1: [],
         reserves2: [],
         organisations: [],
-        companies: [
-            {
-                id: 1,
-                name: 'Предприятие 1',
-                reserv1_id: 1,
-                reserv2_id: 1,
-                organisation_id: 1,
-            },
-            {
-                id: 2,
-                name: 'Предприятие 2',
-                reserv1_id: 1,
-                reserv2_id: 1,
-                organisation_id: 1,
-            }
-        ],
+        companies: [],
         factories: [
             {
                 id: 1,
@@ -254,8 +242,17 @@ export default {
                 return item;
             })
         },
-        companies(state) {
-            return state.companies;
+        companies(state,getters) {
+            let companies = JSON.parse(JSON.stringify(state.companies));
+            if (localStorage.getItem('companies'))
+                companies = JSON.parse(localStorage.getItem('companies'));
+
+            return companies.map(item => {
+                    item.reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id)[0].name;
+                    item.reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id)[0].name;
+                    item.organisation = getters.organisations.filter(i => i.id === item.organisation_id)[0].name;
+                    return item;
+            })
         },
         factories(state) {
 
@@ -334,6 +331,16 @@ export default {
                 organisations.push(option);
 
             state.organisations = organisations;
+        },
+        setCompanies(state, option) {
+            let companies = JSON.parse(localStorage.getItem('companies'));
+            if (option.id && companies.filter(item => item.id === option.id).length)
+                for(let key in companies.filter(item => item.id === option.id)[0])
+                    companies.filter(item => item.id === option.id)[0][key] = option[key];
+            else
+                companies.push(option);
+
+            state.companies = companies;
         },
         setWorkshop(state, option) {
             let workshops = JSON.parse(localStorage.getItem('workshops'));
@@ -433,6 +440,24 @@ export default {
 
             localStorage.setItem('organisations', JSON.stringify(organisations));
             store.commit('setOrganisations', option);
+        },
+        updateCompanies(store, option) {
+            let companies = [];
+            if (localStorage.getItem('companies'))
+                companies = JSON.parse(localStorage.getItem('companies'));
+            else if (this.state.settingsGlobal.companies)
+                companies = JSON.parse(JSON.stringify(this.state.settingsGlobal.companies));
+
+            if (option.id) {
+                for(let key in companies.filter(item => item.id === option.id)[0])
+                    companies.filter(item => item.id === option.id)[0][key] = option[key];
+            } else {
+                option.id = new Date().getTime();
+                companies.push(option);
+            }
+
+            localStorage.setItem('companies', JSON.stringify(companies));
+            store.commit('setCompanies', option);
         },
         updateWorkshop(store, option) {
             let workshops = [];
