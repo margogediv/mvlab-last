@@ -2,7 +2,24 @@ export default {
   namespaced: true,
 
   state: () => ({
-    currentDevMessages: [],
+    currentDevMessages: [
+      {
+        id: 1,
+        device: "Устройство 1",
+        driver: "S7 TCP 192.168.34.23:102",
+        connect: "conn = Stetum_324,var = FD1_real_324",
+        msg: "S7 TCP 192.168.34.23:102",
+        status: "ok",
+      },
+      {
+        id: 2,
+        device: "Устройство 2",
+        driver: "S7 TCP 192.168.34.23:101",
+        connect: "conn = Stetum_325, var = FD1_real_325",
+        msg: "S7 TCP 192.168.34.21:102",
+        status: "ok",
+      }
+    ],
     currentMessages: [],
     currentAlert: null,
 

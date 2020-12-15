@@ -101,6 +101,9 @@
             <span class="plus_green" @click="showFormAdd"></span>
             <!--            <IconifyIcon icon="addIcon" :style="{color: '#01C587', fontSize: '24px'}" />-->
           </button>
+          <button class="level btn_icon btn_icon-panel level-btn" v-if="currentTab === 9">
+            <span class="plus_green" @click="showAddVariablesConnect(true)"></span>
+          </button>
         </div>
       </div>
     </div>
@@ -123,8 +126,8 @@
         >
           <td v-for="(value, key) in row"
               v-if="Object.keys(createTable.thead).includes(key)">
-            <div style="overflow: auto;">
-              <input readonly class="input-td" type="text" v-bind:value="value"/>
+            <div style="overflow-x: auto;">
+              <div style="white-space: pre-wrap">{{ value }}</div>
             </div>
           </td>
         </tr>
@@ -144,6 +147,7 @@
     <addKnot v-if="showAddForm.addKnot" :id="editArr[7]"></addKnot>
     <addSensor v-if="showAddForm.addSensor" :id="editArr[8]"></addSensor>
     <addVariables v-if="showAddForm.addVariables" :id="editArr[9]"></addVariables>
+    <addVariablesConnect v-if="addVariablesConnect"></addVariablesConnect>
     <AttentionInput v-if="showAttentionInput"></AttentionInput>
   </div>
 </template>
@@ -161,6 +165,7 @@ import AddWorkshop from "@/components/settingsGlobal/AddWorkshop";
 import AddKnot from "@/components/settingsGlobal/AddKnot";
 import AddSensor from "@/components/settingsGlobal/AddSensor";
 import AddVariables from "@/components/settingsGlobal/AddVariables";
+import AddVariablesConnect from "@/components/settingsGlobal/AddVariablesConnect";
 
 import AttentionInput from "@/components/settingsGlobal/AttentionInput";
 
@@ -200,6 +205,10 @@ export default {
       this.showAttentionInput = false;
     });
 
+    this.$on('showAddVariablesConnect', (is_active) => {
+      this.addVariablesConnect = is_active;
+    });
+
     this.currentTab = this.clientsObject.currentStructureObject[0].id;
   },
 
@@ -210,6 +219,7 @@ export default {
     addWorkshop: AddWorkshop,
     addSensor: AddSensor,
     addVariables: AddVariables,
+    addVariablesConnect: AddVariablesConnect,
     addReserv1: AddReserv1,
     addReserv2: AddReserv2,
     addOrganization: AddOrganization,
@@ -223,7 +233,7 @@ export default {
       search: "",
       showDelObject: false,
       showCreated: false,
-      currentTab: 6,
+      currentTab: 1,
       currentTabRow: null,
       editArr: [
           null,
@@ -249,6 +259,7 @@ export default {
         addSensor: false,
         addVariables: false,
       },
+      addVariablesConnect: false,
       showAttentionInput: false,
     };
   },
@@ -265,15 +276,6 @@ export default {
       })[0];
 
       let tbody = this.$store.getters['settingsGlobal/' + structured.key];
-      // let tbody = [];
-      // this.$store.getters['settingsGlobal/' + structured.key].forEach((item) => {
-      //   let row = {};
-      //
-      //   for (let key in structured.table)
-      //     row[key] = item[key];
-      //
-      //   tbody.push(row);
-      // });
 
       return {
         thead: structured.table,
@@ -338,6 +340,19 @@ export default {
     },
     showFormAdd() {
       this.currentTabRow = null;
+      this.editArr = [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+      ];
       this.showAddForm.addReserv1 = false;
       this.showAddForm.addReserv2 = false;
       this.showAddForm.addOrganization = false;
@@ -367,6 +382,9 @@ export default {
       this.showAddForm.addVariables = false;
 
       this.showAddForm[this.currentTabName] = true;
+    },
+    showAddVariablesConnect(is_active) {
+      this.addVariablesConnect = is_active;
     }
   },
 };
@@ -584,10 +602,7 @@ tr {
   line-height: 15px;
 
   &.active {
-
-    input {
-      background: #b3c2ee;
-    }
+    background: #b3c2ee;
   }
 }
 

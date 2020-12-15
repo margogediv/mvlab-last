@@ -83,6 +83,12 @@ export default {
                 key: 'variables',
                 table: {
                     name: 'Имя переменной',
+                    connectOut: 'Соединение',
+                    limits: 'Пределы',
+                    sensor: 'Название датчика',
+                    knot: 'Название узла',
+                    workshop: 'Название цеха',
+                    factory: 'Название завода',
                 },
             },
         ],
@@ -175,16 +181,16 @@ export default {
                 return item;
             })
         },
-        companies(state,getters) {
+        companies(state, getters) {
             let companies = JSON.parse(JSON.stringify(state.companies));
             if (localStorage.getItem('companies'))
                 companies = JSON.parse(localStorage.getItem('companies'));
 
             return companies.map(item => {
-                    item.reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id)[0].name;
-                    item.reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id)[0].name;
-                    item.organisation = getters.organisations.filter(i => i.id === item.organisation_id)[0].name;
-                    return item;
+                item.reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id)[0].name;
+                item.reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id)[0].name;
+                item.organisation = getters.organisations.filter(i => i.id === item.organisation_id)[0].name;
+                return item;
             })
         },
         factories(state, getters) {
@@ -211,8 +217,8 @@ export default {
                 let breaks = [];
                 let smenas = [];
                 item.ranges.filter(item => item.is_active).forEach(el => {
-                    smenas.push((el.start + '-' + el.end).replace(':','.'));
-                    el.breaks.filter(e => e.is_active).forEach(b => breaks.push((b.start + '-' + b.end).replace(':','.')));
+                    smenas.push((el.start + '-' + el.end).replace(':', '.'));
+                    el.breaks.filter(e => e.is_active).forEach(b => breaks.push((b.start + '-' + b.end).replace(':', '.')));
                 });
 
                 item.factory = factories.filter(i => i.id === item.factory_id)[0].name;
@@ -224,7 +230,7 @@ export default {
 
             return newObj;
         },
-        knots(state,getters) {
+        knots(state, getters) {
             let knots = JSON.parse(JSON.stringify(state.knots));
             if (localStorage.getItem('knots'))
                 knots = JSON.parse(localStorage.getItem('knots'));
@@ -254,8 +260,27 @@ export default {
                 return item;
             })
         },
-        variables(state) {
-            return state.variables;
+        variables(state, getters) {
+            let variables = JSON.parse(JSON.stringify(state.variables));
+            if (localStorage.getItem('variables'))
+                variables = JSON.parse(localStorage.getItem('variables'));
+
+            return variables.map(item => {
+                let sensors = getters.sensors.filter(i => i.id === item.sensor_id);
+                let knots = getters.knots.filter(i => i.id === item.knot_id);
+                let workshops = getters.workshops.filter(i => i.id === item.workshop_id);
+                let factories = getters.factories.filter(i => i.id === item.factory_id);
+
+                item.connectOut = item.connect.split(",").join("\n");
+                item.limits = `Верхн.измерения = ${item.limitMaxWarn}\nНижн.измерения = ${item.limitMinWarn}МПа\nВерхн.аварийный = ${item.limitMaxСrash}МПа\nНижн.аварийный = ${item.limitMinСrash}МПа\nСкорость изм. = ${item.limitSpead}МПа`;
+
+                item.sensor = knots.length ? sensors[0].name : "";
+                item.knot = knots.length ? knots[0].name : "";
+                item.workshop = workshops.length ? workshops[0].name : "";
+                item.factory = factories.length ? factories[0].name : "";
+
+                return item;
+            })
         }
     },
     mutations: {
@@ -271,7 +296,7 @@ export default {
         setReserve1(state, option) {
             let reserves1 = JSON.parse(localStorage.getItem('reserves1'));
             if (option.id && reserves1.filter(item => item.id === option.id).length)
-                for(let key in reserves1.filter(item => item.id === option.id)[0])
+                for (let key in reserves1.filter(item => item.id === option.id)[0])
                     reserves1.filter(item => item.id === option.id)[0][key] = option[key];
             else
                 reserves1.push(option);
@@ -281,7 +306,7 @@ export default {
         setReserve2(state, option) {
             let reserves2 = JSON.parse(localStorage.getItem('reserves2'));
             if (option.id && reserves2.filter(item => item.id === option.id).length)
-                for(let key in reserves2.filter(item => item.id === option.id)[0])
+                for (let key in reserves2.filter(item => item.id === option.id)[0])
                     reserves2.filter(item => item.id === option.id)[0][key] = option[key];
             else
                 reserves2.push(option);
@@ -291,7 +316,7 @@ export default {
         setOrganisations(state, option) {
             let organisations = JSON.parse(localStorage.getItem('organisations'));
             if (option.id && organisations.filter(item => item.id === option.id).length)
-                for(let key in organisations.filter(item => item.id === option.id)[0])
+                for (let key in organisations.filter(item => item.id === option.id)[0])
                     organisations.filter(item => item.id === option.id)[0][key] = option[key];
             else
                 organisations.push(option);
@@ -301,7 +326,7 @@ export default {
         setCompanies(state, option) {
             let companies = JSON.parse(localStorage.getItem('companies'));
             if (option.id && companies.filter(item => item.id === option.id).length)
-                for(let key in companies.filter(item => item.id === option.id)[0])
+                for (let key in companies.filter(item => item.id === option.id)[0])
                     companies.filter(item => item.id === option.id)[0][key] = option[key];
             else
                 companies.push(option);
@@ -311,7 +336,7 @@ export default {
         setFactories(state, option) {
             let factories = JSON.parse(localStorage.getItem('factories'));
             if (option.id && factories.filter(item => item.id === option.id).length)
-                for(let key in factories.filter(item => item.id === option.id)[0])
+                for (let key in factories.filter(item => item.id === option.id)[0])
                     factories.filter(item => item.id === option.id)[0][key] = option[key];
             else
                 factories.push(option);
@@ -321,7 +346,7 @@ export default {
         setKnots(state, option) {
             let knots = JSON.parse(localStorage.getItem('knots'));
             if (option.id && knots.filter(item => item.id === option.id).length)
-                for(let key in knots.filter(item => item.id === option.id)[0])
+                for (let key in knots.filter(item => item.id === option.id)[0])
                     knots.filter(item => item.id === option.id)[0][key] = option[key];
             else
                 knots.push(option);
@@ -331,7 +356,7 @@ export default {
         setWorkshop(state, option) {
             let workshops = JSON.parse(localStorage.getItem('workshops'));
             if (option.id && workshops.filter(item => item.id === option.id).length)
-                for(let key in workshops.filter(item => item.id === option.id)[0])
+                for (let key in workshops.filter(item => item.id === option.id)[0])
                     workshops.filter(item => item.id === option.id)[0][key] = option[key];
             else
                 workshops.push(option);
@@ -341,12 +366,22 @@ export default {
         setSensors(state, option) {
             let sensors = JSON.parse(localStorage.getItem('sensors'));
             if (option.id && sensors.filter(item => item.id === option.id).length)
-                for(let key in sensors.filter(item => item.id === option.id)[0])
+                for (let key in sensors.filter(item => item.id === option.id)[0])
                     sensors.filter(item => item.id === option.id)[0][key] = option[key];
             else
                 sensors.push(option);
 
             state.sensors = sensors;
+        },
+        setVariables(state, option) {
+            let variables = JSON.parse(localStorage.getItem('variables'));
+            if (option.id && variables.filter(item => item.id === option.id).length)
+                for (let key in variables.filter(item => item.id === option.id)[0])
+                    variables.filter(item => item.id === option.id)[0][key] = option[key];
+            else
+                variables.push(option);
+
+            state.variables = variables;
         },
     },
     actions: {
@@ -391,7 +426,7 @@ export default {
                 reserves1 = JSON.parse(JSON.stringify(this.state.settingsGlobal.reserves1));
 
             if (option.id) {
-                for(let key in reserves1.filter(item => item.id === option.id)[0])
+                for (let key in reserves1.filter(item => item.id === option.id)[0])
                     reserves1.filter(item => item.id === option.id)[0][key] = option[key];
             } else {
                 option.id = new Date().getTime();
@@ -409,7 +444,7 @@ export default {
                 reserves2 = JSON.parse(JSON.stringify(this.state.settingsGlobal.reserves2));
 
             if (option.id) {
-                for(let key in reserves2.filter(item => item.id === option.id)[0])
+                for (let key in reserves2.filter(item => item.id === option.id)[0])
                     reserves2.filter(item => item.id === option.id)[0][key] = option[key];
             } else {
                 option.id = new Date().getTime();
@@ -427,7 +462,7 @@ export default {
                 organisations = JSON.parse(JSON.stringify(this.state.settingsGlobal.organisations));
 
             if (option.id) {
-                for(let key in organisations.filter(item => item.id === option.id)[0])
+                for (let key in organisations.filter(item => item.id === option.id)[0])
                     organisations.filter(item => item.id === option.id)[0][key] = option[key];
             } else {
                 option.id = new Date().getTime();
@@ -445,7 +480,7 @@ export default {
                 companies = JSON.parse(JSON.stringify(this.state.settingsGlobal.companies));
 
             if (option.id) {
-                for(let key in companies.filter(item => item.id === option.id)[0])
+                for (let key in companies.filter(item => item.id === option.id)[0])
                     companies.filter(item => item.id === option.id)[0][key] = option[key];
             } else {
                 option.id = new Date().getTime();
@@ -463,7 +498,7 @@ export default {
                 factories = JSON.parse(JSON.stringify(this.state.settingsGlobal.factories));
 
             if (option.id) {
-                for(let key in factories.filter(item => item.id === option.id)[0])
+                for (let key in factories.filter(item => item.id === option.id)[0])
                     factories.filter(item => item.id === option.id)[0][key] = option[key];
             } else {
                 option.id = new Date().getTime();
@@ -481,7 +516,7 @@ export default {
                 workshops = JSON.parse(JSON.stringify(this.state.settingsGlobal.workshops));
 
             if (option.id) {
-                for(let key in workshops.filter(item => item.id === option.id)[0])
+                for (let key in workshops.filter(item => item.id === option.id)[0])
                     workshops.filter(item => item.id === option.id)[0][key] = option[key];
             } else {
                 option.id = new Date().getTime();
@@ -499,7 +534,7 @@ export default {
                 knots = JSON.parse(JSON.stringify(this.state.settingsGlobal.knots));
 
             if (option.id) {
-                for(let key in knots.filter(item => item.id === option.id)[0])
+                for (let key in knots.filter(item => item.id === option.id)[0])
                     knots.filter(item => item.id === option.id)[0][key] = option[key];
             } else {
                 option.id = new Date().getTime();
@@ -517,7 +552,7 @@ export default {
                 sensors = JSON.parse(JSON.stringify(this.state.settingsGlobal.sensors));
 
             if (option.id) {
-                for(let key in sensors.filter(item => item.id === option.id)[0])
+                for (let key in sensors.filter(item => item.id === option.id)[0])
                     sensors.filter(item => item.id === option.id)[0][key] = option[key];
             } else {
                 option.id = new Date().getTime();
@@ -526,6 +561,37 @@ export default {
 
             localStorage.setItem('sensors', JSON.stringify(sensors));
             store.commit('setSensors', option);
+        },
+        updateVariables(store, option) {
+            let variables = [];
+            if (localStorage.getItem('variables'))
+                variables = JSON.parse(localStorage.getItem('variables'));
+            else if (this.state.settingsGlobal.variables)
+                variables = JSON.parse(JSON.stringify(this.state.settingsGlobal.variables));
+
+            if (option.id) {
+                for (let key in variables.filter(item => item.id === option.id)[0])
+                    variables.filter(item => item.id === option.id)[0][key] = option[key];
+            } else {
+                option.id = new Date().getTime();
+                variables.push(option);
+            }
+
+            localStorage.setItem('variables', JSON.stringify(variables));
+            store.commit('setVariables', option);
+        },
+        updateVariablesConnect(store, option) {
+            let variables = [];
+            if (localStorage.getItem('variables'))
+                variables = JSON.parse(localStorage.getItem('variables'));
+            else if (this.state.settingsGlobal.variables)
+                variables = JSON.parse(JSON.stringify(this.state.settingsGlobal.variables));
+
+            option.id = new Date().getTime();
+            variables.push(option);
+
+            localStorage.setItem('variables', JSON.stringify(variables));
+            store.commit('setVariables', option);
         },
     },
     strict: process.env.NODE_ENV !== 'production'
