@@ -7,21 +7,26 @@
         </div>
         <div class="workshop-body">
           <div class="first-block">
-            <input type="text" v-model="workShop" placeholder="Название цеха">
-            <select type="text">
-              <option value="Название резерва1">Название резерва1</option>
+            <input type="text" v-model="workshop" placeholder="Название цеха">
+            <select type="text" v-model="reserve1">
+              <option value="0" disabled>Название резерва1</option>
+              <option :value="item.id" :key="item.id" v-for="item in reserves1">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название резерва2">Название резерва2</option>
+            <select type="text" v-model="reserve2">
+              <option value="0" disabled>Название резерва2</option>
+              <option :value="item.id" :key="item.id" v-for="item in reserves2">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название организации">Название организации</option>
+            <select type="text" v-model="organisation">
+              <option value="0" disabled>Название организации</option>
+              <option :value="item.id" :key="item.id" v-for="item in organisations">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название предприятия">Название предприятия</option>
+            <select type="text" v-model="company">
+              <option value="0" disabled>Название предприятия</option>
+              <option :value="item.id" :key="item.id" v-for="item in companies">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название предприятия">Название завода</option>
+            <select type="text" v-model="factory">
+              <option value="0" disabled>Название завода</option>
+              <option :value="item.id" :key="item.id" v-for="item in factories">{{ item.name }}</option>
             </select>
           </div>
 
@@ -307,15 +312,21 @@
 </template>
 
 <script>
+import {mapActions, mapGetters} from "vuex";
+
 export default {
-  name: "AddFactory",
+  name: "AddWorkshop",
 
   data() {
     return {
       showTime: false,
       currentIndexRange: 0,
-      workShop: null,
-      factory: null,
+      workshop: '',
+      reserve1: 0,
+      reserve2: 0,
+      organisation: 0,
+      company: 0,
+      factory: 0,
       ranges: [
         {
           start: null,
@@ -433,7 +444,28 @@ export default {
     }
   },
 
+  props: [
+      'id'
+  ],
+
+  created() {
+    if(this.id) {
+      let workshop = this.workshops.filter(item => item.id === this.id);
+      this.id = workshop[0].id;
+      this.workshop = workshop[0].name;
+      this.reserve1 = workshop[0].reserv1_id;
+      this.reserve2 = workshop[0].reserv2_id;
+      this.organisation = workshop[0].organisation_id;
+      this.company = workshop[0].company_id;
+      this.factory = workshop[0].factory_id;
+      this.ranges = workshop[0].ranges;
+    }
+  },
+
   methods: {
+    ...mapActions('settingsGlobal', {
+      updateWorkshop: 'updateWorkshop',
+    }),
     showBreakForm(index) {
       this.currentIndexRange = index;
       for (let i = 0; i !== index && i < 4; i++)
@@ -445,12 +477,35 @@ export default {
     },
     save() {
       let data = {
-        workShop: 'Название Цех',
-        factory: 'Название Завода',
-        smena: 'Смены',
-        break: 'Перерывы',
-      }
-    }
+            id: this.id,
+            name: this.workshop,
+            reserv1_id: this.reserve1,
+            reserv2_id: this.reserve2,
+            organisation_id: this.organisation,
+            company_id: this.company,
+            factory_id: this.factory,
+            ranges: this.ranges,
+      };
+
+      for(let key in data)
+        if(!data[key] && key !== 'id') {
+          this.$parent.$emit('showAttentionInput');
+          return;
+        }
+
+      this.updateWorkshop(data);
+      this.$parent.$emit('closeAddWorkshop');
+    },
+  },
+  computed: {
+    ...mapGetters('settingsGlobal', {
+      reserves1: 'reserves1',
+      reserves2: 'reserves2',
+      organisations: 'organisations',
+      companies: 'companies',
+      factories: 'factories',
+      workshops: 'workshops',
+    }),
   },
 }
 </script>

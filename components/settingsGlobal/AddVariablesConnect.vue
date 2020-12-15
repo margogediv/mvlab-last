@@ -1,51 +1,25 @@
 <template>
   <div class="overlay">
     <div class="modal-created">
-      <div class="sensor">
-        <div class="sensor-header">
-          <div class="title-header">Добавление датчика</div>
+      <div class="variables">
+        <div class="variables-header">
+          <div class="title-header">Добавление переменной</div>
         </div>
-        <div class="sensor-body">
-          <div class="sensor-body-box">
-            <input type="text" v-model="form.name" placeholder="Название датчика">
-            <select type="text" v-model="form.reserve1">
-              <option value="0" disabled>Название резерва1</option>
-              <option :value="item.id" :key="item.id" v-for="item in reserves1">{{ item.name }}</option>
-            </select>
-            <select type="text" v-model="form.reserve2">
-              <option value="0" disabled>Название резерва2</option>
-              <option :value="item.id" :key="item.id" v-for="item in reserves2">{{ item.name }}</option>
-            </select>
-            <select type="text" v-model="form.organisation">
-              <option value="0" disabled>Название организации</option>
-              <option :value="item.id" :key="item.id" v-for="item in organisations">{{ item.name }}</option>
-            </select>
-            <select type="text" v-model="form.company">
-              <option value="0" disabled>Название предприятия</option>
-              <option :value="item.id" :key="item.id" v-for="item in companies">{{ item.name }}</option>
-            </select>
-            <select type="text" v-model="form.factory">
-              <option value="0" disabled>Название завода</option>
-              <option :value="item.id" :key="item.id" v-for="item in factories">{{ item.name }}</option>
-            </select>
-            <select type="text" v-model="form.workshop">
-              <option value="0" disabled>Название цеха</option>
-              <option :value="item.id" :key="item.id" v-for="item in workshops">{{ item.name }}</option>
-            </select>
-            <select type="text" v-model="form.knot">
-              <option value="0" disabled>Название узла</option>
-              <option :value="item.id" :key="item.id" v-for="item in knots">{{ item.name }}</option>
+        <div class="variables-body">
+          <div class="variables-body-box">
+            <select type="text" v-model="form.connect">
+              <option value="" disabled>Название соединения</option>
+              <option :value="item.connect" v-for="item in connections">{{ item.connect }}</option>
             </select>
           </div>
-          <input type="text" placeholder="Обозначение на схемах" v-model="form.shema">
-
+          <div class="variables-body-box-row"></div>
         </div>
-        <div class="sensor-footer">
+        <div class="variables-footer">
           <button class="btn-center" @click="save">Применить</button>
         </div>
       </div>
       <button class="btn_icon2">
-        <div class="btn-bg" @click="$parent.$emit('closeAddForm', 'addSensor')"></div>
+        <div class="btn-bg" @click="$parent.$emit('showAddVariablesConnect', false)"></div>
       </button>
     </div>
   </div>
@@ -55,79 +29,41 @@
 import {mapActions, mapGetters} from "vuex";
 
 export default {
-  name: "AddSensor",
-  props: [
-    'id'
-  ],
-  created() {
-    if(this.id) {
-      let sensors = this.sensors.filter(item => item.id === this.id);
-      this.id = sensors[0].id;
-      this.form.name = sensors[0].name;
-      this.form.reserve1 = sensors[0].reserv1_id;
-      this.form.reserve2 = sensors[0].reserv2_id;
-      this.form.organisation = sensors[0].organisation_id;
-      this.form.company = sensors[0].company_id;
-      this.form.factory = sensors[0].factory_id;
-      this.form.workshop = sensors[0].workshop_id;
-      this.form.knot = sensors[0].knot_id;
-      this.form.shema = sensors[0].shema;
-    }
-  },
+  name: "AddVariablesConnect",
   data() {
     return {
       form: {
-        name: '',
-        reserve1: 0,
-        reserve2: 0,
-        organisation: 0,
-        company: 0,
-        factory: 0,
-        workshop: 0,
-        knot: 0,
-        shema: "",
-      }
+        connect: "",
+      },
     }
   },
   methods: {
     ...mapActions('settingsGlobal', {
-      updateSensors: 'updateSensors',
+      updateVariablesConnect: 'updateVariablesConnect',
     }),
     save() {
       let data = {
-        id: this.id,
-        name: this.form.name,
-        reserv1_id: this.form.reserve1,
-        reserv2_id: this.form.reserve2,
-        organisation_id: this.form.organisation,
-        company_id: this.form.company,
-        factory_id: this.form.factory,
-        workshop_id: this.form.workshop,
-        knot_id: this.form.knot,
-        shema: this.form.shema,
+        connect: this.form.connect,
+        name: "Давление в трубе, МПа",
+        limitMinWarn: 0,
+        limitMaxWarn: 2000,
+        limitMinСrash: 0,
+        limitMaxСrash: 1600,
+        limitSpead: 400,
       }
 
-      for(let key in data)
-        if(!data[key] && key !== 'id') {
-          console.log(data[key], key);
-          this.$parent.$emit('showAttentionInput');
-          return;
-        }
+      if (!this.form.connect) {
+        this.$parent.$emit('showAttentionInput');
+        return;
+      }
 
-      this.updateSensors(data);
-      this.$parent.$emit('closeAddForm', 'addSensor')
+      this.updateVariablesConnect(data);
+      this.$parent.$emit('showAddVariablesConnect', false)
     }
   },
   computed: {
-    ...mapGetters('settingsGlobal', {
-      reserves1: 'reserves1',
-      reserves2: 'reserves2',
-      organisations: 'organisations',
-      companies: 'companies',
-      factories: 'factories',
-      workshops: 'workshops',
-      knots: 'knots',
-      sensors: 'sensors',
+    ...mapGetters('Messages', {
+      connections: 'currentDevMessages',
     }),
   }
 }
@@ -163,9 +99,10 @@ export default {
   background: #F7F8FA;
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
 
-  .sensor {
+  .variables {
     width: 100%;
-    .sensor-header {
+
+    .variables-header {
       width: 100%;
       height: 24px;
       padding-top: 3px;
@@ -174,6 +111,7 @@ export default {
       align-items: center;
       justify-content: center;
       text-align: center;
+
       .title-header {
         font-weight: 500;
         font-size: 16px;
@@ -185,7 +123,7 @@ export default {
       }
     }
 
-    .sensor-body {
+    .variables-body {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -195,12 +133,12 @@ export default {
       font-size: 12px;
       line-height: 15px;
 
-      .sensor-body-box {
+      .variables-body-box {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-bottom: 12px;
+        margin-bottom: 24px;
 
         font-size: 12px;
         line-height: 15px;
@@ -223,6 +161,7 @@ export default {
           font-size: 12px;
 
           color: #9098AF;
+          background: #F7F8FA;
 
           outline: none;
         }
@@ -240,6 +179,7 @@ export default {
           border: 1px solid #9098AF;
           box-sizing: border-box;
           border-radius: 4px;
+          background: #F7F8FA;
 
           font-weight: normal;
           font-size: 12px;
@@ -269,6 +209,7 @@ export default {
         border: 1px solid #9098AF;
         box-sizing: border-box;
         border-radius: 4px;
+        background: #F7F8FA;
 
         outline: none;
       }
@@ -281,7 +222,7 @@ export default {
       }
     }
 
-    .sensor-footer {
+    .variables-footer {
       width: 100%;
       height: 36px;
       display: flex;

@@ -7,8 +7,9 @@
         </div>
         <div class="attention-body">
           <input type="text" placeholder="Название резерв2" v-model="form.name">
-          <select v-model="form.reserv1">
-            <option value="Название резерва1">Название резерва1</option>
+          <select type="text" v-model="form.reserve1">
+            <option value="0" disabled>Название резерва1</option>
+            <option :value="item.id" :key="item.id" v-for="item in reserves1">{{ item.name }}</option>
           </select>
         </div>
         <div class="attention-footer">
@@ -23,31 +24,55 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "AddReserv2",
+  props: [
+    'id'
+  ],
+  created() {
+    if(this.id) {
+      let reserv2 = this.reserves2.filter(item => item.id === this.id);
+      this.id = reserv2[0].id;
+      this.form.name = reserv2[0].name;
+      this.form.reserve1 = reserv2[0].reserv1_id;
+    }
+  },
   data() {
     return {
       form: {
         name: '',
-        reserv1: '',
+        reserve1: 0,
       }
     }
   },
   methods: {
     ...mapActions('settingsGlobal', {
-      updateTypeStructuredTable: 'updateTypeStructuredTable',
+      updateReserve2: 'updateReserve2',
     }),
     save() {
       let data = {
-        id : 2,
-        data: this.form
+        id: this.id,
+        name: this.form.name,
+        reserv1_id: this.form.reserve1,
       }
 
-      this.updateTypeStructuredTable(data);
+      for(let key in data)
+        if(!data[key] && key !== 'id') {
+          this.$parent.$emit('showAttentionInput');
+          return;
+        }
+
+      this.updateReserve2(data);
       this.$parent.$emit('closeAddForm', 'addReserv2')
-    }
+    },
+  },
+  computed: {
+    ...mapGetters('settingsGlobal', {
+      reserves1: 'reserves1',
+      reserves2: 'reserves2',
+    }),
   }
 }
 </script>

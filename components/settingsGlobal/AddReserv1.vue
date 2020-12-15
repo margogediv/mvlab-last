@@ -20,10 +20,20 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "AddReserv1",
+  props: [
+    'id'
+  ],
+  created() {
+    if(this.id) {
+      let reserv1 = this.reserves1.filter(item => item.id === this.id);
+      this.id = reserv1[0].id;
+      this.form.name = reserv1[0].name;
+    }
+  },
   data() {
     return {
       form: {
@@ -33,17 +43,28 @@ export default {
   },
   methods: {
     ...mapActions('settingsGlobal', {
-      updateTypeStructuredTable: 'updateTypeStructuredTable',
+      updateReserve1: 'updateReserve1',
     }),
     save() {
       let data = {
-        id : 1,
-        data: this.form
+        id: this.id,
+        name: this.form.name
       }
 
-      this.updateTypeStructuredTable(data);
+      for(let key in data)
+        if(!data[key] && key !== 'id') {
+          this.$parent.$emit('showAttentionInput');
+          return;
+        }
+
+      this.updateReserve1(data);
       this.$parent.$emit('closeAddForm', 'addReserv1')
     }
+  },
+  computed: {
+    ...mapGetters('settingsGlobal', {
+      reserves1: 'reserves1',
+    }),
   }
 }
 </script>

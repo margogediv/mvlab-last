@@ -8,51 +8,63 @@
         <div class="variables-body">
           <div class="variables-body-box">
             <input type="text" placeholder="Имя переменной" v-model="form.name">
-            <select type="text">
-              <option value="Название резерва1">Название резерва1</option>
+            <select type="text" v-model="form.reserve1">
+              <option value="0" disabled>Название резерва1</option>
+              <option :value="item.id" :key="item.id" v-for="item in reserves1">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название резерва2">Название резерва2</option>
+            <select type="text" v-model="form.reserve2">
+              <option value="0" disabled>Название резерва2</option>
+              <option :value="item.id" :key="item.id" v-for="item in reserves2">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название организации">Название организации</option>
+            <select type="text" v-model="form.organisation">
+              <option value="0" disabled>Название организации</option>
+              <option :value="item.id" :key="item.id" v-for="item in organisations">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название предприятия">Название предприятия</option>
+            <select type="text" v-model="form.company">
+              <option value="0" disabled>Название предприятия</option>
+              <option :value="item.id" :key="item.id" v-for="item in companies">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название завода">Название завода</option>
+            <select type="text" v-model="form.factory">
+              <option value="0" disabled>Название завода</option>
+              <option :value="item.id" :key="item.id" v-for="item in factories">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название цеха">Название цеха</option>
+            <select type="text" v-model="form.workshop">
+              <option value="0" disabled>Название цеха</option>
+              <option :value="item.id" :key="item.id" v-for="item in workshops">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название узла">Название узла</option>
+            <select type="text" v-model="form.knot">
+              <option value="0" disabled>Название узла</option>
+              <option :value="item.id" :key="item.id" v-for="item in knots">{{ item.name }}</option>
             </select>
-            <select type="text">
-              <option value="Название датчика">Название датчика</option>
+            <select type="text" v-model="form.sensor">
+              <option value="0" disabled>Название датчика</option>
+              <option :value="item.id" :key="item.id" v-for="item in sensors">{{ item.name }}</option>
             </select>
           </div>
           <div class="variables-body-box">
-            <select type="text">
-              <option value="Название соединения">Название соединения</option>
+            <select type="text" v-model="form.connect" disabled v-if="id">
+              <option :value="form.connect" selected>{{ form.connect }}</option>
             </select>
-            <select type="text">
-              <option value="Название переменной">Название переменной</option>
+            <select type="text" v-model="form.connect" v-if="!id">
+              <option value="" disabled>Название соединения</option>
+              <option :value="item.connect" v-for="item in connections">{{ item.connect }}</option>
             </select>
-            <select type="text">
-              <option value="Единицы измерения">Единицы измерения</option>
-              <option>бит</option>
-              <option>грамм</option>
-              <option>килограмм</option>
-              <option>тонн</option>
-              <option>миллиметр</option>
-              <option>метр</option>
-              <option>ампер</option>
-              <option>ом</option>
-              <option>цельсий</option>
-              <option>фаренгейт</option>
+            <select type="text" v-model="form.variablee">
+              <option value="0">Название переменной</option>
+              <option v-for="item in variableess">{{ item.name }}</option>
             </select>
+            <select type="text" v-model="form.unit">
+              <option value="">Единицы измерения</option>
+              <option :value="item" v-for="item in units">{{ item }}</option>
+            </select>
+          </div>
+
+          <div class="limits-body-box">
+            <input type="text" v-model="form.limitMinWarn" placeholder="Нижн. предупредительный">
+            <input type="text" v-model="form.limitMaxWarn" placeholder="Верхн. предупредительный">
+            <input type="text" v-model="form.limitMinСrash" placeholder="Нижн. аварийный">
+            <input type="text" v-model="form.limitMaxСrash" placeholder="Нижн. аварийный">
+            <input type="text" v-model="form.limitSpead" placeholder="Аварийная скорость изменения переменной">
           </div>
           <div class="variables-body-box-row">
           </div>
@@ -69,30 +81,135 @@
 </template>
 
 <script>
-import {mapActions} from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "AddVariables",
+  props: [
+    'id'
+  ],
+  created() {
+    if (this.id) {
+      let variables = this.variables.filter(item => item.id === this.id);
+      this.id = variables[0].id;
+      this.form.name = variables[0].name;
+
+      this.form.reserve1 = variables[0].reserve1_id;
+      this.form.reserve2 = variables[0].reserve2_id;
+      this.form.organisation = variables[0].organisation_id;
+      this.form.company = variables[0].company_id;
+      this.form.factory = variables[0].factory_id;
+      this.form.workshop = variables[0].workshop_id;
+      this.form.knot = variables[0].knot_id;
+      this.form.sensor = variables[0].sensor_id;
+
+      this.form.unit = variables[0].unit;
+      this.form.connect = variables[0].connect;
+      this.form.variablee = variables[0].variablee;
+
+      this.form.limitMinWarn = variables[0].limitMinWarn;
+      this.form.limitMaxWarn = variables[0].limitMaxWarn;
+      this.form.limitMinСrash = variables[0].limitMinСrash;
+      this.form.limitMaxСrash = variables[0].limitMaxСrash;
+      this.form.limitSpead = variables[0].limitSpead;
+    }
+  },
   data() {
     return {
       form: {
         name: '',
-      }
+        reserve1: 0,
+        reserve2: 0,
+        organisation: 0,
+        company: 0,
+        factory: 0,
+        workshop: 0,
+        knot: 0,
+        sensor: 0,
+        connect: "",
+        variablee: 0,
+        unit: "",
+        limitMinWarn: "",
+        limitMaxWarn: "",
+        limitMinСrash: "",
+        limitMaxСrash: "",
+        limitSpead: "",
+      },
+      variableess: [
+        {
+          id: 1,
+          name: "переменная 1"
+        }
+      ],
+      units: [
+        'бит',
+        'грамм',
+        'килограмм',
+        'тонн',
+        'миллиметр',
+        'метр',
+        'ампер',
+        'ом',
+        'цельсий',
+        'фаренгейт',
+      ],
     }
   },
   methods: {
     ...mapActions('settingsGlobal', {
-      updateTypeStructuredTable: 'updateTypeStructuredTable',
+      updateVariables: 'updateVariables',
     }),
     save() {
       let data = {
-        id: state.typeStructured.length + 1,
-        data: this.form
+        id: this.id,
+        name: this.form.name,
+        reserve1_id: this.form.reserve1,
+        reserve2_id: this.form.reserve2,
+        organisation_id: this.form.organisation,
+        company_id: this.form.company,
+        factory_id: this.form.factory,
+        workshop_id: this.form.workshop,
+        knot_id: this.form.knot,
+        sensor_id: this.form.sensor,
+        connect: this.form.connect,
+        variablee: this.form.variablee,
+        unit: this.form.unit,
+
+        limitMinWarn: this.form.limitMinWarn,
+        limitMaxWarn: this.form.limitMaxWarn,
+        limitMinСrash: this.form.limitMinСrash,
+        limitMaxСrash: this.form.limitMaxСrash,
+        limitSpead: this.form.limitSpead,
       }
 
-      this.updateTypeStructuredTable(data);
+      for (let key in data)
+        if (!data[key] && key !== 'id') {
+          if(key === 'limitMinWarn' || key === 'limitMaxWarn' || key === 'limitMinСrash' || key === 'limitMaxСrash' || key === 'limitSpead')
+            continue;
+          console.log(data[key], key);
+          this.$parent.$emit('showAttentionInput');
+          return;
+        }
+
+      this.updateVariables(data);
       this.$parent.$emit('closeAddForm', 'addVariables')
     }
+  },
+  computed: {
+    ...mapGetters('settingsGlobal', {
+      reserves1: 'reserves1',
+      reserves2: 'reserves2',
+      organisations: 'organisations',
+      companies: 'companies',
+      factories: 'factories',
+      workshops: 'workshops',
+      knots: 'knots',
+      sensors: 'sensors',
+      variables: 'variables',
+    }),
+    ...mapGetters('Messages', {
+      connections: 'currentDevMessages',
+    }),
   }
 }
 </script>

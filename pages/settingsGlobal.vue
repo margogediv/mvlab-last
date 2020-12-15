@@ -90,7 +90,7 @@
             <span class="minus"></span>
             <!--            <IconifyIcon icon="baselineRemove" :style="{color: '#FF6F64', fontSize: '24px'}" />-->
           </button>
-          <button class=" level btn_icon level-btn btn_icon-panel">
+          <button class=" level btn_icon level-btn btn_icon-panel" @click="edit">
             <span class="edit"></span>
             <!-- <IconifyIcon icon="editOutlined" :style="{color: '#c4b70c', fontSize: '24px'}" /> -->
           </button>
@@ -101,6 +101,9 @@
             <span class="plus_green" @click="showFormAdd"></span>
             <!--            <IconifyIcon icon="addIcon" :style="{color: '#01C587', fontSize: '24px'}" />-->
           </button>
+          <button class="level btn_icon btn_icon-panel level-btn" v-if="currentTab === 9">
+            <span class="plus_green" @click="showAddVariablesConnect(true)"></span>
+          </button>
         </div>
       </div>
     </div>
@@ -109,15 +112,23 @@
       <table>
         <thead>
         <tr class="table-head">
-          <th v-for="(value, key) in filterTypeStructuredTable.data.title">
+          <th v-for="(value, key) in createTable.thead">
             {{ value }}
           </th>
         </tr>
         </thead>
         <tbody>
-        <tr class="table-body" v-for="row in filterTypeStructuredTable.data.rows">
-          <td v-for="(value, key) in row">
-            {{ value }}
+        <tr class="table-body"
+            v-for="(row, key) in createTable.tbody"
+            :class="{active : row.id === currentTabRow }"
+            @click="setRowActive(row.id)"
+            :data-id="row.id"
+        >
+          <td v-for="(value, key) in row"
+              v-if="Object.keys(createTable.thead).includes(key)">
+            <div style="overflow-x: auto;">
+              <div style="white-space: pre-wrap">{{ value }}</div>
+            </div>
           </td>
         </tr>
         </tbody>
@@ -127,15 +138,17 @@
     <delObject v-if="showDelObject" :clientObject="clientsObject"></delObject>
     <VobjectCreated v-if="showCreated" v-on:changeShow="changeshowCreated"></VobjectCreated>
 
-    <addReserv1 v-if="showAddForm.addReserv1"></addReserv1>
-    <addReserv2 v-if="showAddForm.addReserv2"></addReserv2>
-    <addOrganization v-if="showAddForm.addOrganization"></addOrganization>
-    <addCompany v-if="showAddForm.addCompany"></addCompany>
-    <addFactory v-if="showAddForm.addFactory"></addFactory>
-    <addWorkshop v-if="showAddForm.addWorkshop"></addWorkshop>
-    <addKnot v-if="showAddForm.addKnot"></addKnot>
-    <addSensor v-if="showAddForm.addSensor"></addSensor>
-    <addVariables v-if="showAddForm.addVariables"></addVariables>
+    <addReserv1 v-if="showAddForm.addReserv1" :id="editArr[1]"></addReserv1>
+    <addReserv2 v-if="showAddForm.addReserv2" :id="editArr[2]"></addReserv2>
+    <addOrganization v-if="showAddForm.addOrganization" :id="editArr[3]"></addOrganization>
+    <addCompany v-if="showAddForm.addCompany" :id="editArr[4]"></addCompany>
+    <addFactory v-if="showAddForm.addFactory" :id="editArr[5]"></addFactory>
+    <addWorkshop v-if="showAddForm.addWorkshop" :id="editArr[6]"></addWorkshop>
+    <addKnot v-if="showAddForm.addKnot" :id="editArr[7]"></addKnot>
+    <addSensor v-if="showAddForm.addSensor" :id="editArr[8]"></addSensor>
+    <addVariables v-if="showAddForm.addVariables" :id="editArr[9]"></addVariables>
+    <addVariablesConnect v-if="addVariablesConnect"></addVariablesConnect>
+    <AttentionInput v-if="showAttentionInput"></AttentionInput>
   </div>
 </template>
 
@@ -152,6 +165,9 @@ import AddWorkshop from "@/components/settingsGlobal/AddWorkshop";
 import AddKnot from "@/components/settingsGlobal/AddKnot";
 import AddSensor from "@/components/settingsGlobal/AddSensor";
 import AddVariables from "@/components/settingsGlobal/AddVariables";
+import AddVariablesConnect from "@/components/settingsGlobal/AddVariablesConnect";
+
+import AttentionInput from "@/components/settingsGlobal/AttentionInput";
 
 import {mapGetters} from "vuex";
 import {mapActions} from "vuex";
@@ -180,6 +196,20 @@ export default {
     this.$on('closeAddForm', (name) => {
       this.showAddForm[name] = false;
     });
+
+    this.$on('showAttentionInput', () => {
+      this.showAttentionInput = true;
+    });
+
+    this.$on('closeAttentionInput', () => {
+      this.showAttentionInput = false;
+    });
+
+    this.$on('showAddVariablesConnect', (is_active) => {
+      this.addVariablesConnect = is_active;
+    });
+
+    this.currentTab = this.clientsObject.currentStructureObject[0].id;
   },
 
   components: {
@@ -189,11 +219,13 @@ export default {
     addWorkshop: AddWorkshop,
     addSensor: AddSensor,
     addVariables: AddVariables,
+    addVariablesConnect: AddVariablesConnect,
     addReserv1: AddReserv1,
     addReserv2: AddReserv2,
     addOrganization: AddOrganization,
     addCompany: AddCompany,
     addKnot: AddKnot,
+    AttentionInput: AttentionInput,
   },
 
   data() {
@@ -202,6 +234,20 @@ export default {
       showDelObject: false,
       showCreated: false,
       currentTab: 1,
+      currentTabRow: null,
+      editArr: [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+      ],
       showAddForm: {
         addReserv1: false,
         addReserv2: false,
@@ -213,6 +259,8 @@ export default {
         addSensor: false,
         addVariables: false,
       },
+      addVariablesConnect: false,
+      showAttentionInput: false,
     };
   },
 
@@ -222,42 +270,44 @@ export default {
       typeStructured: 'typeStructured',
       typeStructuredTable: 'typeStructuredTable',
     }),
-    filteredList() {
-      // return this.clientsObject.filter((object) => {
-      //   return object.name_object.toLowerCase().includes(this.search.toLowerCase());
-      // });
-    },
-    filterTypeStructuredTable() {
-      return this.typeStructuredTable.filter((item) => {
+    createTable() {
+      let structured = this.typeStructuredTable.filter((item) => {
         return item.id === this.currentTab;
       })[0];
+
+      let tbody = this.$store.getters['settingsGlobal/' + structured.key];
+
+      return {
+        thead: structured.table,
+        tbody: tbody,
+      };
     },
     currentTabName() {
-      if(this.currentTab === 1)
+      if (this.currentTab === 1)
         return 'addReserv1';
 
-      if(this.currentTab === 2)
+      if (this.currentTab === 2)
         return 'addReserv2';
 
-      if(this.currentTab === 3)
+      if (this.currentTab === 3)
         return 'addOrganization';
 
-      if(this.currentTab === 4)
+      if (this.currentTab === 4)
         return 'addCompany';
 
-      if(this.currentTab === 5)
+      if (this.currentTab === 5)
         return 'addFactory';
 
-      if(this.currentTab === 6)
+      if (this.currentTab === 6)
         return 'addWorkshop';
 
-      if(this.currentTab === 7)
+      if (this.currentTab === 7)
         return 'addKnot';
 
-      if(this.currentTab === 8)
+      if (this.currentTab === 8)
         return 'addSensor';
 
-      if(this.currentTab === 9)
+      if (this.currentTab === 9)
         return 'addVariables';
 
       return '';
@@ -281,6 +331,7 @@ export default {
     },
     setTab(id) {
       this.currentTab = id;
+      this.currentTabRow = null;
     },
     changeTypeStructuredTable() {
       return 0;
@@ -288,6 +339,20 @@ export default {
       this.updateTypeStructuredTable(data);
     },
     showFormAdd() {
+      this.currentTabRow = null;
+      this.editArr = [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+      ];
       this.showAddForm.addReserv1 = false;
       this.showAddForm.addReserv2 = false;
       this.showAddForm.addOrganization = false;
@@ -299,6 +364,27 @@ export default {
       this.showAddForm.addVariables = false;
 
       this.showAddForm[this.currentTabName] = true;
+    },
+    setRowActive(id) {
+      this.currentTabRow = id;
+    },
+    edit() {
+      this.editArr[this.currentTab] = this.currentTabRow;
+
+      this.showAddForm.addReserv1 = false;
+      this.showAddForm.addReserv2 = false;
+      this.showAddForm.addOrganization = false;
+      this.showAddForm.addCompany = false;
+      this.showAddForm.addFactory = false;
+      this.showAddForm.addWorkshop = false;
+      this.showAddForm.addKnot = false;
+      this.showAddForm.addSensor = false;
+      this.showAddForm.addVariables = false;
+
+      this.showAddForm[this.currentTabName] = true;
+    },
+    showAddVariablesConnect(is_active) {
+      this.addVariablesConnect = is_active;
     }
   },
 };
@@ -495,6 +581,18 @@ export default {
   padding-left: 24px;
   padding-right: 24px;
   color: #4a627a;
+
+  table {
+    width: 100%;
+
+    thead {
+      width: 100%;
+    }
+
+    tbody {
+      width: 100%;
+    }
+  }
 }
 
 tr {
@@ -502,6 +600,10 @@ tr {
   font-weight: normal;
   font-size: 12px;
   line-height: 15px;
+
+  &.active {
+    background: #b3c2ee;
+  }
 }
 
 th {
@@ -518,6 +620,7 @@ th {
 td {
   border: 1px solid #4a627a;
   padding: 0;
+  overflow: auto;
 }
 
 .input-td {
