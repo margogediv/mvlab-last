@@ -86,7 +86,7 @@
             <span class="search"></span>
             <!--            <IconifyIcon icon="bxSearchAlt2" :style="{color: '#4A627A', fontSize: '24px'}" :horizontal-flip="true" />-->
           </button>
-          <button class=" level btn_icon level-btn btn_icon-panel">
+          <button class=" level btn_icon level-btn btn_icon-panel" @click="del">
             <span class="minus"></span>
             <!--            <IconifyIcon icon="baselineRemove" :style="{color: '#FF6F64', fontSize: '24px'}" />-->
           </button>
@@ -108,7 +108,7 @@
       </div>
     </div>
 
-    <div class="table-objects">
+    <div class="table-objects" v-if="clientsObject">
       <table>
         <thead>
         <tr class="table-head">
@@ -179,7 +179,7 @@ export default {
     this.setActiveTabHeader("");
     this.setActiveTabSidebar("Setting");
 
-    this.getTypeStructured();
+    // this.getTypeStructured();
 
     this.$on('closeAddWorkshop', () => {
       this.showAddForm.addWorkshop = false;
@@ -209,7 +209,8 @@ export default {
       this.addVariablesConnect = is_active;
     });
 
-    this.currentTab = this.clientsObject.currentStructureObject[0].id;
+    if (this.clientsObject)
+      this.currentTab = this.clientsObject.currentStructureObject[0].id;
   },
 
   components: {
@@ -236,17 +237,17 @@ export default {
       currentTab: 1,
       currentTabRow: null,
       editArr: [
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
-          null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
       ],
       showAddForm: {
         addReserv1: false,
@@ -276,6 +277,29 @@ export default {
       })[0];
 
       let tbody = this.$store.getters['settingsGlobal/' + structured.key];
+
+      let arrHide = [];
+      let objects = [
+        {id: 1, value: "reserve1"},
+        {id: 2, value: "reserve2"},
+        {id: 3, value: "organisation"},
+        {id: 4, value: "company"},
+        {id: 5, value: "factory"},
+        {id: 6, value: "workshop"},
+        {id: 7, value: "knot"},
+        {id: 8, value: "sensor"},
+        {id: 9, value: "variable"},
+      ];
+
+      objects.forEach(item => {
+        if(!this.clientsObject.currentStructureObject.filter(i => i.id === item.id).length)
+          arrHide.push(item.value);
+      });
+
+      if (arrHide.length)
+        for (let key in structured.table)
+          if (arrHide.includes(key))
+            delete structured.table[key];
 
       return {
         thead: structured.table,
@@ -321,6 +345,7 @@ export default {
     ...mapActions("settingsGlobal", {
       getTypeStructured: 'getTypeStructured',
       updateTypeStructuredTable: 'updateTypeStructuredTable',
+      deleteTypeStructuredTable: 'deleteTypeStructuredTable',
     }),
     changeshowCreated() {
       this.showCreated = !this.showCreated;
@@ -333,10 +358,11 @@ export default {
       this.currentTab = id;
       this.currentTabRow = null;
     },
-    changeTypeStructuredTable() {
-      return 0;
-      let data = [];
-      this.updateTypeStructuredTable(data);
+    del() {
+      this.deleteTypeStructuredTable({
+        tab: this.currentTab,
+        id: this.currentTabRow,
+      });
     },
     showFormAdd() {
       this.currentTabRow = null;
