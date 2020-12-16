@@ -6,7 +6,16 @@ export default {
     state: () => ({
         clientsObject: null,
 
-        typeStructured: [],
+        typeStructured: [
+            {id: 1, value: "Резерв1"},
+            {id: 2, value: "Резерв2"},
+            {id: 3, value: "Организация"},
+            {id: 4, value: "Предприятие"},
+            {id: 5, value: "Завод"},
+            {id: 6, value: "Цех"},
+            {id: 7, value: "Узел"},
+            {id: 8, value: "Датчик"},
+        ],
         typeStructuredTable: [
             {
                 id: 1,
@@ -19,8 +28,8 @@ export default {
                 id: 2,
                 key: 'reserves2',
                 table: {
-                    name: 'Название Резерв',
-                    reserve1: 'Название Резерв2',
+                    name: 'Название Резерв2',
+                    reserve1: 'Название Резерв1',
                 },
             },
             {
@@ -130,6 +139,7 @@ export default {
             });
 
             newObj.currentStructureObject = newArr;
+
             return newObj;
         },
 
@@ -166,7 +176,9 @@ export default {
                 reserves2 = JSON.parse(localStorage.getItem('reserves2'));
 
             return reserves2.map(item => {
-                item.reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id)[0].name;
+                let reserve1 = getters.reserves1.filter(i => i.id === item.reserve1_id);
+                item.reserve1 = reserve1.length ? reserve1[0].name : "";
+
                 return item;
             })
         },
@@ -176,8 +188,12 @@ export default {
                 organisations = JSON.parse(localStorage.getItem('organisations'));
 
             return organisations.map(item => {
-                item.reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id)[0].name;
-                item.reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id)[0].name;
+                let reserve1 = getters.reserves1.filter(i => i.id === item.reserve1_id);
+                item.reserve1 = reserve1.length ? reserve1[0].name : "";
+
+                let reserve2 = getters.reserves2.filter(i => i.id === item.reserve2_id);
+                item.reserve2 = reserve2.length ? reserve1[0].name : "";
+
                 return item;
             })
         },
@@ -187,9 +203,15 @@ export default {
                 companies = JSON.parse(localStorage.getItem('companies'));
 
             return companies.map(item => {
-                item.reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id)[0].name;
-                item.reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id)[0].name;
-                item.organisation = getters.organisations.filter(i => i.id === item.organisation_id)[0].name;
+                let reserve1 = getters.reserves1.filter(i => i.id === item.reserve1_id);
+                item.reserve1 = reserve1.length ? reserve1[0].name : "";
+
+                let reserve2 = getters.reserves2.filter(i => i.id === item.reserve2_id);
+                item.reserve2 = reserve2.length ? reserve1[0].name : "";
+
+                let organisation = getters.organisations.filter(i => i.id === item.organisation_id);
+                item.organisation = organisation.length ? organisation[0].name : "";
+
                 return item;
             })
         },
@@ -199,10 +221,18 @@ export default {
                 factories = JSON.parse(localStorage.getItem('factories'));
 
             return factories.map(item => {
-                item.reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id)[0].name;
-                item.reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id)[0].name;
-                item.organisation = getters.organisations.filter(i => i.id === item.organisation_id)[0].name;
-                item.company = getters.companies.filter(i => i.id === item.company_id)[0].name;
+                let reserve1 = getters.reserves1.filter(i => i.id === item.reserve1_id);
+                item.reserve1 = reserve1.length ? reserve1[0].name : "";
+
+                let reserve2 = getters.reserves2.filter(i => i.id === item.reserve2_id);
+                item.reserve2 = reserve2.length ? reserve1[0].name : "";
+
+                let organisation = getters.organisations.filter(i => i.id === item.organisation_id);
+                item.organisation = organisation.length ? organisation[0].name : "";
+
+                let company = getters.companies.filter(i => i.id === item.company_id);
+                item.company = company.length ? company[0].name : "";
+
                 return item;
             })
         },
@@ -221,7 +251,9 @@ export default {
                     el.breaks.filter(e => e.is_active).forEach(b => breaks.push((b.start + '-' + b.end).replace(':', '.')));
                 });
 
-                item.factory = factories.filter(i => i.id === item.factory_id)[0].name;
+                let factory = getters.factories.filter(i => i.id === item.factory_id);
+                item.factory = factory.length ? factory[0].name : "";
+
                 item.smena = smenas.join(';');
                 item.break = breaks.join(';');
 
@@ -287,8 +319,42 @@ export default {
         setClientsObject(state, data) {
             state.clientsObject = data;
         },
+        deleteReserves1(state) {
+            state.reserves1 = [];
+        },
+        deleteReserves2(state) {
+            state.reserves2 = [];
+        },
+        deleteOrganisations(state) {
+            state.organisations = [];
+        },
+        deleteCompanies(state) {
+            state.companies = [];
+        },
+        deleteFactories(state) {
+            state.factories = [];
+        },
+        deleteWorkshops(state) {
+            state.workshops = [];
+        },
+        deleteKnots(state) {
+            state.knots = [];
+        },
+        deleteSensors(state) {
+            state.sensors = [];
+        },
+        deleteVariables(state) {
+            state.variables = [];
+        },
         setTypeStructured(state, data) {
             state.typeStructured = data;
+        },
+        deleteTypeStructuredTable(state, option) {
+            try {
+                state[option.tabName] = option.array;
+            } catch (e) {
+                console.log(e);
+            }
         },
         setTypeStructuredTable(state, option) {
             state.typeStructuredTable.filter((item => item.id === option.id))[0].data.rows.push(option.data);
@@ -401,6 +467,33 @@ export default {
         delClientsObject(store) {
             localStorage.setItem('clientsObject', null);
             store.commit('setClientsObject', null);
+
+            localStorage.setItem('reserves1', JSON.stringify([]));
+            store.commit('deleteReserves1', null);
+
+            localStorage.setItem('reserves2', JSON.stringify([]));
+            store.commit('deleteReserves2', null);
+
+            localStorage.setItem('organisations', JSON.stringify([]));
+            store.commit('deleteOrganisations', null);
+
+            localStorage.setItem('companies', JSON.stringify([]));
+            store.commit('deleteCompanies', null);
+
+            localStorage.setItem('factories', JSON.stringify([]));
+            store.commit('deleteFactories', null);
+
+            localStorage.setItem('workshops', JSON.stringify([]));
+            store.commit('deleteWorkshops', null);
+
+            localStorage.setItem('knots', JSON.stringify([]));
+            store.commit('deleteKnots', null);
+
+            localStorage.setItem('sensors', JSON.stringify([]));
+            store.commit('deleteSensors', null);
+
+            localStorage.setItem('variables', JSON.stringify([]));
+            store.commit('deleteVariables', null);
         },
         getTypeStructured(store) {
             let data = [
@@ -417,6 +510,46 @@ export default {
         },
         updateTypeStructuredTable(store, option) {
             store.commit('setTypeStructuredTable', option);
+        },
+        deleteTypeStructuredTable(store, option) {
+            if (!option.id || !option.tab)
+                return;
+
+            let data = [
+                {id: 1, value: "reserves1"},
+                {id: 2, value: "reserves2"},
+                {id: 3, value: "organisations"},
+                {id: 4, value: "companies"},
+                {id: 5, value: "factories"},
+                {id: 6, value: "workshops"},
+                {id: 7, value: "knots"},
+                {id: 8, value: "sensors"},
+                {id: 9, value: "variables"},
+            ];
+
+            let tabName = "";
+            try {
+                tabName = data.filter(item => item.id === option.tab);
+                if (tabName)
+                    tabName = tabName[0].value;
+                else
+                    return;
+            } catch (e) {
+                return;
+            }
+
+            let newArrayLocal = [];
+            if (localStorage.getItem(tabName)) {
+                JSON.parse(localStorage.getItem(tabName)).forEach(function (item, index, array) {
+                    if (item.id !== option.id)
+                        newArrayLocal.push(item)
+                });
+                localStorage.setItem(tabName, JSON.stringify(newArrayLocal));
+            }
+
+            option.tabName = tabName;
+            option.array = newArrayLocal;
+            store.commit('deleteTypeStructuredTable', option);
         },
         updateReserve1(store, option) {
             let reserves1 = [];

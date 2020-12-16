@@ -7,7 +7,9 @@
         </div>
         <div class="attention-body">
           <input type="text" placeholder="Название резерв2" v-model="form.name">
-          <select type="text" v-model="form.reserve1">
+          <select type="text" v-model="form.reserve1"
+                  v-if="this.clientsObject.currentStructureObject.filter(item => item.id === 1).length"
+          >
             <option value="0" disabled>Название резерва1</option>
             <option :value="item.id" :key="item.id" v-for="item in reserves1">{{ item.name }}</option>
           </select>
@@ -59,7 +61,31 @@ export default {
       }
 
       for(let key in data)
-        if(!data[key] && key !== 'id') {
+        if((data[key] === "" || data[key] === 0) && key !== 'id') {
+          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 1).length && key === 'reserv1_id')
+            continue;
+
+          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 2).length && key === 'reserv2_id')
+            continue;
+
+          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 3).length && key === 'organisation_id')
+            continue;
+
+          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 4).length && key === 'company_id')
+            continue;
+
+          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 5).length && key === 'factory_id')
+            continue;
+
+          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 6).length && key === 'workshop_id')
+            continue;
+
+          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 7).length && key === 'knot_id')
+            continue;
+
+          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 8).length && key === 'sensor_id')
+            continue;
+
           this.$parent.$emit('showAttentionInput');
           return;
         }
@@ -72,6 +98,7 @@ export default {
     ...mapGetters('settingsGlobal', {
       reserves1: 'reserves1',
       reserves2: 'reserves2',
+      clientsObject: 'clientsObject',
     }),
   }
 }
