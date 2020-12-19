@@ -36,7 +36,7 @@ export default {
                 id: 3,
                 key: 'organisations',
                 table: {
-                    name: 'Название Органищацмм',
+                    name: 'Название Организации',
                 },
             },
             {
@@ -176,9 +176,9 @@ export default {
                 reserves2 = JSON.parse(localStorage.getItem('reserves2'));
 
             return reserves2.map(item => {
-                let reserve1 = getters.reserves1.filter(i => i.id === item.reserve1_id);
+                let reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id);
                 item.reserve1 = reserve1.length ? reserve1[0].name : "";
-
+                debugger
                 return item;
             })
         },
@@ -457,8 +457,8 @@ export default {
                 customer: option.currentProject.clientName,
                 contact: option.currentProject.clientContract,
                 currentStructureObject: option.currentStructureObject,
-                created_at: '14-11-20',
-                updated_at: '14-11-20',
+                created_at: '22.12.2020 20:20:20',
+                updated_at: '22.12.2020 20:20:20',
             }
 
             localStorage.setItem('clientsObject', JSON.stringify(data));
