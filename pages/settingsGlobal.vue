@@ -117,6 +117,10 @@
         <tr class="table-head">
           <th v-for="(value, key) in createTable.thead">
             {{ value }}
+            <div class="sort">
+              <span class="asc" @click="sort(key, 'asc')">sort asc</span>
+              <span class="desc" @click="sort(key, 'desc')">sort desc</span>
+            </div>
           </th>
         </tr>
         </thead>
@@ -266,6 +270,10 @@ export default {
       addVariablesConnect: false,
       showAttentionInput: false,
       showSearch: false,
+      sorting: {
+        key: 'name',
+        type: 'asc',
+      }
     };
   },
 
@@ -281,7 +289,7 @@ export default {
       })[0];
 
       let tbody = this.$store.getters['settingsGlobal/' + structured.key];
-      if(tbody) {
+      if (tbody) {
         tbody = tbody.filter(item => {
           return item.name.toLowerCase().match(this.search.toLowerCase()) !== null;
         });
@@ -309,6 +317,36 @@ export default {
         for (let key in structured.table)
           if (arrHide.includes(key))
             delete structured.table[key];
+
+      //sort
+      let i = 0;
+      Object.keys(structured.table).forEach((item, index) => {
+        if (item === this.sorting.key) {
+          i = index;
+          return 0;
+        }
+      });
+
+      if (this.sorting.type === 'asc')
+        tbody.sort(function (a, b) {
+          let nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          if (nameA < nameB)
+            return -1
+          if (nameA > nameB)
+            return 1
+          return 0;
+        });
+      else
+        tbody.sort(function (a, b) {
+          let nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          if (nameA < nameB)
+            return 1
+          if (nameA > nameB)
+            return -1
+          return 0;
+        });
+
+      //end sort
 
       return {
         thead: structured.table,
@@ -420,7 +458,13 @@ export default {
     },
     showAddVariablesConnect(is_active) {
       this.addVariablesConnect = is_active;
-    }
+    },
+    sort(key, type) {
+      this.sorting = {
+        key: key,
+        type: type,
+      }
+    },
   },
 };
 </script>
