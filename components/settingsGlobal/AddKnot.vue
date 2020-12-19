@@ -155,7 +155,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.modal-created input {
+  color: #49617B !important;
+}
 .modal-created {
 
   position: absolute;

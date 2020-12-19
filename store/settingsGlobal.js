@@ -37,6 +37,8 @@ export default {
                 key: 'organisations',
                 table: {
                     name: 'Название Организации',
+                    reserve1: 'Название резерв1',
+                    reserve2: 'Название резерв2',
                 },
             },
             {
@@ -188,10 +190,10 @@ export default {
                 organisations = JSON.parse(localStorage.getItem('organisations'));
 
             return organisations.map(item => {
-                let reserve1 = getters.reserves1.filter(i => i.id === item.reserve1_id);
+                let reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id);
                 item.reserve1 = reserve1.length ? reserve1[0].name : "";
 
-                let reserve2 = getters.reserves2.filter(i => i.id === item.reserve2_id);
+                let reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id);
                 item.reserve2 = reserve2.length ? reserve1[0].name : "";
 
                 return item;
@@ -203,10 +205,10 @@ export default {
                 companies = JSON.parse(localStorage.getItem('companies'));
 
             return companies.map(item => {
-                let reserve1 = getters.reserves1.filter(i => i.id === item.reserve1_id);
+                let reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id);
                 item.reserve1 = reserve1.length ? reserve1[0].name : "";
 
-                let reserve2 = getters.reserves2.filter(i => i.id === item.reserve2_id);
+                let reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id);
                 item.reserve2 = reserve2.length ? reserve1[0].name : "";
 
                 let organisation = getters.organisations.filter(i => i.id === item.organisation_id);
@@ -221,10 +223,10 @@ export default {
                 factories = JSON.parse(localStorage.getItem('factories'));
 
             return factories.map(item => {
-                let reserve1 = getters.reserves1.filter(i => i.id === item.reserve1_id);
+                let reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id);
                 item.reserve1 = reserve1.length ? reserve1[0].name : "";
 
-                let reserve2 = getters.reserves2.filter(i => i.id === item.reserve2_id);
+                let reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id);
                 item.reserve2 = reserve2.length ? reserve1[0].name : "";
 
                 let organisation = getters.organisations.filter(i => i.id === item.organisation_id);
@@ -284,9 +286,11 @@ export default {
 
             return sensors.map(item => {
                 let factories = getters.factories.filter(i => i.id === item.factory_id);
+                let knots = getters.knots.filter(i => i.id === item.knot_id);
                 let workshops = getters.workshops.filter(i => i.id === item.workshop_id);
 
                 item.factory = factories.length ? factories[0].name : "";
+                item.knot = knots.length ? knots[0].name : "";
                 item.workshop = workshops.length ? workshops[0].name : "";
 
                 return item;
@@ -304,12 +308,12 @@ export default {
                 let factories = getters.factories.filter(i => i.id === item.factory_id);
 
                 item.connectOut = item.connect.split(",").join("\n");
-                item.limits = `Верхн.измерения = ${item.limitMaxWarn}\nНижн.измерения = ${item.limitMinWarn}МПа\nВерхн.аварийный = ${item.limitMaxСrash}МПа\nНижн.аварийный = ${item.limitMinСrash}МПа\nСкорость изм. = ${item.limitSpead}МПа`;
+                item.limits = `Верхн.измерения = ${item.limitMaxWarn}МПа\nНижн.измерения = ${item.limitMinWarn}МПа\nВерхн.аварийный = ${item.limitMaxСrash}МПа\nНижн.аварийный = ${item.limitMinСrash}МПа\nСкорость изм. = ${item.limitSpead}МПа`;
 
-                item.sensor = knots.length ? sensors[0].name : "";
-                item.knot = knots.length ? knots[0].name : "";
-                item.workshop = workshops.length ? workshops[0].name : "";
-                item.factory = factories.length ? factories[0].name : "";
+                item.sensor = knots.length ? sensors[0].name : "Название датчика";
+                item.knot = knots.length ? knots[0].name : "Название узла";
+                item.workshop = workshops.length ? workshops[0].name : "Название цеха";
+                item.factory = factories.length ? factories[0].name : "Название завода";
 
                 return item;
             })

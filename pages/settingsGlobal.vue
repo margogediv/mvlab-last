@@ -97,15 +97,15 @@
             <span class="edit"></span>
             <!-- <IconifyIcon icon="editOutlined" :style="{color: '#c4b70c', fontSize: '24px'}" /> -->
           </button>
+          <button class="level btn_icon btn_icon-panel level-btn list" v-if="currentTab === 9">
+            <span class="plus_green__list" @click="showAddVariablesConnect(true)"></span>
+          </button>
           <button
               class=" level btn_icon btn_icon-panel level-btn"
               @click=""
           >
             <span class="plus_green" @click="showFormAdd"></span>
             <!--            <IconifyIcon icon="addIcon" :style="{color: '#01C587', fontSize: '24px'}" />-->
-          </button>
-          <button class="level btn_icon btn_icon-panel level-btn" v-if="currentTab === 9">
-            <span class="plus_green" @click="showAddVariablesConnect(true)"></span>
           </button>
         </div>
       </div>
@@ -707,24 +707,32 @@ thead {
   border-collapse: collapse;
 }
 
-td:nth-child(1) {
+th:nth-child(1), td:nth-child(1) {
   width: 472px;
 }
 
-td:nth-child(2) {
+th:nth-child(2), td:nth-child(2) {
   width: 470px;
 }
 
-td:nth-child(3) {
+th:nth-child(3), td:nth-child(3) {
   width: 470px;
 }
 
-td:nth-child(4) {
+th:nth-child(4), td:nth-child(4) {
   width: 170px;
 }
 
-td:nth-child(5) {
+th:nth-child(5), td:nth-child(5) {
   width: 170px;
+}
+
+th:nth-child(6), td:nth-child(6) {
+  width: 100px;
+}
+
+th:nth-child(7), td:nth-child(7) {
+  width: 100px;
 }
 
 th:nth-child(1) {
@@ -812,12 +820,28 @@ th:nth-child(5) {
 
       .btn_icon-panel {
         align-items: center;
+
+        &.list {
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
       }
 
       .plus_green {
         width: 14px;
         height: 14px;
         background-image: url("~assets/svg/setting/box-panel/green_plus.svg");
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+      }
+
+      .plus_green__list {
+        width: 18px;
+        height: 13px;
+        background-image: url("~assets/svg/setting/box-panel/green_plus_list.png");
         background-repeat: no-repeat;
         background-position: center;
         background-size: contain;
@@ -852,4 +876,5 @@ th:nth-child(5) {
     }
   }
 }
+
 </style>
