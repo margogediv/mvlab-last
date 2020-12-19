@@ -2,10 +2,6 @@
   <div>
     <div class="top-panel">
       <div class="project-box">Объекты</div>
-<!--      <div class="search-wrapper">-->
-<!--        <input type="text" v-model="search" placeholder="Search title.."/>-->
-<!--        <IconifyIcon icon="bxSearchAlt2" :style="{fontSize: '24px'}" class="input-icon"/>-->
-<!--      </div>-->
       <div class="btn-box">
 
         <button
@@ -82,10 +78,17 @@
           </div>
         </template>
         <div class="panel-btn-box">
-          <button class=" level btn_icon level-btn btn_icon-panel">
-            <span class="search"></span>
-            <!--            <IconifyIcon icon="bxSearchAlt2" :style="{color: '#4A627A', fontSize: '24px'}" :horizontal-flip="true" />-->
-          </button>
+          <div class="search-wrapper" :class="{active: showSearch}">
+            <button class="level btn_icon level-btn btn_icon-panel"
+                    @click="showSearch = !showSearch"
+            >
+              <span class="search"></span>
+            </button>
+            <input type="text" v-model="search" v-if="showSearch" placeholder=""/>
+            <div class="close" v-if="showSearch" @click="showSearch = !showSearch">
+              <img src="../assets/img/ico-searh.png" alt=""/>
+            </div>
+          </div>
           <button class=" level btn_icon level-btn btn_icon-panel" @click="del">
             <span class="minus"></span>
             <!--            <IconifyIcon icon="baselineRemove" :style="{color: '#FF6F64', fontSize: '24px'}" />-->
@@ -108,7 +111,7 @@
       </div>
     </div>
 
-    <div class="table-objects" v-if="clientsObject">
+    <div class="table-objects table-objects-rows" v-if="clientsObject">
       <table>
         <thead>
         <tr class="table-head">
@@ -262,6 +265,7 @@ export default {
       },
       addVariablesConnect: false,
       showAttentionInput: false,
+      showSearch: false,
     };
   },
 
@@ -292,7 +296,7 @@ export default {
       ];
 
       objects.forEach(item => {
-        if(!this.clientsObject.currentStructureObject.filter(i => i.id === item.id).length)
+        if (!this.clientsObject.currentStructureObject.filter(i => i.id === item.id).length)
           arrHide.push(item.value);
       });
 
@@ -437,38 +441,63 @@ export default {
 
 .search-wrapper {
   position: relative;
-
-  margin-left: 12px;
-  margin-right: auto;
-
-
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
-
-  width: 210px;
-  height: 24px;
   display: flex;
-  /* justify-content: center; */
-  /* align-items: center; */
-
   color: #4a627a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
+  &.active {
+    background: #F9FAFC;
+    height: 24px;
+    width: 274px;
+    padding: 7px 12px 7px 12px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .btn_icon.level-btn {
+    margin-left: 0 !important;
+    padding: 0;
+    width: 14px !important;
+    height: 14px !important;
+
+    span {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+
+  input {
+    background: inherit;
+    border-bottom: 1px solid #4A627A;
+    width: 206px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: 0;
+    margin-bottom: 7px;
+  }
+
+  .close {
+    width: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      max-width: 100%;
+    }
+  }
 }
 
 .input-icon {
   position: absolute;
   top: 12px;
   /* left: 24px; */
-}
-
-.search-wrapper input {
-  outline: none;
-  position: absolute;
-  top: 12px;
-  padding-left: 24px;
-  padding-top: 5px;
-  border: none;
 }
 
 .project-box {
@@ -608,6 +637,10 @@ export default {
   padding-right: 24px;
   color: #4a627a;
 
+  &.table-objects-rows {
+    padding-top: 24px !important;
+  }
+
   table {
     width: 100%;
 
@@ -628,7 +661,7 @@ tr {
   line-height: 15px;
 
   &.active {
-    background: #b3c2ee;
+    background: rgba(255, 113, 103, 0.15);
   }
 }
 
@@ -641,12 +674,18 @@ th {
   color: #4A627A;
 
   border: 1px solid #4a627a;
+  text-align: center;
 }
 
 td {
   border: 1px solid #4a627a;
   padding: 0;
   overflow: auto;
+  text-align: center;
+
+  input {
+    text-align: center;
+  }
 }
 
 .input-td {
