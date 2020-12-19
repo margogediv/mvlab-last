@@ -176,7 +176,7 @@ export default {
   layout: "header_footer",
 
   created() {
-    this.setActiveTabHeader("");
+    this.setActiveTabHeader("SETTING");
     this.setActiveTabSidebar("Setting");
 
     // this.getTypeStructured();
