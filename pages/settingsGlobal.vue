@@ -281,6 +281,11 @@ export default {
       })[0];
 
       let tbody = this.$store.getters['settingsGlobal/' + structured.key];
+      if(tbody) {
+        tbody = tbody.filter(item => {
+          return item.name.toLowerCase().match(this.search.toLowerCase()) !== null;
+        });
+      }
 
       let arrHide = [];
       let objects = [
