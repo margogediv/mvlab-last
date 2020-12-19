@@ -2,10 +2,10 @@
   <div>
     <div class="top-panel">
       <div class="project-box">Объекты</div>
-      <div class="search-wrapper">
-        <input type="text" v-model="search" placeholder="Search title.."/>
-        <IconifyIcon icon="bxSearchAlt2" :style="{fontSize: '24px'}" class="input-icon"/>
-      </div>
+<!--      <div class="search-wrapper">-->
+<!--        <input type="text" v-model="search" placeholder="Search title.."/>-->
+<!--        <IconifyIcon icon="bxSearchAlt2" :style="{fontSize: '24px'}" class="input-icon"/>-->
+<!--      </div>-->
       <div class="btn-box">
 
         <button
