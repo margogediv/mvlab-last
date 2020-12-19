@@ -70,7 +70,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.modal-created input {
+  color: #49617B !important;
+}
 .overlay {
   width: 100vw;
   height: 100vh;

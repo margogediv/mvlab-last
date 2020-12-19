@@ -76,11 +76,18 @@
           </div>
 
           <div class="limits-body-box">
-            <input type="text" v-model="form.limitMinWarn" placeholder="Нижн. предупредительный">
-            <input type="text" v-model="form.limitMaxWarn" placeholder="Верхн. предупредительный">
-            <input type="text" v-model="form.limitMinСrash" placeholder="Нижн. аварийный">
-            <input type="text" v-model="form.limitMaxСrash" placeholder="Нижн. аварийный">
-            <input type="text" v-model="form.limitSpead" placeholder="Аварийная скорость изменения переменной">
+            <h3 class="title">Пределы</h3>
+            <div class="form-group">
+              <input type="text" class="col-6" v-model="form.limitMinWarn" placeholder="Нижн. предупредительный">
+              <input type="text" class="col-6" v-model="form.limitMaxWarn" placeholder="Верхн. предупредительный">
+            </div>
+            <div class="form-group">
+              <input type="text" class="col-6" v-model="form.limitMinСrash" placeholder="Нижн. аварийный">
+              <input type="text" class="col-6" v-model="form.limitMaxСrash" placeholder="Верхн. аварийный">
+            </div>
+            <div class="form-group">
+              <input type="text" v-model="form.limitSpead" placeholder="Аварийная скорость изменения переменной">
+            </div>
           </div>
           <div class="variables-body-box-row">
           </div>
@@ -200,31 +207,31 @@ export default {
 
       for (let key in data)
         if (!data[key] && key !== 'id') {
-          if(key === 'limitMinWarn' || key === 'limitMaxWarn' || key === 'limitMinСrash' || key === 'limitMaxСrash' || key === 'limitSpead')
+          if (key === 'limitMinWarn' || key === 'limitMaxWarn' || key === 'limitMinСrash' || key === 'limitMaxСrash' || key === 'limitSpead')
             continue;
 
-          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 1).length && key === 'reserv1_id')
+          if (!this.clientsObject.currentStructureObject.filter(item => item.id === 1).length && key === 'reserv1_id')
             continue;
 
-          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 2).length && key === 'reserv2_id')
+          if (!this.clientsObject.currentStructureObject.filter(item => item.id === 2).length && key === 'reserv2_id')
             continue;
 
-          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 3).length && key === 'organisation_id')
+          if (!this.clientsObject.currentStructureObject.filter(item => item.id === 3).length && key === 'organisation_id')
             continue;
 
-          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 4).length && key === 'company_id')
+          if (!this.clientsObject.currentStructureObject.filter(item => item.id === 4).length && key === 'company_id')
             continue;
 
-          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 5).length && key === 'factory_id')
+          if (!this.clientsObject.currentStructureObject.filter(item => item.id === 5).length && key === 'factory_id')
             continue;
 
-          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 6).length && key === 'workshop_id')
+          if (!this.clientsObject.currentStructureObject.filter(item => item.id === 6).length && key === 'workshop_id')
             continue;
 
-          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 7).length && key === 'knot_id')
+          if (!this.clientsObject.currentStructureObject.filter(item => item.id === 7).length && key === 'knot_id')
             continue;
 
-          if(!this.clientsObject.currentStructureObject.filter(item => item.id === 8).length && key === 'sensor_id')
+          if (!this.clientsObject.currentStructureObject.filter(item => item.id === 8).length && key === 'sensor_id')
             continue;
 
           this.$parent.$emit('showAttentionInput');
@@ -256,6 +263,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+h3.title {
+  font-family: Montserrat;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 15px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: rgba(127, 145, 162, 0.6);
+  margin-bottom: 12px;
+}
+
+.modal-created input {
+  color: #49617B !important;
+}
 
 .overlay {
   width: 100vw;
@@ -324,7 +346,7 @@ export default {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        margin-bottom: 24px;
+        margin-bottom: 12px;
 
         font-size: 12px;
         line-height: 15px;
@@ -468,5 +490,19 @@ export default {
       background-size: contain;
     }
   }
+}
+
+.form-group {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  .col-6 {
+    width: calc(50% - 3px) !important;
+  }
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
 }
 </style>
