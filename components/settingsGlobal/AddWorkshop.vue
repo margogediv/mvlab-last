@@ -53,7 +53,7 @@
                       prefix-icon="false"
                       :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         }">
                   </el-time-select>
@@ -63,7 +63,7 @@
                       prefix-icon="false"
                       :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         minTime: ranges[0].start
                       }">
@@ -87,7 +87,7 @@
                       prefix-icon="false"
                       :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         }">
                   </el-time-select>
@@ -97,7 +97,7 @@
                       prefix-icon="false"
                       :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         minTime: ranges[1].start
                       }">
@@ -121,7 +121,7 @@
                       prefix-icon="false"
                       :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         }">
                   </el-time-select>
@@ -131,7 +131,7 @@
                       prefix-icon="false"
                       :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         minTime: ranges[2].start
                       }">
@@ -155,7 +155,7 @@
                       prefix-icon="false"
                       :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         }">
                   </el-time-select>
@@ -165,7 +165,7 @@
                       prefix-icon="false"
                       :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         minTime: ranges[3].start
                       }">
@@ -193,7 +193,7 @@
                         prefix-icon="false"
                         :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         }">
                     </el-time-select>
@@ -203,7 +203,7 @@
                         prefix-icon="false"
                         :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         minTime: ranges[currentIndexRange].breaks[0].start
                       }">
@@ -223,7 +223,7 @@
                         prefix-icon="false"
                         :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         }">
                     </el-time-select>
@@ -233,7 +233,7 @@
                         prefix-icon="false"
                         :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         minTime: ranges[currentIndexRange].breaks[1].start
                       }">
@@ -253,7 +253,7 @@
                         prefix-icon="false"
                         :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         }">
                     </el-time-select>
@@ -263,7 +263,7 @@
                         prefix-icon="false"
                         :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         minTime: ranges[currentIndexRange].breaks[2].start
                       }">
@@ -283,7 +283,7 @@
                         prefix-icon="false"
                         :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         }">
                     </el-time-select>
@@ -293,7 +293,7 @@
                         prefix-icon="false"
                         :picker-options="{
                           start: '00:00',
-                          step: '00:30',
+                          step: '00:05',
                           end: '23:59',
                         minTime: ranges[currentIndexRange].breaks[3].start
                       }">

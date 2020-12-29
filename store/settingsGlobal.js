@@ -57,6 +57,10 @@ export default {
                 table: {
                     name: 'Название Завод',
                     map: 'Местоположение',
+                    reserve1: 'Название Резерв1',
+                    reserve2: 'Название Резерв2',
+                    organisation: 'Название организации',
+                    company: 'Название Предприятия',
                 },
             },
             {
@@ -64,6 +68,10 @@ export default {
                 key: 'workshops',
                 table: {
                     name: 'Название Цех',
+                    reserve1: 'Название Резерв1',
+                    reserve2: 'Название Резерв2',
+                    organisation: 'Название организации',
+                    company: 'Название Предприятия',
                     factory: 'Название Завода',
                     smena: 'Смены',
                     break: 'Перерывы',
@@ -74,8 +82,12 @@ export default {
                 key: 'knots',
                 table: {
                     name: 'Название Узел',
-                    workshop: 'Название цеха',
+                    reserve1: 'Название Резерв1',
+                    reserve2: 'Название Резерв2',
+                    organisation: 'Название организации',
+                    company: 'Название Предприятия',
                     factory: 'Название завода',
+                    workshop: 'Название цеха',
                 },
             },
             {
@@ -84,9 +96,13 @@ export default {
                 table: {
                     name: 'Название Датчик',
                     shema: 'Обозначение на схеме',
-                    knot: 'Название узла',
-                    workshop: 'Название цеха',
+                    reserve1: 'Название Резерв1',
+                    reserve2: 'Название Резерв2',
+                    organisation: 'Название организации',
+                    company: 'Название Предприятия',
                     factory: 'Название завода',
+                    workshop: 'Название цеха',
+                    knot: 'Название узла',
                 },
             },
             {
@@ -180,7 +196,7 @@ export default {
             return reserves2.map(item => {
                 let reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id);
                 item.reserve1 = reserve1.length ? reserve1[0].name : "";
-                debugger
+
                 return item;
             })
         },
@@ -253,6 +269,19 @@ export default {
                     el.breaks.filter(e => e.is_active).forEach(b => breaks.push((b.start + '-' + b.end).replace(':', '.')));
                 });
 
+
+                let reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id);
+                item.reserve1 = reserve1.length ? reserve1[0].name : "";
+
+                let reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id);
+                item.reserve2 = reserve2.length ? reserve1[0].name : "";
+
+                let organisation = getters.organisations.filter(i => i.id === item.organisation_id);
+                item.organisation = organisation.length ? organisation[0].name : "";
+
+                let company = getters.companies.filter(i => i.id === item.company_id);
+                item.company = company.length ? company[0].name : "";
+
                 let factory = getters.factories.filter(i => i.id === item.factory_id);
                 item.factory = factory.length ? factory[0].name : "";
 
@@ -273,6 +302,18 @@ export default {
                 let factories = getters.factories.filter(i => i.id === item.factory_id);
                 let workshops = getters.workshops.filter(i => i.id === item.workshop_id);
 
+                let reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id);
+                item.reserve1 = reserve1.length ? reserve1[0].name : "";
+
+                let reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id);
+                item.reserve2 = reserve2.length ? reserve1[0].name : "";
+
+                let organisation = getters.organisations.filter(i => i.id === item.organisation_id);
+                item.organisation = organisation.length ? organisation[0].name : "";
+
+                let company = getters.companies.filter(i => i.id === item.company_id);
+                item.company = company.length ? company[0].name : "";
+
                 item.factory = factories.length ? factories[0].name : "";
                 item.workshop = workshops.length ? workshops[0].name : "";
 
@@ -289,9 +330,21 @@ export default {
                 let knots = getters.knots.filter(i => i.id === item.knot_id);
                 let workshops = getters.workshops.filter(i => i.id === item.workshop_id);
 
+                let reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id);
+                item.reserve1 = reserve1.length ? reserve1[0].name : "";
+
+                let reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id);
+                item.reserve2 = reserve2.length ? reserve1[0].name : "";
+
+                let organisation = getters.organisations.filter(i => i.id === item.organisation_id);
+                item.organisation = organisation.length ? organisation[0].name : "";
+
+                let company = getters.companies.filter(i => i.id === item.company_id);
+                item.company = company.length ? company[0].name : "";
+
                 item.factory = factories.length ? factories[0].name : "";
-                item.knot = knots.length ? knots[0].name : "";
                 item.workshop = workshops.length ? workshops[0].name : "";
+                item.knot = knots.length ? knots[0].name : "";
 
                 return item;
             })

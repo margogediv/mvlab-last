@@ -37,28 +37,28 @@
       <table>
         <thead>
         <tr class="table-head">
-          <th>Название объекта</th>
-          <th>Заказчик</th>
-          <th>Договор</th>
-          <th>Дата создания</th>
-          <th>Дата изменения</th>
+          <th style="width: calc(100%/5)">Название объекта</th>
+          <th style="width: calc(100%/5)">Заказчик</th>
+          <th style="width: calc(100%/5)">Договор</th>
+          <th style="width: calc(100%/5)">Дата создания</th>
+          <th style="width: calc(100%/5)">Дата изменения</th>
         </tr>
         </thead>
         <tbody>
         <tr class="table-body" v-if="clientsObject">
-          <td>
+          <td style="width: calc(100%/5)">
             <input readonly class="input-td" type="text" v-bind:value="clientsObject.name_object"/>
           </td>
-          <td>
+          <td style="width: calc(100%/5)">
             <input readonly class="input-td" type="text" v-bind:value="clientsObject.customer"/>
           </td>
-          <td>
+          <td style="width: calc(100%/5)">
             <input readonly class="input-td" type="text" v-bind:value="clientsObject.contact"/>
           </td>
-          <td>
+          <td style="width: calc(100%/5)">
             <input readonly class="input-td" type="text" v-bind:value="clientsObject.created_at"/>
           </td>
-          <td>
+          <td style="width: calc(100%/5)">
             <input readonly class="input-td" type="text" v-bind:value="clientsObject.updated_at"/>
           </td>
         </tr>
@@ -85,7 +85,7 @@
               <span class="search"></span>
             </button>
             <input type="text" v-model="search" v-if="showSearch" placeholder=""/>
-            <div class="close" v-if="showSearch" @click="showSearch = !showSearch">
+            <div class="close" v-if="showSearch" @click="showSearch = !showSearch; search = ''">
               <img src="../assets/img/ico-searh.png" alt=""/>
             </div>
           </div>
@@ -115,8 +115,14 @@
       <table>
         <thead>
         <tr class="table-head">
-          <th v-for="(value, key) in createTable.thead">
+          <th v-for="(value, key) in createTable.thead"
+              v-bind:style="{width : (100 / Object.keys(createTable.thead).length) + '%' }"
+          >
             {{ value }}
+            <div class="sort" style="display:none;">
+              <span class="asc" @click="sort(key, 'asc')">sort asc</span>
+              <span class="desc" @click="sort(key, 'desc')">sort desc</span>
+            </div>
           </th>
         </tr>
         </thead>
@@ -128,7 +134,9 @@
             :data-id="row.id"
         >
           <td v-for="(value, key) in row"
-              v-if="Object.keys(createTable.thead).includes(key)">
+              v-if="Object.keys(createTable.thead).includes(key)"
+              v-bind:style="{width : (100 / Object.keys(createTable.thead).length) + '%' }"
+          >
             <div style="overflow-x: auto;">
               <div style="white-space: pre-wrap">{{ value }}</div>
             </div>
@@ -266,6 +274,10 @@ export default {
       addVariablesConnect: false,
       showAttentionInput: false,
       showSearch: false,
+      sorting: {
+        key: 'name',
+        type: 'asc',
+      }
     };
   },
 
@@ -281,7 +293,7 @@ export default {
       })[0];
 
       let tbody = this.$store.getters['settingsGlobal/' + structured.key];
-      if(tbody) {
+      if (tbody) {
         tbody = tbody.filter(item => {
           return item.name.toLowerCase().match(this.search.toLowerCase()) !== null;
         });
@@ -309,6 +321,36 @@ export default {
         for (let key in structured.table)
           if (arrHide.includes(key))
             delete structured.table[key];
+
+      //sort
+      let i = 0;
+      Object.keys(structured.table).forEach((item, index) => {
+        if (item === this.sorting.key) {
+          i = index;
+          return 0;
+        }
+      });
+
+      if (this.sorting.type === 'asc')
+        tbody.sort(function (a, b) {
+          let nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          if (nameA < nameB)
+            return -1
+          if (nameA > nameB)
+            return 1
+          return 0;
+        });
+      else
+        tbody.sort(function (a, b) {
+          let nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+          if (nameA < nameB)
+            return 1
+          if (nameA > nameB)
+            return -1
+          return 0;
+        });
+
+      //end sort
 
       return {
         thead: structured.table,
@@ -420,7 +462,13 @@ export default {
     },
     showAddVariablesConnect(is_active) {
       this.addVariablesConnect = is_active;
-    }
+    },
+    sort(key, type) {
+      this.sorting = {
+        key: key,
+        type: type,
+      }
+    },
   },
 };
 </script>
@@ -492,6 +540,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 
     img {
       max-width: 100%;
@@ -882,4 +931,22 @@ th:nth-child(5) {
   }
 }
 
+</style>
+
+<style>
+button {
+  cursor: pointer;
+}
+
+select {
+  cursor: pointer;
+}
+
+select:disabled {
+  cursor: default;
+}
+
+.wraper_sidebar .item {
+  cursor: pointer;
+}
 </style>
