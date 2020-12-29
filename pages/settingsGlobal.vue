@@ -536,6 +536,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 
     img {
       max-width: 100%;
@@ -926,4 +927,22 @@ th:nth-child(5) {
   }
 }
 
+</style>
+
+<style>
+button {
+  cursor: pointer;
+}
+
+select {
+  cursor: pointer;
+}
+
+select:disabled {
+  cursor: default;
+}
+
+.wraper_sidebar .item {
+  cursor: pointer;
+}
 </style>
