@@ -180,7 +180,7 @@ export default {
             return reserves2.map(item => {
                 let reserve1 = getters.reserves1.filter(i => i.id === item.reserv1_id);
                 item.reserve1 = reserve1.length ? reserve1[0].name : "";
-                debugger
+
                 return item;
             })
         },

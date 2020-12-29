@@ -37,28 +37,28 @@
       <table>
         <thead>
         <tr class="table-head">
-          <th>Название объекта</th>
-          <th>Заказчик</th>
-          <th>Договор</th>
-          <th>Дата создания</th>
-          <th>Дата изменения</th>
+          <th style="width: calc(100%/5)">Название объекта</th>
+          <th style="width: calc(100%/5)">Заказчик</th>
+          <th style="width: calc(100%/5)">Договор</th>
+          <th style="width: calc(100%/5)">Дата создания</th>
+          <th style="width: calc(100%/5)">Дата изменения</th>
         </tr>
         </thead>
         <tbody>
         <tr class="table-body" v-if="clientsObject">
-          <td>
+          <td style="width: calc(100%/5)">
             <input readonly class="input-td" type="text" v-bind:value="clientsObject.name_object"/>
           </td>
-          <td>
+          <td style="width: calc(100%/5)">
             <input readonly class="input-td" type="text" v-bind:value="clientsObject.customer"/>
           </td>
-          <td>
+          <td style="width: calc(100%/5)">
             <input readonly class="input-td" type="text" v-bind:value="clientsObject.contact"/>
           </td>
-          <td>
+          <td style="width: calc(100%/5)">
             <input readonly class="input-td" type="text" v-bind:value="clientsObject.created_at"/>
           </td>
-          <td>
+          <td style="width: calc(100%/5)">
             <input readonly class="input-td" type="text" v-bind:value="clientsObject.updated_at"/>
           </td>
         </tr>
@@ -115,9 +115,11 @@
       <table>
         <thead>
         <tr class="table-head">
-          <th v-for="(value, key) in createTable.thead">
+          <th v-for="(value, key) in createTable.thead"
+              v-bind:style="{width : (100 / Object.keys(createTable.thead).length) + '%' }"
+          >
             {{ value }}
-            <div class="sort">
+            <div class="sort" style="display:none;">
               <span class="asc" @click="sort(key, 'asc')">sort asc</span>
               <span class="desc" @click="sort(key, 'desc')">sort desc</span>
             </div>
@@ -132,7 +134,9 @@
             :data-id="row.id"
         >
           <td v-for="(value, key) in row"
-              v-if="Object.keys(createTable.thead).includes(key)">
+              v-if="Object.keys(createTable.thead).includes(key)"
+              v-bind:style="{width : (100 / Object.keys(createTable.thead).length) + '%' }"
+          >
             <div style="overflow-x: auto;">
               <div style="white-space: pre-wrap">{{ value }}</div>
             </div>
