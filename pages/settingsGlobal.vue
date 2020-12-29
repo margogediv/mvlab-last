@@ -85,7 +85,7 @@
               <span class="search"></span>
             </button>
             <input type="text" v-model="search" v-if="showSearch" placeholder=""/>
-            <div class="close" v-if="showSearch" @click="showSearch = !showSearch">
+            <div class="close" v-if="showSearch" @click="showSearch = !showSearch; search = ''">
               <img src="../assets/img/ico-searh.png" alt=""/>
             </div>
           </div>
