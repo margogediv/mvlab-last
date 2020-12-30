@@ -7,7 +7,11 @@
         </div>
         <div class="sensor-body">
           <div class="sensor-body-box">
-            <input type="text" v-model="form.name" placeholder="Название датчика">
+            <div class="first-step-object">
+              <input v-model.lazy="form.name" placeholder="Название датчика" autocomplete="off" id="name"
+                     type="text"/>
+              <label for="name">Название датчика</label>
+            </div>
             <select type="text" v-model="form.reserve1"
                     v-if="this.clientsObject.currentStructureObject.filter(item => item.id === 1).length"
             >
@@ -51,7 +55,11 @@
               <option :value="item.id" :key="item.id" v-for="item in knots">{{ item.name }}</option>
             </select>
           </div>
-          <input type="text" placeholder="Обозначение на схемах" v-model="form.shema">
+          <div class="first-step-object last">
+            <input v-model.lazy="form.shema" placeholder="Обозначение на схемах" autocomplete="off"
+                   type="text"/>
+            <label>Обозначение на схемах</label>
+          </div>
 
         </div>
         <div class="sensor-footer">
@@ -381,5 +389,16 @@ export default {
       background-size: contain;
     }
   }
+}
+
+.first-step-object {
+   margin-top: 0;
+   border: none;
+   width: 376px;
+   margin-bottom: 12px;
+ }
+
+.first-step-object.last {
+  margin-bottom: 0;
 }
 </style>

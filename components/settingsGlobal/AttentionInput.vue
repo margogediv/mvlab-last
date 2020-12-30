@@ -1,26 +1,48 @@
 <template>
-<!--  <div class="attention-close" v-show="showTable">-->
-  <div class="attention-close">
-    <div class="attention-header">
-      <IconifyIcon icon="warningStandardLine"  width="68" height="58" :style="{ color: 'white' }"/>
+  <!--  <div class="attention-close" v-show="showTable">-->
+  <div class="popup">
+    <div class="attention-close">
+      <div class="attention-header">
+        <IconifyIcon icon="warningStandardLine" width="68" height="58" :style="{ color: 'white' }"/>
+      </div>
+      <div class="attention-body">
+        <div class="title">Внимание!</div>
+        <div class="subtitle">Для создания объекта должны быть заполнены все строки</div>
+      </div>
+      <div class="attention-footer">
+        <button class="btn-close" @click="$parent.$emit('closeAttentionInput')">Закрыть</button>
+      </div>
     </div>
-    <div class="attention-body">
-      <div class="title">Внимание!</div>
-      <div class="subtitle">Для создания объекта должны быть заполнены все строки</div>
-    </div>
-    <div class="attention-footer">
-      <button class="btn-close" @click="$parent.$emit('closeAttentionInput')">Закрыть</button>
-    </div>
+    <div class="popup-overlay"></div>
   </div>
 </template>
 
 <script>
 export default {
   name: "AttentionInput",
- }
+}
 </script>
 
 <style lang="scss" scoped>
+.popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 111;
+  width: 100%;
+  height: 100%;
+}
+
+.popup-overlay {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
 .attention-close {
   position: absolute;
   top: 50%;
@@ -50,6 +72,7 @@ export default {
     padding: 0 24px;
     margin-bottom: 17px;
     text-align: center;
+
     .title {
       margin-top: 18px;
       margin-bottom: 17px;

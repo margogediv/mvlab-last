@@ -8,7 +8,12 @@
         <div class="attention-body">
 
           <div class="box select">
-            <input type="text" placeholder="Название завода" v-model="form.name">
+            <div class="first-step-object">
+              <input v-model.lazy="form.name" placeholder="Название завода" autocomplete="off"
+                     type="text"/>
+              <label>Название предприятия</label>
+            </div>
+
             <select type="text" v-model="form.reserve1"
                     v-if="this.clientsObject.currentStructureObject.filter(item => item.id === 1).length"
             >
@@ -35,7 +40,11 @@
             </select>
           </div>
 
-          <input type="text" placeholder="Местоположение" v-model="form.map">
+          <div class="first-step-object">
+            <input v-model.lazy="form.map" placeholder="Местоположение" autocomplete="off" id="name"
+                   type="text"/>
+            <label for="name">Местоположение</label>
+          </div>
         </div>
         <div class="attention-footer">
           <button class="btn-center" @click="save">Применить</button>
@@ -375,5 +384,16 @@ export default {
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.062);
+}
+
+.first-step-object {
+  margin-top: 0;
+  border: none;
+  width: 376px;
+  margin-bottom: 12px;
+}
+
+.first-step-object.last {
+  margin-bottom: 0;
 }
 </style>

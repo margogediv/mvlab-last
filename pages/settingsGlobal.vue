@@ -79,7 +79,7 @@
         </template>
         <div class="panel-btn-box">
           <div class="search-wrapper" :class="{active: showSearch}">
-            <button class="level btn_icon level-btn btn_icon-panel"
+            <button class="level btn_icon level-btn btn_icon-panel search-button"
                     @click="showSearch = !showSearch"
             >
               <span class="search"></span>
@@ -89,11 +89,11 @@
               <img src="../assets/img/ico-searh.png" alt=""/>
             </div>
           </div>
-          <button class=" level btn_icon level-btn btn_icon-panel" @click="del">
+          <button class=" level btn_icon level-btn btn_icon-panel minus-btn" @click="del">
             <span class="minus"></span>
             <!--            <IconifyIcon icon="baselineRemove" :style="{color: '#FF6F64', fontSize: '24px'}" />-->
           </button>
-          <button class=" level btn_icon level-btn btn_icon-panel" @click="edit">
+          <button class=" level btn_icon level-btn btn_icon-panel edit-btn" @click="edit">
             <span class="edit"></span>
             <!-- <IconifyIcon icon="editOutlined" :style="{color: '#c4b70c', fontSize: '24px'}" /> -->
           </button>
@@ -101,7 +101,7 @@
             <span class="plus_green__list" @click="showAddVariablesConnect(true)"></span>
           </button>
           <button
-              class=" level btn_icon btn_icon-panel level-btn"
+              class=" level btn_icon btn_icon-panel level-btn plus_green-btn"
               @click=""
           >
             <span class="plus_green" @click="showFormAdd"></span>
@@ -504,12 +504,13 @@ export default {
   align-items: center;
 
   &.active {
-    background: #F9FAFC;
     height: 24px;
-    width: 274px;
-    padding: 7px 12px 7px 12px;
+    width: 254px;
+    padding: 0;
     display: flex;
-    justify-content: space-between;
+    //justify-content: space-between;
+    position: relative;
+    bottom: -1px;
   }
 
   .btn_icon.level-btn {
@@ -528,11 +529,12 @@ export default {
     background: inherit;
     border-bottom: 1px solid #4A627A;
     width: 206px;
+    height: 100%;
     border-top: none;
     border-left: none;
     border-right: none;
     outline: 0;
-    margin-bottom: 7px;
+    margin-bottom: 0px;
   }
 
   .close {
@@ -541,6 +543,7 @@ export default {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    margin-left: 8px;
 
     img {
       max-width: 100%;
@@ -844,10 +847,16 @@ th:nth-child(5) {
     {
       content: "";
       width: 100%;
-      border-bottom: 1px solid #2dc2fa;
+      border-bottom: 1px solid #2EC3FB;
       position: absolute;
       bottom: -1px;
       left: 0;
+    }
+
+    .structure-item:hover,
+    .structure-item.active,
+    {
+      color: #49617B;
     }
 
     .panel-btn-box {
@@ -858,10 +867,20 @@ th:nth-child(5) {
 
       .level-btn {
         cursor: pointer;
-        width: 24px;
-        height: 24px;
-        margin-left: 6px;
+        //width: 24px;
+        //height: 24px;
+        //margin-left: 6px;
         border-radius: 4px;
+        padding: 0;
+
+        &.minus-btn {
+          margin-left: 17px;
+          margin-right: 16px;
+        }
+
+        &.edit-btn {
+          margin-right: 16px;
+        }
       }
 
       .btn_icon {
@@ -919,13 +938,17 @@ th:nth-child(5) {
         background-size: contain;
       }
 
-      .search {
-        width: 14px;
-        height: 14px;
-        background-image: url("~assets/svg/setting/box-panel/search.svg");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: contain;
+      .search-button {
+        width: 12px !important;
+        height: 12px !important;
+        margin-right: 6px;
+
+        .search {
+          background-image: url("~assets/svg/setting/box-panel/search.svg");
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain;
+        }
       }
     }
   }
