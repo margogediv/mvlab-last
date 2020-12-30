@@ -70,11 +70,11 @@
               <option :value="item.connect" v-for="item in connections">{{ item.connect }}</option>
             </select>
             <select type="text" v-model="form.variablee">
-              <option value="0">Название переменной</option>
+              <option value="0" disabled>Название переменной</option>
               <option v-for="item in variableess">{{ item.name }}</option>
             </select>
             <select type="text" v-model="form.unit">
-              <option value="">Единицы измерения</option>
+              <option value="" disabled>Единицы измерения</option>
               <option :value="item" v-for="item in units">{{ item }}</option>
             </select>
           </div>
