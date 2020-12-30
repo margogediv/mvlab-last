@@ -166,7 +166,7 @@ export default {
       this.showAttentionInput = false;
     });
 
-    if(this.clientsObject) {
+    if (this.clientsObject) {
       this.currentProject.projectName = this.clientsObject.name_object;
       this.currentProject.clientContract = this.clientsObject.contact;
       this.currentProject.clientName = this.clientsObject.customer;
@@ -187,12 +187,12 @@ export default {
 
   watch: {
     currentStructureObject: function (newValue) {
-      if(newValue.length < 2)
+      if (newValue.length < 2)
         return false;
 
       let index = newValue[newValue.length - 2];
       for (let i = 1; i <= this.typeStructured.length - 1; i++) {
-        if(i <= index)
+        if (i <= index)
           this.typeStructured[i].disabled = true;
         else
           this.typeStructured[i].disabled = false;
@@ -435,65 +435,6 @@ button {
   align-items: center;
   text-align: center;
   justify-content: center;
-}
-
-.first-step-object {
-  position: relative;
-  margin-top: 24px;
-  height: 24px;
-  width: 444px;
-  background: inherit;
-
-  border: 1px solid #9098AF;
-  border-radius: 4px;
-
-  font-size: 12px;
-  line-height: 15px;
-
-  color: #778A9C;
-
-  outline: none;
-  cursor: pointer;
-
-  input {
-    width: 100%;
-    height: 100%;
-    outline: none;
-    border-radius: 4px;
-    border: none;
-    background: #F7F8FA;
-    padding: 0 5px;
-    //cursor: initial;
-    transition: 0.1s;
-  }
-
-  input + label {
-    position: absolute;
-    top: -20px;
-    left: 6px;
-    transition: all 0.1s;
-    opacity: 1;
-    background: #F7F8FA;
-
-    transform: translateY(calc(50% + 2px));
-  }
-
-  input:placeholder-shown + label {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-
-
-  input:focus + label {
-    opacity: 1;
-    transform: translateY(calc(50% + 2px));
-    color: #00c484;
-
-  }
-
-  input:focus:placeholder-shown {
-    -webkit-text-fill-color: transparent;
-  }
 }
 
 
@@ -750,7 +691,70 @@ option.hide {
 .hide_minus {
   opacity: 0;
 }
+
 .hide_plus {
   opacity: 0;
 }
 </style>
+
+<style lang="scss">
+.first-step-object {
+  position: relative;
+  margin-top: 24px;
+  height: 24px;
+  width: 444px;
+  background: inherit;
+
+  border: 1px solid #9098AF;
+  border-radius: 4px;
+
+  font-size: 12px;
+  line-height: 15px;
+
+  color: #778A9C;
+
+  outline: none;
+  cursor: pointer;
+
+  input {
+    width: 100%;
+    height: 100%;
+    outline: none;
+    border-radius: 4px;
+    border: none;
+    background: #F7F8FA;
+    padding: 0 5px;
+    //cursor: initial;
+    transition: 0.1s;
+  }
+
+  input + label {
+    position: absolute;
+    top: -20px;
+    left: 6px;
+    transition: all 0.1s;
+    opacity: 1;
+    background: #F7F8FA;
+
+    transform: translateY(calc(50% + 2px));
+  }
+
+  input:placeholder-shown + label {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+
+  input:focus + label {
+    opacity: 1;
+    transform: translateY(calc(50% + 2px));
+    color: #00c484;
+
+  }
+
+  input:focus:placeholder-shown {
+    -webkit-text-fill-color: transparent;
+  }
+}
+</style>
+

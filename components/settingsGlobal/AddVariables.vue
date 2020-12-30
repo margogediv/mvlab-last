@@ -7,7 +7,11 @@
         </div>
         <div class="variables-body">
           <div class="variables-body-box">
-            <input type="text" placeholder="Имя переменной" v-model="form.name">
+            <div class="first-step-object">
+              <input v-model.lazy="form.name" placeholder="Имя переменной" autocomplete="off"
+                     type="text"/>
+              <label>Имя переменной</label>
+            </div>
             <select type="text" v-model="form.reserve1"
                     v-if="this.clientsObject.currentStructureObject.filter(item => item.id === 1).length"
             >
@@ -78,15 +82,40 @@
           <div class="limits-body-box">
             <h3 class="title">Пределы</h3>
             <div class="form-group">
-              <input type="text" class="col-6" v-model="form.limitMinWarn" placeholder="Нижн. предупредительный">
-              <input type="text" class="col-6" v-model="form.limitMaxWarn" placeholder="Верхн. предупредительный">
+              <div class="first-step-object col-6">
+                <input v-model.lazy="form.limitMinWarn" placeholder="Нижн. предупредительный" autocomplete="off"
+                       type="text"/>
+                <label>Нижн. предупредительный</label>
+              </div>
+              <div class="first-step-object col-6">
+                <input v-model.lazy="form.limitMaxWarn" placeholder="Верхн. предупредительный" autocomplete="off"
+                       type="text"/>
+                <label>Верхн. предупредительный</label>
+              </div>
+              <!--              <input type="text" class="col-6" v-model="form.limitMinWarn" placeholder="Нижн. предупредительный">-->
+              <!--              <input type="text" class="col-6" v-model="form.limitMaxWarn" placeholder="Верхн. предупредительный">-->
             </div>
             <div class="form-group">
-              <input type="text" class="col-6" v-model="form.limitMinСrash" placeholder="Нижн. аварийный">
-              <input type="text" class="col-6" v-model="form.limitMaxСrash" placeholder="Верхн. аварийный">
+              <div class="first-step-object col-6">
+                <input v-model.lazy="form.limitMinСrash" placeholder="Нижн. аварийный" autocomplete="off"
+                       type="text"/>
+                <label>Нижн. аварийный</label>
+              </div>
+              <div class="first-step-object col-6">
+                <input v-model.lazy="form.limitMaxСrash" placeholder="Верхн. аварийный" autocomplete="off"
+                       type="text"/>
+                <label>Верхн. аварийный</label>
+              </div>
+<!--              <input type="text" class="col-6" v-model="form.limitMinСrash" placeholder="Нижн. аварийный">-->
+<!--              <input type="text" class="col-6" v-model="form.limitMaxСrash" placeholder="Верхн. аварийный">-->
             </div>
             <div class="form-group">
-              <input type="text" v-model="form.limitSpead" placeholder="Аварийная скорость изменения переменной">
+              <div class="first-step-object">
+                <input v-model.lazy="form.limitSpead" placeholder="Аварийная скорость изменения переменной" autocomplete="off"
+                       type="text"/>
+                <label>Аварийная скорость изменения переменной</label>
+              </div>
+<!--              <input type="text" v-model="form.limitSpead" placeholder="Аварийная скорость изменения переменной">-->
             </div>
           </div>
           <div class="variables-body-box-row">
@@ -497,6 +526,7 @@ h3.title {
   display: flex;
   justify-content: space-between;
   margin-bottom: 12px;
+
   .col-6 {
     width: calc(50% - 3px) !important;
   }
@@ -504,5 +534,24 @@ h3.title {
 
 .form-group:last-child {
   margin-bottom: 0;
+}
+
+.first-step-object {
+  margin-top: 0;
+  border: none;
+  width: 376px;
+  margin-bottom: 12px;
+}
+
+.first-step-object.last {
+  margin-bottom: 0;
+}
+
+.col-6 {
+  margin-bottom: 0;
+}
+
+.col-6 input {
+  width: 100% !important;
 }
 </style>

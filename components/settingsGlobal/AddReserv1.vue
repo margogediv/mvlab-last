@@ -6,7 +6,11 @@
           <div class="title-header">Добавление резерв1</div>
         </div>
         <div class="attention-body">
-          <input type="text" placeholder="Название резерв1" v-model="form.name">
+          <div class="first-step-object">
+            <input v-model.lazy="form.name" placeholder="Название резерв1" autocomplete="off" id="name"
+                   type="text"/>
+            <label for="name">Название резерв1</label>
+          </div>
         </div>
         <div class="attention-footer">
           <button class="btn-center" @click="save">Применить</button>
@@ -243,5 +247,16 @@ export default {
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.062);
+}
+
+.first-step-object {
+   margin-top: 0;
+   border: none;
+   width: 376px;
+   margin-bottom: 12px;
+ }
+
+.first-step-object.last {
+  margin-bottom: 0;
 }
 </style>

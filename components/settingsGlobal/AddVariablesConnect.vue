@@ -285,4 +285,15 @@ export default {
     }
   }
 }
+
+.first-step-object {
+  margin-top: 0;
+  border: none;
+  width: 376px;
+  margin-bottom: 12px;
+}
+
+.first-step-object.last {
+  margin-bottom: 0;
+}
 </style>

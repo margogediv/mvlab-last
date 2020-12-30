@@ -7,7 +7,12 @@
         </div>
         <div class="workshop-body">
           <div class="first-block">
-            <input type="text" v-model="workshop" placeholder="Название цеха">
+            <div class="first-step-object">
+              <input v-model.lazy="workshop" placeholder="Название цеха" autocomplete="off" id="name"
+                     type="text"/>
+              <label for="name">Название цеха</label>
+            </div>
+<!--            <input type="text" v-model="workshop" placeholder="Название цеха">-->
             <select type="text" v-model="reserve1"
                     v-if="this.clientsObject.currentStructureObject.filter(item => item.id === 1).length"
             >
@@ -971,5 +976,16 @@ input[type="checkbox"]:checked + label:after {
 
 .el-picker-panel.time-select.el-popper {
   z-index: 10;
+}
+
+.first-step-object {
+  margin-top: 0;
+  border: none;
+  width: 376px;
+  margin-bottom: 12px;
+}
+
+.first-step-object.last {
+  margin-bottom: 0;
 }
 </style>
