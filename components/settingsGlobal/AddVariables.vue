@@ -84,12 +84,12 @@
             <div class="form-group">
               <div class="first-step-object col-6">
                 <input v-model.lazy="form.limitMinWarn" placeholder="Нижн. предупредительный" autocomplete="off"
-                       type="text"/>
+                       type="number"/>
                 <label>Нижн. предупредительный</label>
               </div>
               <div class="first-step-object col-6">
                 <input v-model.lazy="form.limitMaxWarn" placeholder="Верхн. предупредительный" autocomplete="off"
-                       type="text"/>
+                       type="number"/>
                 <label>Верхн. предупредительный</label>
               </div>
               <!--              <input type="text" class="col-6" v-model="form.limitMinWarn" placeholder="Нижн. предупредительный">-->
@@ -98,12 +98,12 @@
             <div class="form-group">
               <div class="first-step-object col-6">
                 <input v-model.lazy="form.limitMinСrash" placeholder="Нижн. аварийный" autocomplete="off"
-                       type="text"/>
+                       type="number"/>
                 <label>Нижн. аварийный</label>
               </div>
               <div class="first-step-object col-6">
                 <input v-model.lazy="form.limitMaxСrash" placeholder="Верхн. аварийный" autocomplete="off"
-                       type="text"/>
+                       type="number"/>
                 <label>Верхн. аварийный</label>
               </div>
 <!--              <input type="text" class="col-6" v-model="form.limitMinСrash" placeholder="Нижн. аварийный">-->
@@ -112,7 +112,7 @@
             <div class="form-group">
               <div class="first-step-object">
                 <input v-model.lazy="form.limitSpead" placeholder="Аварийная скорость изменения переменной" autocomplete="off"
-                       type="text"/>
+                       type="number"/>
                 <label>Аварийная скорость изменения переменной</label>
               </div>
 <!--              <input type="text" v-model="form.limitSpead" placeholder="Аварийная скорость изменения переменной">-->
