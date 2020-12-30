@@ -844,10 +844,16 @@ th:nth-child(5) {
     {
       content: "";
       width: 100%;
-      border-bottom: 1px solid #2dc2fa;
+      border-bottom: 1px solid #2EC3FB;
       position: absolute;
       bottom: -1px;
       left: 0;
+    }
+
+    .structure-item:hover,
+    .structure-item.active,
+    {
+      color: #49617B;
     }
 
     .panel-btn-box {
