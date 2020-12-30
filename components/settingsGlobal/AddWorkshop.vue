@@ -960,6 +960,16 @@ input[type="checkbox"]:checked + label:after {
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.25);
 }
 
+.first-step-object {
+  margin-top: 0;
+  border: none;
+  width: 376px;
+  margin-bottom: 12px;
+}
+
+.first-step-object.last {
+  margin-bottom: 0;
+}
 </style>
 
 <style lang="scss">
@@ -976,16 +986,5 @@ input[type="checkbox"]:checked + label:after {
 
 .el-picker-panel.time-select.el-popper {
   z-index: 10;
-}
-
-.first-step-object {
-  margin-top: 0;
-  border: none;
-  width: 376px;
-  margin-bottom: 12px;
-}
-
-.first-step-object.last {
-  margin-bottom: 0;
 }
 </style>
