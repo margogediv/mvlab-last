@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+/*
 .recorder-items {
   padding-top: 96px;
   padding-left: 12px;
@@ -175,4 +175,5 @@ export default {
     }
   }
 }
+*/
 </style>
