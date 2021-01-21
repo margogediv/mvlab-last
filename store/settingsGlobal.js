@@ -21,22 +21,22 @@ export default {
                 id: 1,
                 key: 'reserves1',
                 table: {
-                    name: 'Название Резерв1',
+                    name: 'Название резерв1',
                 },
             },
             {
                 id: 2,
                 key: 'reserves2',
                 table: {
-                    name: 'Название Резерв2',
-                    reserve1: 'Название Резерв1',
+                    name: 'Название резерв2',
+                    reserve1: 'Название резерв1',
                 },
             },
             {
                 id: 3,
                 key: 'organisations',
                 table: {
-                    name: 'Название Организации',
+                    name: 'Название организации',
                     reserve1: 'Название резерв1',
                     reserve2: 'Название резерв2',
                 },
@@ -45,7 +45,7 @@ export default {
                 id: 4,
                 key: 'companies',
                 table: {
-                    name: 'Название Предприятие',
+                    name: 'Название предприятие',
                     reserve1: 'Название резерв1',
                     reserve2: 'Название резерв2',
                     organisation: 'Название организации',
@@ -55,24 +55,24 @@ export default {
                 id: 5,
                 key: 'factories',
                 table: {
-                    name: 'Название Завод',
+                    name: 'Название завод',
                     map: 'Местоположение',
-                    reserve1: 'Название Резерв1',
-                    reserve2: 'Название Резерв2',
+                    reserve1: 'Название резерв1',
+                    reserve2: 'Название резерв2',
                     organisation: 'Название организации',
-                    company: 'Название Предприятия',
+                    company: 'Название предприятия',
                 },
             },
             {
                 id: 6,
                 key: 'workshops',
                 table: {
-                    name: 'Название Цех',
-                    reserve1: 'Название Резерв1',
-                    reserve2: 'Название Резерв2',
+                    name: 'Название цех',
+                    reserve1: 'Название резерв1',
+                    reserve2: 'Название резерв2',
                     organisation: 'Название организации',
-                    company: 'Название Предприятия',
-                    factory: 'Название Завода',
+                    company: 'Название предприятия',
+                    factory: 'Название завода',
                     smena: 'Смены',
                     break: 'Перерывы',
                 },
@@ -81,11 +81,11 @@ export default {
                 id: 7,
                 key: 'knots',
                 table: {
-                    name: 'Название Узел',
-                    reserve1: 'Название Резерв1',
-                    reserve2: 'Название Резерв2',
+                    name: 'Название узел',
+                    reserve1: 'Название резерв1',
+                    reserve2: 'Название резерв2',
                     organisation: 'Название организации',
-                    company: 'Название Предприятия',
+                    company: 'Название предприятия',
                     factory: 'Название завода',
                     workshop: 'Название цеха',
                 },
@@ -94,12 +94,12 @@ export default {
                 id: 8,
                 key: 'sensors',
                 table: {
-                    name: 'Название Датчик',
+                    name: 'Название датчик',
                     shema: 'Обозначение на схеме',
-                    reserve1: 'Название Резерв1',
-                    reserve2: 'Название Резерв2',
+                    reserve1: 'Название резерв1',
+                    reserve2: 'Название резерв2',
                     organisation: 'Название организации',
-                    company: 'Название Предприятия',
+                    company: 'Название предприятия',
                     factory: 'Название завода',
                     workshop: 'Название цеха',
                     knot: 'Название узла',
@@ -210,7 +210,7 @@ export default {
                 item.reserve1 = reserve1.length ? reserve1[0].name : "";
 
                 let reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id);
-                item.reserve2 = reserve2.length ? reserve1[0].name : "";
+                item.reserve2 = reserve2.length ? reserve2[0].name : "";
 
                 return item;
             })
@@ -225,7 +225,7 @@ export default {
                 item.reserve1 = reserve1.length ? reserve1[0].name : "";
 
                 let reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id);
-                item.reserve2 = reserve2.length ? reserve1[0].name : "";
+                item.reserve2 = reserve2.length ? reserve2[0].name : "";
 
                 let organisation = getters.organisations.filter(i => i.id === item.organisation_id);
                 item.organisation = organisation.length ? organisation[0].name : "";
@@ -243,7 +243,7 @@ export default {
                 item.reserve1 = reserve1.length ? reserve1[0].name : "";
 
                 let reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id);
-                item.reserve2 = reserve2.length ? reserve1[0].name : "";
+                item.reserve2 = reserve2.length ? reserve2[0].name : "";
 
                 let organisation = getters.organisations.filter(i => i.id === item.organisation_id);
                 item.organisation = organisation.length ? organisation[0].name : "";
@@ -274,7 +274,7 @@ export default {
                 item.reserve1 = reserve1.length ? reserve1[0].name : "";
 
                 let reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id);
-                item.reserve2 = reserve2.length ? reserve1[0].name : "";
+                item.reserve2 = reserve2.length ? reserve2[0].name : "";
 
                 let organisation = getters.organisations.filter(i => i.id === item.organisation_id);
                 item.organisation = organisation.length ? organisation[0].name : "";
@@ -306,7 +306,7 @@ export default {
                 item.reserve1 = reserve1.length ? reserve1[0].name : "";
 
                 let reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id);
-                item.reserve2 = reserve2.length ? reserve1[0].name : "";
+                item.reserve2 = reserve2.length ? reserve2[0].name : "";
 
                 let organisation = getters.organisations.filter(i => i.id === item.organisation_id);
                 item.organisation = organisation.length ? organisation[0].name : "";
@@ -334,7 +334,7 @@ export default {
                 item.reserve1 = reserve1.length ? reserve1[0].name : "";
 
                 let reserve2 = getters.reserves2.filter(i => i.id === item.reserv2_id);
-                item.reserve2 = reserve2.length ? reserve1[0].name : "";
+                item.reserve2 = reserve2.length ? reserve2[0].name : "";
 
                 let organisation = getters.organisations.filter(i => i.id === item.organisation_id);
                 item.organisation = organisation.length ? organisation[0].name : "";
