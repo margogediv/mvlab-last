@@ -363,7 +363,7 @@ export default {
                 item.connectOut = item.connect.split(",").join("\n");
                 item.limits = `Верхн.измерения = ${item.limitMaxWarn}МПа\nНижн.измерения = ${item.limitMinWarn}МПа\nВерхн.аварийный = ${item.limitMaxСrash}МПа\nНижн.аварийный = ${item.limitMinСrash}МПа\nСкорость изм. = ${item.limitSpead}МПа`;
 
-                item.sensor = knots.length ? sensors[0].name : "Название датчика";
+                item.sensor = sensors.length ? sensors[0].name : "Название датчика";
                 item.knot = knots.length ? knots[0].name : "Название узла";
                 item.workshop = workshops.length ? workshops[0].name : "Название цеха";
                 item.factory = factories.length ? factories[0].name : "Название завода";
@@ -753,22 +753,23 @@ export default {
             store.commit('setSensors', option);
         },
         updateVariables(store, option) {
-            let variables = [];
-            if (localStorage.getItem('variables'))
-                variables = JSON.parse(localStorage.getItem('variables'));
-            else if (this.state.settingsGlobal.variables)
-                variables = JSON.parse(JSON.stringify(this.state.settingsGlobal.variables));
+                let variables = [];
+                if (localStorage.getItem('variables'))
+                    variables = JSON.parse(localStorage.getItem('variables'));
+                else if (this.state.settingsGlobal.variables)
+                    variables = JSON.parse(JSON.stringify(this.state.settingsGlobal.variables));
 
-            if (option.id) {
-                for (let key in variables.filter(item => item.id === option.id)[0])
-                    variables.filter(item => item.id === option.id)[0][key] = option[key];
-            } else {
-                option.id = new Date().getTime();
-                variables.push(option);
-            }
+                if (option.id) {
+                    let v = variables.filter(item => item.id === option.id)[0];
+                    for (let key in option)
+                        v[key] = option[key];
+                } else {
+                    option.id = new Date().getTime();
+                    variables.push(option);
+                }
 
-            localStorage.setItem('variables', JSON.stringify(variables));
-            store.commit('setVariables', option);
+                localStorage.setItem('variables', JSON.stringify(variables));
+                store.commit('setVariables', option);
         },
         updateVariablesConnect(store, option) {
             let variables = [];

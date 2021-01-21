@@ -62,16 +62,16 @@
             </select>
           </div>
           <div class="variables-body-box">
-            <select type="text" v-model="form.connect" disabled v-if="id">
-              <option :value="form.connect" selected>{{ form.connect }}</option>
-            </select>
-            <select type="text" v-model="form.connect" v-if="!id">
+<!--            <select type="text" v-model="form.connect" disabled v-if="id">-->
+<!--              <option :value="form.connect" selected>{{ form.connect }}</option>-->
+<!--            </select>-->
+            <select type="text" v-model="form.connect">
               <option value="" disabled>Название соединения</option>
               <option :value="item.connect" v-for="item in connections">{{ item.connect }}</option>
             </select>
             <select type="text" v-model="form.variablee">
               <option value="0" disabled>Название переменной</option>
-              <option v-for="item in variableess">{{ item.name }}</option>
+              <option :value="item.id" v-for="item in variableess">{{ item.name }}</option>
             </select>
             <select type="text" v-model="form.unit">
               <option value="" disabled>Единицы измерения</option>
@@ -146,18 +146,18 @@ export default {
       this.id = variables[0].id;
       this.form.name = variables[0].name;
 
-      this.form.reserve1 = variables[0].reserve1_id;
-      this.form.reserve2 = variables[0].reserve2_id;
-      this.form.organisation = variables[0].organisation_id;
-      this.form.company = variables[0].company_id;
-      this.form.factory = variables[0].factory_id;
-      this.form.workshop = variables[0].workshop_id;
-      this.form.knot = variables[0].knot_id;
-      this.form.sensor = variables[0].sensor_id;
+      this.form.reserve1 = variables[0].reserve1_id ? variables[0].reserve1_id : 0;
+      this.form.reserve2 = variables[0].reserve2_id ? variables[0].reserve2_id : 0;
+      this.form.organisation = variables[0].organisation_id ? variables[0].organisation_id : 0;
+      this.form.company = variables[0].company_id ? variables[0].company_id : 0;
+      this.form.factory = variables[0].factory_id ? variables[0].factory_id : 0;
+      this.form.workshop = variables[0].workshop_id ? variables[0].workshop_id : 0;
+      this.form.knot = variables[0].knot_id ? variables[0].knot_id : 0;
+      this.form.sensor = variables[0].sensor_id ? variables[0].sensor_id : 0;
 
-      this.form.unit = variables[0].unit;
-      this.form.connect = variables[0].connect;
-      this.form.variablee = variables[0].variablee;
+      this.form.unit = variables[0].unit ? variables[0].unit : "";
+      this.form.connect = variables[0].connect ? variables[0].connect : 0;
+      this.form.variablee = variables[0].variablee ? variables[0].variablee : 0;
 
       this.form.limitMinWarn = variables[0].limitMinWarn;
       this.form.limitMaxWarn = variables[0].limitMaxWarn;
@@ -191,7 +191,11 @@ export default {
         {
           id: 1,
           name: "переменная 1"
-        }
+        },
+        {
+          id: 2,
+          name: "переменная 2"
+        },
       ],
       units: [
         'бит',
@@ -266,7 +270,7 @@ export default {
           this.$parent.$emit('showAttentionInput');
           return;
         }
-
+      console.log(data);
       this.updateVariables(data);
       this.$parent.$emit('closeAddForm', 'addVariables')
     }

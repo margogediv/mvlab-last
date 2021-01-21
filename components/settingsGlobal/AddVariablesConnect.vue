@@ -3,7 +3,7 @@
     <div class="modal-created">
       <div class="variables">
         <div class="variables-header">
-          <div class="title-header">Добавление переменной</div>
+          <div class="title-header">Добавление переменных</div>
         </div>
         <div class="variables-body">
           <div class="variables-body-box">
