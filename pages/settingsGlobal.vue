@@ -861,7 +861,7 @@ th:nth-child(5) {
 
     .panel-btn-box {
       margin-left: auto;
-      margin-right: 12px;
+      //margin-right: 12px;
       display: flex;
       flex-direction: row;
 
@@ -899,6 +899,7 @@ th:nth-child(5) {
           display: flex;
           justify-content: center;
           align-items: center;
+          margin-right: 16px;
         }
       }
 

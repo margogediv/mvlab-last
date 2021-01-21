@@ -85,3 +85,7 @@ html {
   background: hsv(120, 71%, 88%);
 
 }
+
+select, select option, input {
+  background-color: #F7F8FA !important;
+}
