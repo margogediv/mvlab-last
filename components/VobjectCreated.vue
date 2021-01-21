@@ -187,8 +187,12 @@ export default {
 
   watch: {
     currentStructureObject: function (newValue) {
-      if (newValue.length < 2)
+      if (newValue.length < 2) {
+        for (let i = 1; i <= this.typeStructured.length - 1; i++)
+          this.typeStructured[i].disabled = false;
+
         return false;
+      }
 
       let index = newValue[newValue.length - 2];
       for (let i = 1; i <= this.typeStructured.length - 1; i++) {
