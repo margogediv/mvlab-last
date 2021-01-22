@@ -106,7 +106,7 @@ export default {
     }),
     option() {
       return {
-        date: this.calendar,
+        date: this.calendar ? this.calendar : new Date().getTime(),
       }
     }
   },

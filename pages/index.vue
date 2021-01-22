@@ -645,6 +645,7 @@ export default {
       },
       calendar: {
         time: new Date().getTime(),
+        date: formatDate(new Date().getTime()),
       },
     }
   },
@@ -825,6 +826,12 @@ export default {
       this.updateEnergyConsumption();
     }
   },
+}
+
+function formatDate(date) {
+  let d = new Date(date);
+
+  return d.getFullYear() + "-" + d.getMonth() + 1 + "-" + d.getDate();
 }
 </script>
 
