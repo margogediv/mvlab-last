@@ -38,8 +38,8 @@ export default {
   data() {
     return {
       login: {
-        username: 'mvlab',
-        password: '123'
+        username: '',
+        password: ''
       }
     }
   },

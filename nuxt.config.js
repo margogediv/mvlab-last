@@ -75,12 +75,13 @@ export default {
     //     locale: 'ru',
     // },
     axios: {
-        baseURL: 'http://localhost/ ',
+        // baseURL: 'http://localhost/',
+        baseURL: 'http://185.231.71.153:8000',
         // proxy: true,
         proxy: false,
     },
     router: {
-        //middleware: ['auth'],
+        middleware: ['auth'],
     },
     auth: {
         localStorage: false,
@@ -112,9 +113,9 @@ export default {
         plugins: ['~/plugins/auth.js']
     },
     proxy: {
-        // '/user/': 'http://77.220.212.211:8000',
-        // '/api/Users/': 'http://77.220.212.211:8000',
-        // '/api/': 'http://185.6.25.155',
+        // '/user/': 'http://185.231.71.153:8000',
+        // '/api/Users/': 'http://185.231.71.153:8000',
+        // '/api/': 'http://185.231.71.153:8000',
     },
 
     webfontloader: {

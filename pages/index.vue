@@ -745,9 +745,9 @@ export default {
           name: 'Количество',
           innerSize: '70%',
           data: [
-            {name: 'Годно', y: this.panelRelease.suitable, color: '#4BBEA9'},
-            {name: 'Брак', y: this.panelRelease.substandard, color: ' #FC7A7A'},
-            {name: 'Некондиция', y: this.panelRelease.defect, color: '#2D9AD8'}
+            {name: 'Годно', y: this.panelRelease ? this.panelRelease.suitable : 0, color: '#4BBEA9'},
+            {name: 'Брак', y: this.panelRelease ? this.panelRelease.substandard : 0, color: ' #FC7A7A'},
+            {name: 'Некондиция', y: this.panelRelease ? this.panelRelease.defect : 0, color: '#2D9AD8'}
           ]
         }]
       }

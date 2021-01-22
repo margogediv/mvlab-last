@@ -137,232 +137,254 @@ export default {
                 sum: 0,
             };
 
-            // try {
-            //     if (option.smena)
-            //         data = await this.$axios.$get(`/dashboard/duration/${option.date}/shift/${option.smena}`);
-            //     else
-            //         data = await this.$axios.$get(`/dashboard/duration/${option.date}/day/`);
-            //
-            // } catch (e) {
-            //     console.error("getLineDataFirst axios");
-            // }
+            try {
+                if (option.smena)
+                    data = await this.$axios.$get(`/dashboard/duration/${option.date}/shift/${option.smena}`);
+                else
+                    data = await this.$axios.$get(`/dashboard/duration/${option.date}/day/`);
 
-            //later remove
-            //start block
-            data.sum = getRandomInt(90) + 10;
-            let start = "";
-            let end = "";
-            for (let i = 0; i < 10; i++) {
-                start = new Date(2020, 1, 11, getRandomInt(12), getRandomInt(59), 0, 0);
-                end = new Date(2020, 1, 11, getRandomInt(12) + 11, getRandomInt(59), 0, 0);
-                data.interval.push({
-                    start: start.getHours() + ':' + start.getMinutes(),
-                    end: end.getHours() + ':' + end.getMinutes(),
-                    duration: Math.random() * 23,
-                });
+                if(!data)
+                    throw new Error('return data is null');
+
+            } catch (e) {
+                console.error("getLineDataFirst axios");
+
+                //later remove
+                //start block
+                data.sum = getRandomInt(90) + 10;
+                let start = "";
+                let end = "";
+                for (let i = 0; i < 10; i++) {
+                    start = new Date(2020, 1, 11, getRandomInt(12), getRandomInt(59), 0, 0);
+                    end = new Date(2020, 1, 11, getRandomInt(12) + 11, getRandomInt(59), 0, 0);
+                    data.interval.push({
+                        start: start.getHours() + ':' + start.getMinutes(),
+                        end: end.getHours() + ':' + end.getMinutes(),
+                        duration: Math.random() * 23,
+                    });
+                }
+                //end block
             }
-            //end block
 
             store.commit('setLineDataFirst', data);
         },
         async getComparisonModule(store, option) {
             let data = null;
-            // try {
-            //     if (option.id1 && option.id2)
-            //         data = await this.$axios.$get(`/dashboard/comparison/shift/${option.date1}/${option.id1}/${option.date2}/${option.id2}`);
-            //     else if (option.isType1 === 'day')
-            //         data = await this.$axios.$get(`/dashboard/comparison/day/${option.date1}/${option.date2}`);
-            //     else if (option.isType1 === 'month')
-            //         data = await this.$axios.$get(`/dashboard/comparison/month/${option.date1}/${option.date2}`);
-            //
-            //     data.isQuery = true;
-            // } catch (e) {
-            //     console.error("getComparisonModule axios");
-            // }
+            try {
+                if (option.id1 && option.id2)
+                    data = await this.$axios.$get(`/dashboard/comparison/shift/${option.date1}/${option.id1}/${option.date2}/${option.id2}`);
+                else if (option.isType1 === 'day')
+                    data = await this.$axios.$get(`/dashboard/comparison/day/${option.date1}/${option.date2}`);
+                else if (option.isType1 === 'month')
+                    data = await this.$axios.$get(`/dashboard/comparison/month/${option.date1}/${option.date2}`);
 
-            //latter remove
-            //start block
-            data = {
-                suitable1: getRandomInt(300) + 200,
-                change_suitable1: 0,
-                suitable2: getRandomInt(300) + 200,
+                data.isQuery = true;
 
-                substandard1: getRandomInt(100),
-                change_substandard1: 0,
-                substandard2: getRandomInt(100),
+                if(!data)
+                    throw new Error('return data is null');
+            } catch (e) {
+                console.error("getComparisonModule axios");
+                //latter remove
+                //start block
+                data = {
+                    suitable1: getRandomInt(300) + 200,
+                    change_suitable1: 0,
+                    suitable2: getRandomInt(300) + 200,
 
-                defect1: getRandomInt(70),
-                change_defect1: 0,
-                defect2: getRandomInt(70),
+                    substandard1: getRandomInt(100),
+                    change_substandard1: 0,
+                    substandard2: getRandomInt(100),
 
-                flooded1: getRandomInt(100000) + 10000,
-                change_flooded1: 0,
-                flooded2: getRandomInt(100000) + 10000,
+                    defect1: getRandomInt(70),
+                    change_defect1: 0,
+                    defect2: getRandomInt(70),
 
-                sum1: getRandomInt(900) + 100,
-                change_sum1: 0,
-                sum2: getRandomInt(900) + 100,
-            };
+                    flooded1: getRandomInt(100000) + 10000,
+                    change_flooded1: 0,
+                    flooded2: getRandomInt(100000) + 10000,
 
-            data.change_suitable1 = ((data.suitable1 / data.suitable2) * 100).toFixed();
-            data.change_substandard1 = ((data.substandard1 / data.substandard2) * 100).toFixed();
-            data.change_defect1 = ((data.defect1 / data.defect2) * 100).toFixed();
-            data.change_flooded1 = ((data.flooded1 / data.flooded2) * 100).toFixed();
-            data.change_sum1 = ((data.sum1 / data.sum2) * 100).toFixed();
-            data.isQuery = true;
+                    sum1: getRandomInt(900) + 100,
+                    change_sum1: 0,
+                    sum2: getRandomInt(900) + 100,
+                };
 
-            //end block
+                data.change_suitable1 = ((data.suitable1 / data.suitable2) * 100).toFixed();
+                data.change_substandard1 = ((data.substandard1 / data.substandard2) * 100).toFixed();
+                data.change_defect1 = ((data.defect1 / data.defect2) * 100).toFixed();
+                data.change_flooded1 = ((data.flooded1 / data.flooded2) * 100).toFixed();
+                data.change_sum1 = ((data.sum1 / data.sum2) * 100).toFixed();
+                data.isQuery = true;
+
+                //end block
+            }
 
             store.commit('setComparisonModule', data);
         },
         async getEnergyConsumption(store, option) {
             let data = null;
-            // try {
-            //     if (option.id1)
-            //         data = await this.$axios.$get(`/dashboard/energyconsumption/${option.date}/shift/${option.id1}/`);
-            //     else if (option.isType1 === 'day')
-            //         data = await this.$axios.$get(`/dashboard/energyconsumption/${option.date}/day/`);
-            //     else if (option.isType1 === 'month')
-            //         data = await this.$axios.$get(`/dashboard/energyconsumption/${option.date}/month/`);
-            //
-            // } catch (e) {
-            //     console.error("getEnergyConsumption axios");
-            // }
+            try {
+                if (option.id1)
+                    data = await this.$axios.$get(`/dashboard/energyconsumption/${option.date}/shift/${option.id1}/`);
+                else if (option.isType1 === 'day')
+                    data = await this.$axios.$get(`/dashboard/energyconsumption/${option.date}/day/`);
+                else if (option.isType1 === 'month')
+                    data = await this.$axios.$get(`/dashboard/energyconsumption/${option.date}/month/`);
 
-            //latter remove
-            //start block
-            data = {
-                input1: getRandomInt(300) + 200,
-                input2: getRandomInt(100000) + 10000,
-                gas: getRandomInt(100000) + 100000,
-            };
-            //end block
+                if(!data)
+                    throw new Error('return data is null');
+
+            } catch (e) {
+                console.error("getEnergyConsumption axios");
+
+                //latter remove
+                //start block
+                data = {
+                    input1: getRandomInt(300) + 200,
+                    input2: getRandomInt(100000) + 10000,
+                    gas: getRandomInt(100000) + 100000,
+                };
+                //end block
+            }
+
             store.commit('setEnergyConsumption', data);
         },
         async getTotalConsumption(store, option) {
             let data = null;
-            // try {
-            //     if (option.id1)
-            //         data = await this.$axios.$get(`/dashboard/sumexpense/${option.date}/shift/${option.id1}/`);
-            //     else if (option.isType1 === 'day')
-            //         data = await this.$axios.$get(`/dashboard/sumexpense/${option.date}/day/`);
-            //     else if (option.isType1 === 'month')
-            //         data = await this.$axios.$get(`/dashboard/sumexpense/${option.date}/month/`);
-            //
-            // } catch (e) {
-            //     console.error("getTotalСonsumption axios");
-            // }
+            try {
+                if (option.id1)
+                    data = await this.$axios.$get(`/dashboard/sumexpense/${option.date}/shift/${option.id1}/`);
+                else if (option.isType1 === 'day')
+                    data = await this.$axios.$get(`/dashboard/sumexpense/${option.date}/day/`);
+                else if (option.isType1 === 'month')
+                    data = await this.$axios.$get(`/dashboard/sumexpense/${option.date}/month/`);
 
-            //latter remove
-            //start block
-            data = {
-                iso: getRandomInt(300) + 200,
-                pol: getRandomInt(300) + 200,
-                pen: getRandomInt(300) + 200,
-                kat1: getRandomInt(50) + 50,
-                kat2: getRandomInt(50) + 50,
-                kat3: getRandomInt(50) + 50,
-            };
-            //end block
+                if(!data)
+                    throw new Error('return data is null');
+            } catch (e) {
+                console.error("getTotalСonsumption axios");
+
+                //latter remove
+                //start block
+                data = {
+                    iso: getRandomInt(300) + 200,
+                    pol: getRandomInt(300) + 200,
+                    pen: getRandomInt(300) + 200,
+                    kat1: getRandomInt(50) + 50,
+                    kat2: getRandomInt(50) + 50,
+                    kat3: getRandomInt(50) + 50,
+                };
+                //end block
+            }
+
             store.commit('setTotalConsumption', data);
         },
         async getSpecificConsumption(store, option) {
             let data = null;
-            // try {
-            //     if (option.id1)
-            //         data = await this.$axios.$get(`/dashboard/specificconsumption/${option.date}/shift/${option.id1}/`);
-            //     else if (option.isType1 === 'day')
-            //         data = await this.$axios.$get(`/dashboard/specificconsumption/${option.date}/day/`);
-            //     else if (option.isType1 === 'month')
-            //         data = await this.$axios.$get(`/dashboard/specificconsumption/${option.date}/month/`);
-            //
-            // } catch (e) {
-            //     console.error("getSpecificConsumption axios");
-            // }
+            try {
+                if (option.id1)
+                    data = await this.$axios.$get(`/dashboard/specificconsumption/${option.date}/shift/${option.id1}/`);
+                else if (option.isType1 === 'day')
+                    data = await this.$axios.$get(`/dashboard/specificconsumption/${option.date}/day/`);
+                else if (option.isType1 === 'month')
+                    data = await this.$axios.$get(`/dashboard/specificconsumption/${option.date}/month/`);
 
-            //latter remove
-            //start block
-            data = {
-                iso: (Math.random() * 10).toFixed(1),
-                pol: (Math.random() * 10).toFixed(1),
-                pen: (Math.random() * 10).toFixed(1),
-                kat1: (Math.random() * 10).toFixed(1),
-                kat2: (Math.random() * 10).toFixed(1),
-                kat3: (Math.random() * 10).toFixed(1),
-            };
-            //end block
+                if(!data)
+                    throw new Error('return data is null');
+
+            } catch (e) {
+                console.error("getSpecificConsumption axios");
+
+                //latter remove
+                // start block
+                data = {
+                    iso: (Math.random() * 10).toFixed(1),
+                    pol: (Math.random() * 10).toFixed(1),
+                    pen: (Math.random() * 10).toFixed(1),
+                    kat1: (Math.random() * 10).toFixed(1),
+                    kat2: (Math.random() * 10).toFixed(1),
+                    kat3: (Math.random() * 10).toFixed(1),
+                };
+                //end block
+            }
+
             store.commit('setSpecificConsumption', data);
         },
         async getStockBalances(store, option) {
             let data = null;
-            // try {
-            //     data = await this.$axios.$get(`/dashboard/remainder/${option.date}/`);
-            // } catch (e) {
-            //     console.error("getStockBalances axios");
-            // }
+            try {
+                data = await this.$axios.$get(`/dashboard/remainder/${option.date}/`);
+                if(!data)
+                    throw new Error('return data is null');
+            } catch (e) {
+                console.error("getStockBalances axios");
 
-            //latter remove
-            //start block
-            data = {
-                storehouse: [
-                    {
-                        name: "Скалад 1",
-                        iso: [getRandomInt(100), getRandomInt(100)],
-                        pol: [getRandomInt(100), getRandomInt(100)],
-                        pen: [],
-                    },
-                    {
-                        name: "Скалад 2",
-                        iso: [getRandomInt(100), getRandomInt(100), getRandomInt(100)],
-                        pol: [],
-                        pen: [getRandomInt(100)],
-                    },
-                    {
-                        name: "Скалад 3",
-                        iso: [getRandomInt(100), getRandomInt(100), getRandomInt(100)],
-                        pol: [getRandomInt(100), getRandomInt(100)],
-                        pen: [],
-                    },
-                ],
-                "in_total": {
-                    "iso": getRandomInt(100),
-                    "pol": getRandomInt(100),
-                    "pen": getRandomInt(100),
+                //latter remove
+                //start block
+                data = {
+                    storehouse: [
+                        {
+                            name: "Скалад 1",
+                            iso: [getRandomInt(100), getRandomInt(100)],
+                            pol: [getRandomInt(100), getRandomInt(100)],
+                            pen: [],
+                        },
+                        {
+                            name: "Скалад 2",
+                            iso: [getRandomInt(100), getRandomInt(100), getRandomInt(100)],
+                            pol: [],
+                            pen: [getRandomInt(100)],
+                        },
+                        {
+                            name: "Скалад 3",
+                            iso: [getRandomInt(100), getRandomInt(100), getRandomInt(100)],
+                            pol: [getRandomInt(100), getRandomInt(100)],
+                            pen: [],
+                        },
+                    ],
+                    "in_total": {
+                        "iso": getRandomInt(100),
+                        "pol": getRandomInt(100),
+                        "pen": getRandomInt(100),
 
-                }
-            };
-            //end block
+                    }
+                };
+                //end block
+            }
+
             store.commit('setStockBalances', data);
         },
         async getPanelRelease(store, option) {
             let data = null;
-            // try {
-            //     if (option.id1)
-            //         data = await this.$axios.$get(`/dashboard/edition/${option.date}/shift/${option.id1}/`);
-            //     else if (option.isType1 === 'day')
-            //         data = await this.$axios.$get(`/dashboard/edition/${option.date}/day/`);
-            //     else if (option.isType1 === 'month')
-            //         data = await this.$axios.$get(`/dashboard/edition/${option.date}/month/`);
-            //
-            // } catch (e) {
-            //     console.error("getSpecificConsumption axios");
-            // }
+            try {
+                if (option.id1)
+                    data = await this.$axios.$get(`/dashboard/edition/${option.date}/shift/${option.id1}/`);
+                else if (option.isType1 === 'day')
+                    data = await this.$axios.$get(`/dashboard/edition/${option.date}/day/`);
+                else if (option.isType1 === 'month')
+                    data = await this.$axios.$get(`/dashboard/edition/${option.date}/month/`);
 
-            //latter remove
-            //start block
-            data = {
-                suitable: getRandomInt(500),
-                change_suitable: getRandomInt(100),
-                substandard: getRandomInt(100),
-                change_substandard: getRandomInt(100),
-                defect: getRandomInt(100),
-                change_defect: getRandomInt(100),
-                flooded: getRandomInt(1000000),
-                change_flooded: getRandomInt(100),
-                sum: getRandomInt(500),
-                change_sum: getRandomInt(100),
+                if(!data)
+                    throw new Error('return data is null');
+            } catch (e) {
+                console.error("getSpecificConsumption axios");
+
+                //latter remove
+                //start block
+                data = {
+                    suitable: getRandomInt(500),
+                    change_suitable: getRandomInt(100),
+                    substandard: getRandomInt(100),
+                    change_substandard: getRandomInt(100),
+                    defect: getRandomInt(100),
+                    change_defect: getRandomInt(100),
+                    flooded: getRandomInt(1000000),
+                    change_flooded: getRandomInt(100),
+                    sum: getRandomInt(500),
+                    change_sum: getRandomInt(100),
+                }
+                //end block
             }
-            //end block
+
             store.commit('setPanelRelease', data);
         }
     },
